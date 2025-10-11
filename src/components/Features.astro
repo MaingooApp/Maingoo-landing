@@ -319,6 +319,7 @@ const features = [
         opacity: 1;
         grid-column: span 1;
         position: relative;
+        scroll-margin-top: 100px ;
       }
 
 
@@ -336,7 +337,6 @@ const features = [
       .features-grid.has-expanded .feature-card:not(.expanded) {
         grid-column: 1;
         padding: 1.5rem;
-        background: rgba(241, 245, 249, 0.9);
         display: flex;
         align-items: center;
         min-height: 70px;
@@ -367,14 +367,13 @@ const features = [
       .features-grid.has-expanded .feature-card:not(.expanded):hover {
         transform: translateY(-0.5rem) scale(1.02);
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 0 15px -3px rgba(59, 130, 246, 0.2);
-        background: rgba(255, 255, 255, 0.95);
         border-color: rgba(59, 130, 246, 0.3);
       }
 
       .dark .features-grid.has-expanded .feature-card:not(.expanded):hover {
         background: rgba(31, 41, 55, 0.2);
         border-color: rgba(75, 85, 99, 0.3);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 0 15px -3px rgba(59, 130, 246, 0.3);
+        /* box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 0 15px -3px rgba(59, 130, 246, 0.3); */
       }
 
       /* Efecto de brillo para las tarjetas no expandidas */
@@ -382,7 +381,6 @@ const features = [
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
         opacity: 0;
         transition: opacity 0.5s ease;
         border-radius: 1rem;
@@ -529,7 +527,7 @@ const features = [
     <div class="features-grid grid grid-cols-3 grid-rows-2 gap-x-6 gap-y-6 relative">
       {features.slice(0, 6).map((feature) => (
         <div
-          class={`feature-card bg-white/10 dark:bg-gray-800/10 backdrop-blur-sm border border-gray-200/20 dark:border-gray-700/20 p-6 rounded-2xl transition-all duration-300 group cursor-pointer relative z-10 hover:bg-white/20 dark:hover:bg-gray-800/20 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl hover:shadow-blue-500/20 before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500 before:bg-[length:200%_100%] hover:before:animate-shine overflow-hidden [&.expanded]:hover:bg-white/10 [&.expanded]:hover:translate-y-0 [&.expanded]:hover:scale-100 [&.expanded]:hover:shadow-none [&.expanded]:hover:before:opacity-0 [&.expanded]:before:animate-none`}
+          class={`feature-card bg-white/10 dark:bg-gray-800/10 backdrop-blur-sm border border-gray-200/20 dark:border-gray-700/20 p-6 rounded-2xl transition-all duration-300 group cursor-pointer relative z-10  hover:-translate-y-2   before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500 before:bg-[length:200%_100%] hover:before:animate-shine overflow-hidden  [&.expanded]:hover:translate-y-0 [&.expanded]:hover:scale-100 [&.expanded]:hover:shadow-none [&.expanded]:hover:before:opacity-0 [&.expanded]:before:animate-none`}
           data-feature-id={feature.id}
         >
           <!-- Contenido normal -->
