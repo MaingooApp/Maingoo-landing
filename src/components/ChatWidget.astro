@@ -15,15 +15,12 @@
     >
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-3">
-          <div
-            class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"
-          >
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fill-rule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                clip-rule="evenodd"></path>
-            </svg>
+          <div class="w-8 h-8 rounded-full flex items-center justify-center">
+            <img
+              src="/maingoo_logo.svg"
+              alt="Maingoo Logo"
+              class="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 object-contain"
+            />
           </div>
           <div>
             <h3 class="font-semibold text-sm">Asistente Maingoo</h3>
@@ -62,26 +59,22 @@
       <!-- Welcome Message -->
       <div class="flex items-start space-x-2">
         <div
-          class="w-6 h-6 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 rounded-full flex items-center justify-center flex-shrink-0"
+          class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
         >
-          <svg
-            class="w-4 h-4 text-white"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-              clip-rule="evenodd"></path>
-          </svg>
+          <img
+            src="/maingoo_logo.svg"
+            alt="Maingoo Logo"
+            class="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 object-contain"
+          />
         </div>
         <div
           class="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm max-w-xs border border-purple-100 dark:border-purple-900/30"
         >
           <p class="text-sm text-gray-800 dark:text-gray-200">
-            Hola 👋 Soy Maingoo AI.
-            Antes de continuar, te animo a écharle un vistazo al apartado de Características de la web, allí verás todo lo que ofrecemos. 
-            Y si te surge cualquier duda, pregúntame por este chat.
+            Hola 👋 Soy Maingoo AI. Antes de continuar, te animo a écharle un
+            vistazo al apartado de Características de la web, allí verás todo lo
+            que ofrecemos. Y si te surge cualquier duda, pregúntame por este
+            chat.
           </p>
           <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 block"
             >Ahora</span
@@ -103,8 +96,7 @@
         />
         <button
           id="send-message"
-          class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 dark:from-blue-500 dark:to-purple-500 dark:hover:from-blue-600 dark:hover:to-purple-600 text-white px-4 py-2 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled
+          class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 dark:from-blue-500 dark:to-purple-500 dark:hover:from-blue-600 dark:hover:to-purple-600 text-white px-4 py-2 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <svg
             class="w-4 h-4"
@@ -282,6 +274,7 @@
             "bot"
           );
         }
+        this.sendButton.disabled = false;
       } catch (error) {
         this.hideTypingIndicator();
 
@@ -290,6 +283,7 @@
           "¡Gracias por tu mensaje! 😊 Lo hemos recibido correctamente y nuestro equipo te contactará pronto.",
           "bot"
         );
+        this.sendButton.disabled = false;
       }
     }
 
@@ -344,10 +338,12 @@
         `;
       } else {
         messageDiv.innerHTML = `
-          <div class="w-6 h-6 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
-            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
-            </svg>
+          <div class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
+            <img
+              src="/maingoo_logo.svg"
+              alt="Maingoo Logo"
+              class="h-6 w-6 object-contain"
+            />
           </div>
           <div class="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm max-w-xs border border-purple-100 dark:border-purple-900/30">
             <p class="text-sm text-gray-800 dark:text-gray-200">${this.escapeHtml(message)}</p>
@@ -365,10 +361,12 @@
       typingDiv.id = "typing-indicator";
       typingDiv.className = "flex items-start space-x-2";
       typingDiv.innerHTML = `
-        <div class="w-6 h-6 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
-          <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
-          </svg>
+        <div class="w-6 h-6  rounded-full flex items-center justify-center flex-shrink-0">
+          <img
+              src="/maingoo_logo.svg"
+              alt="Maingoo Logo"
+              class="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 object-contain"
+            />
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm border border-purple-100 dark:border-purple-900/30">
           <div class="flex space-x-1">
