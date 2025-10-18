@@ -31,10 +31,12 @@ import ChatWidget from "../components/ChatWidget.astro";
 </script>
 
 <section
-  class="pt-16 pb-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 h-screen"
+  class="pt-16 pb-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
 >
-  <div class="container mx-auto px-6">
-    <div class="max-w-4xl mx-auto text-center">
+  <div class="container mx-auto px-6 h-full">
+    <div
+      class="max-w-4xl mx-auto text-center h-full flex flex-col justify-center"
+    >
       <!-- Hero Headline -->
       <style>
         /* Estilos compartidos */
@@ -248,7 +250,9 @@ import ChatWidget from "../components/ChatWidget.astro";
       </div>
 
       <!-- Hero Stats -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-2xl sm:max-w-4xl mx-auto"
+      >
         <div class="text-center">
           <div
             class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2 flex justify-center"
