@@ -4,9 +4,6 @@ const features = [
     id: 1,
     title: "Carga Automática de Facturas",
     description: "Olvídate de teclear datos: sube tus facturas y albaranes y en segundos tendrás todo registrado, sin errores.",
-    gradient: "from-blue-50 to-blue-100",
-    darkGradient: "dark:from-blue-900/30 dark:to-blue-800/30",
-    iconGradient: "from-blue-600 to-blue-700",
     expandedContent: {
       video: "/videos/facturacion-demo.mp4",
       // Video sugerido:
@@ -28,9 +25,6 @@ const features = [
     id: 2,
     title: "Análisis Predictivo",
     description: "Anticípate: ajusta inventario, prevé ventas y detecta tendencias antes que tu competencia.",
-    gradient: "from-purple-50 to-purple-100",
-    darkGradient: "dark:from-purple-900/30 dark:to-purple-800/30",
-    iconGradient: "from-purple-600 to-purple-700",
     expandedContent: {
       video: "/videos/analisis-demo.mp4",
       // Video sugerido:
@@ -52,9 +46,6 @@ const features = [
     id: 3,
     title: "Inventario Inteligente",
     description: "Controla el stock en tiempo real con alertas y sugerencias de pedidos.",
-    gradient: "from-green-50 to-green-100",
-    darkGradient: "dark:from-green-900/30 dark:to-green-800/30",
-    iconGradient: "from-green-600 to-green-700",
     expandedContent: {
       video: "/videos/inventario-demo.mp4",
       // Video sugerido:
@@ -76,9 +67,6 @@ const features = [
     id: 4,
     title: "Maingoo IA",
     description: "Pregunta lo que quieras sobre tu negocio y obtén la respuesta al instante, como si hablaras con tu propio consultor.",
-    gradient: "from-orange-50 to-orange-100",
-    darkGradient: "dark:from-orange-900/30 dark:to-orange-800/30",
-    iconGradient: "from-orange-600 to-orange-700",
     expandedContent: {
       video: "/videos/reportes-demo.mp4",
       // Video sugerido:
@@ -100,9 +88,6 @@ const features = [
     id: 5,
     title: "Optimización de Costes",
     description: "Detecta oportunidades de ahorro y mejora tus márgenes de manera más efectiva.",
-    gradient: "from-red-50 to-red-100",
-    darkGradient: "dark:from-red-900/30 dark:to-red-800/30",
-    iconGradient: "from-red-600 to-red-700",
     expandedContent: {
       video: "/videos/costes-demo.mp4",
       // Video sugerido:
@@ -124,9 +109,6 @@ const features = [
     id: 6,
     title: "Integración Total",
     description: "Todo en un solo sistema: TPV, horarios, inventario y facturación, sin depender de otras plataformas.",
-    gradient: "from-indigo-50 to-indigo-100",
-    darkGradient: "dark:from-indigo-900/30 dark:to-indigo-800/30",
-    iconGradient: "from-indigo-600 to-indigo-700",
     expandedContent: {
       video: "/videos/integracion-demo.mp4",
       // Video sugerido:
@@ -147,13 +129,13 @@ const features = [
 ];
 ---
 
-<section id="features" class="relative pt-12 pb-12 bg-white dark:bg-gray-900">
+<section id="features" class="relative pt-12 pb-12 dark:bg-[#F0F7F4]">
   <div class="container mx-auto px-6">
     <!-- Section Header -->
     <div class="text-center max-w-3xl mx-auto mb-10">
-      <h2 class="text-3xl md:text-5xl font-bold text-gray-800 dark:text-white mb-6">
+      <h2 class="text-3xl md:text-5xl font-bold dark:text-[#1A3C34] mb-6">
         Características que 
-        <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <span class="bg-[#6B9E86] bg-clip-text text-transparent">
           transforman
         </span>
         tu negocio
@@ -161,7 +143,7 @@ const features = [
       <div class="flex justify-center mb-8">
         <button
           id="open-chat-features"
-          class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block text-center"
+          class="border-2 border-solid border-[#6B9E86] bg-transparent text-[#6B9E86] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transform hover:-translate-y-1 inline-block text-center"
         >
           Hablar con Maingoo IA
         </button>
@@ -301,274 +283,6 @@ const features = [
     </script>
 
     <style>
-      .features-grid {
-        min-height: 600px;
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        gap: 2rem;
-        position: relative;
-      }
-
-      @media (min-width: 768px) {
-        .features-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-
-      @media (min-width: 1024px) {
-        .features-grid {
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-
-      /* Grid cuando hay una tarjeta expandida */
-      .features-grid.has-expanded {
-        display: grid;
-        grid-template-columns: minmax(300px, 1fr) 4fr !important;
-        grid-template-rows: repeat(5, 1fr);
-        gap: 1rem !important;
-        align-items: center;
-        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      /* En móvil, layout completamente diferente */
-      @media (max-width: 1023px) {
-        .features-grid.has-expanded {
-          display: flex !important;
-          flex-direction: column !important;
-          gap: 1rem !important;
-        }
-        
-        .feature-card.expanded {
-          order: -1 !important;
-          grid-column: unset !important;
-          grid-row: unset !important;
-          width: 100% !important;
-          margin-bottom: 1rem !important;
-        }
-        
-        .features-grid.has-expanded .feature-card:not(.expanded) {
-          grid-column: unset !important;
-          width: 100% !important;
-          order: 1 !important;
-        }
-      }
-
-      .feature-card {
-        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        transform-origin: center;
-        height: 100%;
-        opacity: 1;
-        grid-column: span 1;
-        position: relative;
-        scroll-margin-top: 100px;
-        will-change: transform, opacity;
-      }
-
-
-
-      .feature-card.expanded {
-        grid-column: 2;
-        grid-row: 1 / span 5;
-        width: 100%;
-        position: relative;
-        min-height: 300px;
-        z-index: 20;
-        box-sizing: border-box;
-        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded) {
-        grid-column: 1;
-        padding: 1.5rem;
-        display: flex;
-        align-items: center;
-        min-height: 70px;
-        transition: all 0.3s ease;
-        margin-bottom: 0.5rem;
-        width: 100%;
-        border: 1px solid rgba(148, 163, 184, 0.3);
-        border-radius: 1rem;
-        backdrop-filter: blur(8px);
-        cursor: pointer;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
-
-      .dark .features-grid.has-expanded .feature-card:not(.expanded) {
-        background: rgba(31, 41, 55, 0.1);
-        border-color: rgba(75, 85, 99, 0.2);
-        box-shadow: none;
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded) h3 {
-        @apply text-gray-900;
-      }
-
-      .dark .features-grid.has-expanded .feature-card:not(.expanded) h3 {
-        @apply text-white;
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded):hover {
-        transform: translateY(-0.5rem) scale(1.02);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 0 15px -3px rgba(59, 130, 246, 0.2);
-        border-color: rgba(59, 130, 246, 0.3);
-      }
-
-      .dark .features-grid.has-expanded .feature-card:not(.expanded):hover {
-        background: rgba(31, 41, 55, 0.2);
-        border-color: rgba(75, 85, 99, 0.3);
-        /* box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 0 15px -3px rgba(59, 130, 246, 0.3); */
-      }
-
-      /* Efecto de brillo para las tarjetas no expandidas */
-      .features-grid.has-expanded .feature-card:not(.expanded)::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        border-radius: 1rem;
-        background-size: 200% 100%;
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded):hover::before {
-        opacity: 1;
-        animation: shine 8s ease infinite;
-      }
-
-      /* Estilo para las features no expandidas */
-      .features-grid.has-expanded .feature-card:not(.expanded) .feature-normal {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        width: 100%;
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded) .feature-normal > div {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0.75rem;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(4px);
-        transition: all 0.3s ease;
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded):hover .feature-normal > div {
-        background: rgba(255, 255, 255, 0.3);
-        transform: scale(1.1);
-      }
-
-      /* Ajustar el texto en las tarjetas minimizadas */
-      .features-grid.has-expanded .feature-card:not(.expanded) h3 {
-        font-size: 1rem;
-        font-weight: 600;
-        margin: 0 0 0 1rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        @apply !text-white;
-        transition: all 0.3s ease;
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded):hover h3 {
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded) .feature-normal svg {
-        width: 28px;
-        height: 28px;
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded) .feature-normal h3 {
-        display: block;
-        margin: 0;
-        font-size: 1rem;
-        font-weight: 600;
-        color: rgb(17 24 39);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      /* Mantener bordes de colores en las tarjetas minimizadas */
-      .features-grid.has-expanded .feature-card:not(.expanded) {
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded) .feature-normal p {
-        display: none;
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded):hover .feature-normal h3 {
-        color: rgb(17 24 39);
-      }
-
-      .feature-card .feature-normal,
-      .feature-card .expanded-content {
-        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .feature-card .expanded-content {
-        opacity: 0;
-        height: 0;
-        overflow: hidden;
-        transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .feature-card.expanded .expanded-content {
-        opacity: 1;
-        height: auto;
-        padding: 0;
-        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s, height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .feature-card:not(.expanded) {
-        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .close-button {
-        transition: all 0.2s ease-in-out;
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      .feature-card.expanded .close-button {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .close-button:hover {
-        transform: scale(1.1);
-      }
-
-      /* Botón de cerrar más pequeño en móvil */
-      @media (max-width: 768px) {
-        .close-button {
-          padding: 0.5rem !important;
-          top: 0.75rem !important;
-          right: 0.75rem !important;
-        }
-        
-        .close-button svg {
-          width: 1.25rem !important;
-          height: 1.25rem !important;
-        }
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
       @keyframes shine {
         from {
           background-position: -200% 0;
@@ -582,100 +296,82 @@ const features = [
         animation: shine 8s ease infinite;
       }
 
-      /* Responsive para grids internos del contenido expandido */
-      @media (max-width: 768px) {
-        .expanded-content .grid-cols-2 {
-          grid-template-columns: 1fr !important;
-        }
-        
-        /* Ajustar padding y tamaño de texto en móvil */
-        .feature-card.expanded {
-          padding: 1.5rem !important;
-          margin-bottom: 1.5rem !important;
-        }
-        
-        .expanded-content h4 {
-          font-size: 1.75rem !important;
-          line-height: 1.2 !important;
-        }
-        
-        .expanded-content p {
-          font-size: 1rem !important;
-          line-height: 1.5 !important;
-        }
-        
-        .expanded-content .text-lg {
-          font-size: 0.9375rem !important;
-        }
-        
-        .expanded-content .text-xl {
-          font-size: 1rem !important;
-        }
-        
-        /* Video responsive */
-        .expanded-content video {
-          max-height: 250px !important;
-        }
-        
-        .expanded-content .aspect-\[16\/9\] {
-          aspect-ratio: auto !important;
-          height: auto !important;
-          max-height: 250px !important;
-        }
-        
-        /* Espaciado entre elementos */
-        .expanded-content .flex-col {
-          gap: 1rem !important;
-        }
-        
-        .expanded-content .space-y-6 > * + * {
-          margin-top: 1rem !important;
-        }
-        
-        /* Cards de características más compactas */
-        .expanded-content .rounded-lg.p-4 {
-          padding: 0.75rem !important;
+      .features-grid.has-expanded {
+        grid-template-columns: minmax(300px, 1fr) 4fr !important;
+        grid-template-rows: repeat(5, 1fr);
+      }
+
+      @media (max-width: 1023px) {
+        .features-grid.has-expanded {
+          display: flex !important;
+          flex-direction: column !important;
         }
       }
 
-      /* Estilos específicos para tablets */
-      @media (min-width: 769px) and (max-width: 1023px) {
-        .expanded-content .aspect-\[16\/9\] {
-          aspect-ratio: 16 / 10 !important;
-          max-height: 350px !important;
+      .feature-card.expanded {
+        grid-column: 2;
+        grid-row: 1 / span 5;
+        background: transparent !important;
+        border: 2px solid #6B9E86 !important;
+      }
+
+      @media (max-width: 1023px) {
+        .feature-card.expanded {
+          order: -1 !important;
+          grid-column: unset !important;
+          grid-row: unset !important;
         }
-        
-        .expanded-content video {
-          object-fit: cover !important;
+      }
+
+      .features-grid.has-expanded .feature-card:not(.expanded) {
+        grid-column: 1;
+      }
+
+      @media (max-width: 1023px) {
+        .features-grid.has-expanded .feature-card:not(.expanded) {
+          grid-column: unset !important;
+          order: 1 !important;
         }
-        
-        .expanded-content .grid-cols-2 {
-          gap: 1rem !important;
-        }
-        
-        .expanded-content .space-y-6 {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem !important;
-        }
-        
-        .expanded-content .space-y-6 > * + * {
-          margin-top: 0 !important;
-        }
+      }
+
+      .features-grid.has-expanded .feature-card:not(.expanded) .feature-normal p {
+        display: none;
+      }
+
+      .feature-card .expanded-content {
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+      }
+
+      .feature-card.expanded .expanded-content {
+        opacity: 1;
+        height: auto;
+        padding: 0;
+      }
+
+      .close-button {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .feature-card.expanded .close-button {
+        opacity: 1;
+        visibility: visible;
       }
     </style>
     
     <!-- Features Grid -->
-    <div class="features-grid relative">
+    <div class="features-grid relative min-h-[600px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {features.slice(0, 6).map((feature) => (
         <div
-          class={`feature-card bg-white/10 dark:bg-gray-800/10 backdrop-blur-sm border border-gray-200/20 dark:border-gray-700/20 p-6 rounded-2xl transition-all duration-300 group cursor-pointer relative z-10  hover:-translate-y-2   before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500 before:bg-[length:200%_100%] hover:before:animate-shine overflow-hidden  [&.expanded]:hover:translate-y-0 [&.expanded]:hover:scale-100 [&.expanded]:hover:shadow-none [&.expanded]:hover:before:opacity-0 [&.expanded]:before:animate-none`}
+          class={`feature-card dark:bg-[#6B9E86] backdrop-blur-sm p-6 rounded-2xl   group cursor-pointer relative z-10 h-full opacity-100 col-span-1 scroll-mt-[100px] will-change-transform origin-center hover:-translate-y-2 hover:shadow-xl before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:opacity-0 hover:before:opacity-100 before:bg-[length:200%_100%] hover:before:animate-shine overflow-hidden [&.expanded]:hover:translate-y-0 [&.expanded]:hover:scale-100 [&.expanded]:hover:shadow-none [&.expanded]:hover:before:opacity-0 [&.expanded]:before:animate-none`}
           data-feature-id={feature.id}
         >
           <!-- Contenido normal -->
           <div class="feature-normal">
-            <h3 class="text-2xl font-bold text-gray-900 dark:!text-white mb-4">{feature.title}</h3>
-            <p class="text-gray-700 dark:!text-white leading-relaxed">
+            <h3 class="text-2xl font-bold dark:!text-white mb-4">{feature.title}</h3>
+            <p class=" dark:!text-[#F0F7F4] leading-relaxed">
               {feature.description}
             </p>
           </div>
@@ -683,25 +379,25 @@ const features = [
           <!-- Contenido expandido -->
           <div class="expanded-content hidden">
             <!-- Botón de cerrar -->
-            <button class="close-button absolute top-4 right-4 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full p-2 shadow-lg hover:bg-white dark:hover:bg-gray-700 transition-all">
-              <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button class="close-button absolute top-4 right-4 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full p-2 shadow-lg hover:bg-white dark:hover:bg-gray-700 hover:scale-110 max-md:p-2 max-md:top-3 max-md:right-3">
+              <svg class="w-6 h-6 text-gray-800 dark:text-white max-md:!w-5 max-md:!h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             </button>
             <div class="w-full h-full relative p-0">
               <div class="flex flex-col gap-4">
                 <!-- Sección superior: título, descripción y video -->
-                <div class="grid grid-cols-2 gap-6">
-                  <div class="space-y-6">
-                    <h4 class="text-4xl font-bold !text-gray-800 dark:!text-white">{feature.title}</h4>
-                    <p class="text-xl !text-gray-600 dark:!text-gray-300 leading-relaxed">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div class="space-y-6 max-md:gap-4 max-md:flex max-md:flex-col">
+                    <h4 class="text-4xl font-bold dark:text-[#6B9E86] max-md:!text-[1.75rem] max-md:!leading-tight">{feature.title}</h4>
+                    <p class="text-xl dark:text-[#1A3C34] leading-relaxed max-md:!text-base max-md:!leading-normal">
                       {feature.expandedContent.description}
                     </p>
                   </div>
-                  <div class="rounded-2xl overflow-hidden aspect-[16/9]">
+                  <div class="rounded-2xl overflow-hidden aspect-[16/9] max-md:!aspect-auto max-md:!h-auto max-md:!max-h-[250px] md:max-lg:!aspect-[16/10] md:max-lg:!max-h-[350px]">
                     {feature.expandedContent.video && (
                       <video
-                        class="w-full h-full object-contain"
+                        class="w-full h-full object-contain max-md:!max-h-[250px] md:max-lg:!object-cover"
                         controls
                         poster="/images/features/demo-poster.jpg"
                       >
@@ -712,15 +408,15 @@ const features = [
                   </div>
                 </div>
 
-                <!-- Grid 2x2 de características -->
-                <div class="grid grid-cols-2 gap-4 mt-4">
+                <!-- Grid 2x3 de características -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 md:max-lg:!gap-4">
                   {feature.expandedContent.features.map((item) => (
-                    <div class="rounded-lg p-4 bg-white/5 dark:bg-gray-800/10 backdrop-blur-sm">
+                    <div class="rounded-lg p-4 border-2 border-[#6B9E86] backdrop-blur-sm max-md:!p-3">
                       <div class="flex items-start space-x-3">
-                        <svg class="w-6 h-6 !text-green-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-[#6B9E86] mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span class="text-lg !text-gray-600 dark:!text-gray-300">{item}</span>
+                        <span class="text-lg dark:text-[#1A3C34] max-md:!text-[0.9375rem]">{item}</span>
                       </div>
                     </div>
                   ))}
