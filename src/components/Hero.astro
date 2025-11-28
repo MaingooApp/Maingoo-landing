@@ -31,8 +31,8 @@ import ChatWidget from "../components/ChatWidget.astro";
 </script>
 
 <section
-  class="pt-16 pb-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
->
+  class="pt-16 pb-16"
+  style="background-color: #F0F7F4;">
   <div class="container mx-auto px-6 h-full">
     <div
       class="max-w-4xl mx-auto text-center h-full flex flex-col justify-center"
@@ -86,13 +86,13 @@ import ChatWidget from "../components/ChatWidget.astro";
             height: 1em;
           }
           .changing-business::after {
-            color: rgb(31 41 55);
+            color: #1A3C34;
             position: absolute;
             left: 0;
           }
 
           :global(.dark) .changing-business::after {
-            color: white;
+            color: #1A3C34;
           }
         }
 
@@ -121,13 +121,13 @@ import ChatWidget from "../components/ChatWidget.astro";
             height: 1.2em;
           }
           .changing-business::after {
-            color: rgb(31 41 55);
+            color: #1A3C34;
             position: relative;
             display: inline-block;
           }
 
           :global(.dark) .changing-business::after {
-            color: white;
+            color: #1A3C34;
           }
         }
 
@@ -203,21 +203,22 @@ import ChatWidget from "../components/ChatWidget.astro";
         }
       </style>
       <h1
-        class="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-800 dark:text-white mb-8"
+        class="text-3xl sm:text-4xl md:text-6xl font-bold mb-8"
+        style="color: #1A3C34;"
       >
         <div class="headline-row flex-custom">
           <div class="fixed-text">
-            <span class="text-gray-800 dark:text-white">Gestiona tu</span>
+            <span style="color: #1A3C34;">Gestiona tu</span>
           </div>
           <div class="changing-container">
-            <span class="changing-business dark:text-white"></span>
+            <span class="changing-business"></span>
           </div>
         </div>
         <div class="headline-row">
           <div>
-            <span class="text-gray-800 dark:text-white">con</span>
+            <span style="color: #1A3C34;">con</span>
             <span
-              class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+              class= "bg-[#6B9E86] bg-clip-text text-transparent"
             >
               Inteligencia Artificial
             </span>
@@ -227,7 +228,8 @@ import ChatWidget from "../components/ChatWidget.astro";
 
       <!-- Hero Subtitle -->
       <p
-        class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed"
+        class="text-xl md:text-2xl mb-8 leading-relaxed"
+        style="color: #1A3C34;"
       >
         Maingoo (r)evoluciona la gestión con automatización inteligente de
         facturas, inventario y análisis de datos para optimizar tu negocio.
@@ -237,13 +239,13 @@ import ChatWidget from "../components/ChatWidget.astro";
       <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
         <a
           href="#contact"
-          class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block text-center"
+          class="bg-[#6B9E86] text-[#F0F7F4] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block text-center"
         >
           Solicitar Acceso a la Beta
         </a>
         <button
           id="open-chat"
-          class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block text-center"
+          class="border-2 border-solid border-[#6B9E86] bg-transparent text-[#6B9E86] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block text-center"
         >
           Hablar con Maingoo IA
         </button>
@@ -270,7 +272,7 @@ import ChatWidget from "../components/ChatWidget.astro";
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
-          <div class="text-gray-600 dark:text-gray-400">
+          <div style="color: #1A3C34;">
             Ahorra horas de trabajo cada semana
           </div>
         </div>
@@ -292,7 +294,7 @@ import ChatWidget from "../components/ChatWidget.astro";
               ></path>
             </svg>
           </div>
-          <div class="text-gray-600 dark:text-gray-400">
+          <div style="color: #1A3C34;">
             Facturas volcadas automáticamente con IA
           </div>
         </div>
@@ -314,7 +316,7 @@ import ChatWidget from "../components/ChatWidget.astro";
               ></path>
             </svg>
           </div>
-          <div class="text-gray-600 dark:text-gray-400">
+          <div style="color: #1A3C34;">
             Inventario conectado en tiempo real
           </div>
         </div>
@@ -336,7 +338,7 @@ import ChatWidget from "../components/ChatWidget.astro";
               ></path>
             </svg>
           </div>
-          <div class="text-gray-600 dark:text-gray-400">
+          <div style="color: #1A3C34;">
             Datos seguros en la nube
           </div>
         </div>
@@ -357,7 +359,7 @@ import ChatWidget from "../components/ChatWidget.astro";
                 d="M13 10V3L4 14h7v7l9-11h-7z"></path>
             </svg>
           </div>
-          <div class="text-gray-600 dark:text-gray-400">
+          <div style="color: #1A3C34;">
             Plataforma escalable y modular
           </div>
         </div>
@@ -379,7 +381,7 @@ import ChatWidget from "../components/ChatWidget.astro";
               ></path>
             </svg>
           </div>
-          <div class="text-gray-600 dark:text-gray-400">
+          <div style="color: #1A3C34;">
             Diseñado junto a gerentes reales
           </div>
         </div>
