@@ -120,6 +120,36 @@ const {
         console.log("===============================");
       })();
     </script>
+
+    <script>
+      // Declarar el tipo de window.chatWidget
+      declare global {
+        interface Window {
+          chatWidget: any;
+        }
+      }
+
+      function openChat() {
+        const chatWindow = document.getElementById("chat-window");
+        if (chatWindow) {
+          chatWindow.style.transform = "scale(1)";
+          chatWindow.style.opacity = "1";
+
+          const chatInput = document.getElementById("chat-input");
+          if (chatInput) {
+            setTimeout(() => chatInput.focus(), 300);
+          }
+        }
+      }
+
+      // Agregar el evento de clic
+      document.querySelectorAll("#open-chat")?.forEach(element => {
+        element.addEventListener("click", (e) => {
+          e.preventDefault();
+          openChat();
+        });
+      });
+    </script>
   </head>
   <body
     class="font-inter antialiased dark:bg-[#F0F7F4] dark:text-[#1A3C34] transition-colors duration-300 dark-mode-transition"
