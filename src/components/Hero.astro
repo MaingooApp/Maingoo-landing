@@ -1,7 +1,13 @@
-<section class="pt-16 pb-16 min-h-[90vh]">
-  <div class="container mx-auto px-6 h-full">
+<section class="relative pt-16 pb-16 min-h-[90vh] bg-cover bg-center z-20" style="background-image: url('/Hero-bg.png');">
+  <!-- Degradado overlay superior -->
+  <div class="absolute inset-0 z-10" style="background: linear-gradient(to bottom, #6B9E86 0%, #6B9E86 25%, transparent 55%);"></div>
+  
+  <!-- Bloque sólido inferior con curva cóncava superior -->
+  <div class="absolute bottom-0 left-0 right-0 h-[35%] z-10 bg-[#6B9E86]" style="clip-path: ellipse(60% 40% at 50% 90%);"></div>
+  
+  <div class="container mx-auto px-6 h-full relative z-20">
     <div
-      class="max-w-4xl mx-auto text-center h-full flex flex-col justify-center"
+      class="max-w-4xl mx-auto text-left h-full flex flex-col justify-center"
     >
       <!-- Hero Headline -->
       <style>
@@ -12,7 +18,7 @@
 
         .flex-custom {
           display: flex !important;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: baseline;
           gap: 10px;
         }
@@ -29,14 +35,14 @@
           .headline-row {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             margin-bottom: 0.25em;
           }
           .headline-row:last-child {
             margin-bottom: 0;
           }
           .fixed-text {
-            text-align: right;
+            text-align: left;
             white-space: nowrap;
           }
           .changing-container {
@@ -52,13 +58,13 @@
             height: 1em;
           }
           .changing-business::after {
-            color: #1A3C34;
+            color: #000000;
             position: absolute;
             left: 0;
           }
 
           :global(.dark) .changing-business::after {
-            color: #1A3C34;
+            color: #000000;
           }
         }
 
@@ -69,7 +75,7 @@
           }
           .headline-row {
             display: block;
-            text-align: center;
+            text-align: left;
           }
           .headline-row:last-child {
             margin-bottom: 0;
@@ -87,13 +93,13 @@
             height: 1.2em;
           }
           .changing-business::after {
-            color: #1A3C34;
+            color: #000000;
             position: relative;
             display: inline-block;
           }
 
           :global(.dark) .changing-business::after {
-            color: #1A3C34;
+            color: #000000;
           }
         }
 
@@ -170,32 +176,38 @@
       </style>
       <h1
         class="text-3xl sm:text-4xl md:text-6xl font-bold mb-8"
-        style="color: #1A3C34;"
+        style="color: #FFFFFF;"
       >
         <div class="headline-row flex-custom">
           <div class="fixed-text">
-            <span style="color: #1A3C34;">Gestiona tu</span>
+            <span style="color: #FFFFFF;">Gestiona tu</span>
           </div>
           <div class="changing-container">
             <span class="changing-business"></span>
           </div>
         </div>
-        <div class="headline-row">
-          <div>
-            <span style="color: #1A3C34;">con</span>
-            <span
-              class= "bg-[#6B9E86] bg-clip-text text-transparent"
-            >
-              Inteligencia Artificial
-            </span>
-          </div>
+        <div class="headline-row" style="display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: nowrap;">
+          <span style="color: #FFFFFF;">con Inteligencia Artificial</span>
         </div>
       </h1>
+
+      <style>
+        @media (min-width: 640px) {
+          .ia-text {
+            font-size: 3rem !important;
+          }
+        }
+        @media (min-width: 768px) {
+          .ia-text {
+            font-size: 4rem !important;
+          }
+        }
+      </style>
 
       <!-- Hero Subtitle -->
       <p
         class="text-xl md:text-2xl mb-8 leading-relaxed"
-        style="color: #1A3C34;"
+        style="color: #FFFFFF;"
       >
         Maingoo (r)evoluciona la gestión con automatización inteligente de
         facturas, inventario y análisis de datos para optimizar tu negocio.
@@ -211,24 +223,21 @@
         </a>
         <button
           id="open-chat"
-          class="relative bg-transparent text-[#1A3C34] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-flex items-center justify-center gap-2"
-          style="border: 3px solid #6B9E86; background-image: linear-gradient(#F0F7F4, #F0F7F4),  background-origin: border-box; background-clip: padding-box, border-box;"
+          class="relative bg-transparent text-[#] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-flex items-center justify-between gap-4"
+          style="border: 3px solid #6B9E86; background: rgba(240, 247, 244, 0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"
         >
-        <img src="/icono-IA-SF.png" alt="IA" class="w-7 h-7" />
-        Pregunta a Maingoo
+        <span>Pregunta a Maingoo</span>
+        <img src="/maingoo_logo.svg" alt="IA" class="w-7 h-7" />
       </button>
       </div>
 
       <!-- Hero Stats -->
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-2xl sm:max-w-4xl mx-auto"
-      >
-        <div class="text-center">
-          <div
-            class="text-3xl font-bold dark:text-[#6B9E86] mb-2 flex justify-center"
-          >
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <!-- Card 1: Ahorra horas -->
+        <div class="bg-[#FFFFFF] rounded-xl p-6 shadow-lg">
+          <div class="flex justify-center mb-4">
             <svg
-              class="w-8 h-8"
+              class="w-12 h-12 text-[#6B9E86]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -240,103 +249,19 @@
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
-          <div style="color: #1A3C34;">
-            Ahorra horas de trabajo cada semana
-          </div>
+          <h3 class="text-xl font-bold text-[#1A3C34] mb-3 text-center">
+            Ahorra horas de trabajo a la semana
+          </h3>
+          <p class="text-[#1A3C34] text-center text-sm">
+            Automatiza tareas repetitivas y dedica más tiempo a hacer crecer tu negocio.
+          </p>
         </div>
-        <div class="text-center">
-          <div
-            class="text-3xl font-bold dark:text-[#6B9E86] mb-2 flex justify-center"
-          >
+
+        <!-- Card 2: Diseñado junto a gerentes reales -->
+        <div class="bg-[#FFFFFF] rounded-xl p-6 shadow-lg">
+          <div class="flex justify-center mb-4">
             <svg
-              class="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              ></path>
-            </svg>
-          </div>
-          <div style="color: #1A3C34;">
-            Facturas volcadas automáticamente con IA
-          </div>
-        </div>
-        <div class="text-center">
-          <div
-            class="text-3xl font-bold dark:text-[#6B9E86] mb-2 flex justify-center"
-          >
-            <svg
-              class="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-              ></path>
-            </svg>
-          </div>
-          <div style="color: #1A3C34;">
-            Inventario conectado en tiempo real
-          </div>
-        </div>
-        <div class="text-center">
-          <div
-            class="text-3xl font-bold dark:text-[#6B9E86] mb-2 flex justify-center"
-          >
-            <svg
-              class="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-              ></path>
-            </svg>
-          </div>
-          <div style="color: #1A3C34;">
-            Datos seguros en la nube
-          </div>
-        </div>
-        <div class="text-center">
-          <div
-            class="text-3xl font-bold dark:text-[#6B9E86] mb-2 flex justify-center"
-          >
-            <svg
-              class="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-            </svg>
-          </div>
-          <div style="color: #1A3C34;">
-            Plataforma escalable y modular
-          </div>
-        </div>
-        <div class="text-center">
-          <div
-            class="text-3xl font-bold dark:text-[#6B9E86] mb-2 flex justify-center"
-          >
-            <svg
-              class="w-8 h-8"
+              class="w-12 h-12 text-[#6B9E86]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -349,9 +274,36 @@
               ></path>
             </svg>
           </div>
-          <div style="color: #1A3C34;">
+          <h3 class="text-xl font-bold text-[#1A3C34] mb-3 text-center">
             Diseñado junto a gerentes reales
+          </h3>
+          <p class="text-[#1A3C34] text-center text-sm">
+            Desarrollado con profesionales de la hostelería para adaptarse a tus necesidades reales.
+          </p>
+        </div>
+
+        <!-- Card 3: Impulsado por IA -->
+        <div class="bg-[#FFFFFF] rounded-xl p-6 shadow-lg">
+          <div class="flex justify-center mb-4">
+            <svg
+              class="w-12 h-12 text-[#6B9E86]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
           </div>
+          <h3 class="text-xl font-bold text-[#1A3C34] mb-3 text-center">
+            Impulsado por IA
+          </h3>
+          <p class="text-[#1A3C34] text-center text-sm">
+            Tecnología de inteligencia artificial que aprende y mejora con cada interacción.
+          </p>
         </div>
       </div>
     </div>
