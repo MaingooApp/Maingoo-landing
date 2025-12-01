@@ -4,6 +4,15 @@
 
 <!-- Chat Widget -->
 <div id="chat-widget" class="fixed bottom-6 right-6 z-50">
+  <!-- Botón Burbuja Flotante -->
+  <button
+    id="chat-toggle"
+    class="w-16 h-16 bg-[#6B9E86] hover:bg-[#5a8a71] text-white rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center hover:scale-110"
+    aria-label="Abrir chat de Maingoo IA"
+  >
+    <img src="/maingoo_logo.svg" alt="Chat IA" class="w-8 h-8" />
+  </button>
+
   <!-- Chat Window -->
   <div
     id="chat-window"
@@ -139,12 +148,16 @@
 
     initializeElements() {
       this.chatWindow = document.getElementById("chat-window");
+      this.chatToggle = document.getElementById("chat-toggle");
       this.minimizeChat = document.getElementById("minimize-chat");
       this.chatInput = document.getElementById("chat-input");
       this.sendButton = document.getElementById("send-message");
       this.chatMessages = document.getElementById("chat-messages");
 
       // Bindear eventos
+      if (this.chatToggle) {
+        this.chatToggle.addEventListener("click", () => this.openChat());
+      }
       if (this.minimizeChat) {
         this.minimizeChat.addEventListener("click", () => this.closeChat());
       }
