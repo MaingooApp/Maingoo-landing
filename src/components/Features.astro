@@ -1,132 +1,5 @@
 ---
-const features = [
-  {
-    id: 1,
-    title: "Carga Automática de Facturas",
-    description: "Olvídate de teclear datos: sube tus facturas y albaranes y en segundos tendrás todo registrado, sin errores.",
-    expandedContent: {
-      video: "/videos/facturacion-demo.mp4",
-      // Video sugerido:
-      // Un usuario arrastra un PDF de una factura al sistema → la IA procesa en segundos → 
-      // aparecen los campos rellenados automáticamente (proveedor, fecha, IVA, total) → 
-      // se guarda en un dashboard organizado.
-      description: "Nuestro sistema de análisis de documentos con IA extrae automáticamente toda la información de tus facturas y albaranes: fechas, importes, impuestos y conceptos clave. Todo queda digitalizado y organizado al instante.",
-      features: [
-        "Reconocimiento automático de proveedores",
-        "Validación automática de importes",
-        "Detección de duplicados",
-        "Archivo digital organizado y seguro",
-        "Clasificación automatica de productos y categorías",
-        "Integración directa con inventario y costes"
-      ]
-    }
-  },
-  {
-    id: 2,
-    title: "Análisis Predictivo",
-    description: "Anticípate: ajusta inventario, prevé ventas y detecta tendencias antes que tu competencia.",
-    expandedContent: {
-      video: "/videos/analisis-demo.mp4",
-      // Video sugerido:
-      // Gráfico de ventas que se actualiza automáticamente → la IA proyecta una curva de demanda futura → 
-      // aparecen alertas de “más stock en verano” o “baja demanda en invierno” → 
-      // cierre con un panel de recomendaciones.
-      description: "Nuestra IA aprende de tu negocio y te da predicciones claras sobre ventas, temporadas y consumo. Podrás saber qué se venderá más, cuándo pedir y cómo evitar quedarte corto o con exceso de stock.",
-      features: [
-        "Predicción de ventas por temporada",
-        "Optimización de niveles de stock",
-        "Identificación de patrones de compra",
-        "Recomendaciones personalizadas",
-        "Alertas de picos de demanda",
-        "Sugerencias de ofertas y promociones"
-      ]
-    }
-  },
-  {
-    id: 3,
-    title: "Inventario Inteligente",
-    description: "Controla el stock en tiempo real con alertas y sugerencias de pedidos.",
-    expandedContent: {
-      video: "/videos/inventario-demo.mp4",
-      // Video sugerido:
-      // Vista de almacén con productos → el sistema marca en rojo los que están bajos → 
-      // se genera una alerta automática → el sistema propone un pedido óptimo → 
-      // aparece un check de confirmación de pedido.
-      description: "Mantén un control total sobre tu inventario con actualizaciones en tiempo real y gestión automatizada. El sistema aprende de tus patrones de venta para sugerir pedidos óptimos y prevenir roturas de stock.",
-      features: [
-        "Monitorización en tiempo real",
-        "Alertas de stock bajo",
-        "Sugerencias de reposición",
-        "Gestión multi-almacén integrada",
-        "Control de caducidades y mermas",
-        "Actualización automática tras ventas y recepciones"
-      ]
-    }
-  },
-  {
-    id: 4,
-    title: "Maingoo IA",
-    description: "Pregunta lo que quieras sobre tu negocio y obtén la respuesta al instante, como si hablaras con tu propio consultor.",
-    expandedContent: {
-      video: "/videos/reportes-demo.mp4",
-      // Video sugerido:
-      // Un usuario abre el chat y escribe: “¿Cuánto gasté en carne este mes?” → 
-      // el sistema responde con una cifra y un gráfico → el usuario pide “Compárame con el mes pasado” → 
-      // aparece el gráfico comparativo con recomendación breve.
-      description: "Maingoo incluye un chat integrado que entiende tus preguntas en lenguaje natural. Puedes pedir cifras, comparativas o explicaciones y el sistema responde con claridad, gráficos o recomendaciones prácticas. Toma decisiones rápidas con informes automáticos y fáciles de entender. Visualiza costes, márgenes y beneficios de un solo vistazo. Nunca había sido tan fácil gestionar un negocio de hostelería.",
-      features: [
-        "Respuestas inmediatas en lenguaje natural",
-        "Métricas clave de rendimiento",
-        "Dashboards interactivos",
-        "Informes programados automáticos o bajo demanda",
-        "Interacción accesible desde cualquier módulo de la app",
-        "Recomendaciones prácticas basadas en tus datos"
-      ]
-    }
-  },
-  {
-    id: 5,
-    title: "Optimización de Costes",
-    description: "Detecta oportunidades de ahorro y mejora tus márgenes de manera más efectiva.",
-    expandedContent: {
-      video: "/videos/costes-demo.mp4",
-      // Video sugerido:
-      // El sistema muestra un gráfico de gastos por categorías → 
-      // resalta en rojo “Carne: +20% más cara con tu proveedor actual” → 
-      // aparece una comparativa de proveedores → se marca una sugerencia de ahorro estimado.
-      description: "Identifica y aprovecha oportunidades de ahorro con nuestro sistema de optimización de costes. Analiza gastos, compara proveedores y maximiza tus márgenes de beneficio de forma inteligente.",
-      features: [
-        "Análisis de gastos por categoría",
-        "Detección de gastos innecesarios",
-        "Seguimiento de ahorros conseguidos",
-        "Comparativa inteligente de proveedores",
-        "Negociación sugerida con proveedores",
-        "Alertas de productos con sobrecostes"
-      ]
-    }
-  },
-  {
-    id: 6,
-    title: "Integración Total",
-    description: "Todo en un solo sistema: TPV, horarios, inventario y facturación, sin depender de otras plataformas.",
-    expandedContent: {
-      video: "/videos/integracion-demo.mp4",
-      // Video sugerido:
-      // Animación que conecta módulos: TPV → Inventario → Facturación → Horarios 
-      // → al registrar una venta en el TPV, se descuenta el stock automáticamente y se actualiza un informe → 
-      // cierre con un panel central que muestra todo unido.
-      description: "Maingoo integra de forma nativa todos los procesos de tu negocio en un único lugar: TPV, inventario, horarios, proveedores, facturación, pedidos online... No necesitas apps externas ni sistemas complicados: todo está conectado automáticamente, ahorrándote trabajo y errores.",
-      features: [
-        "TPV integrado",
-        "Gestión de horarios y turnos en la misma plataforma",
-        "Sincronización con plataformas de delivery",
-        "Facturación, costes y proveedores todo en uno",
-        "Pedidos online centralizados",
-        "Sincronización automática entre módulos (ventas → stock → informes)"
-      ]
-    }
-  }
-];
+
 ---
 
 <section id="features" class="pt-12 pb-12">
@@ -134,13 +7,15 @@ const features = [
     <!-- Section Header -->
     <div class="text-center max-w-3xl mx-auto mb-10">
       <h2 class="text-3xl md:text-5xl font-bold dark:text-[#1A3C34] mb-6">
-        Características que <br/>
+        Características que <br />
         <span class="bg-[#6B9E86] bg-clip-text text-transparent">
           transforman
         </span> tu negocio
       </h2>
       <p class="text-lg md:text-xl dark:text-[#1A3C34] mb-8">
-        Descubre cómo nuestra tecnología optimiza cada rincón de tu negocio. Maingoo tiene herramientas diseñadas para ahorrar tiempo, reducir costes y maximizar beneficios.
+        Descubre cómo nuestra tecnología optimiza cada rincón de tu negocio.
+        Maingoo tiene herramientas diseñadas para ahorrar tiempo, reducir costes
+        y maximizar beneficios.
       </p>
       <div class="flex justify-center mb-8">
         <button
@@ -148,290 +23,566 @@ const features = [
           class="relative bg-transparent text-[#000000] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-flex items-center justify-center gap-2"
           style="border: 3px solid #6B9E86; background-image: linear-gradient(#F0F7F4, #F0F7F4),  background-origin: border-box; background-clip: padding-box, border-box;"
         >
-        <img src="/maingoo_logo.svg" alt="IA" class="w-7 h-7" />
-        Pregunta a Maingoo
-      </button>
+          <img src="/maingoo_logo.svg" alt="IA" class="w-7 h-7" />
+          Pregunta a Maingoo
+        </button>
       </div>
     </div>
 
-    <script>
-      document.getElementById('open-chat-features')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        const chatWindow = document.getElementById('chat-window');
-        if (chatWindow) {
-          chatWindow.style.transform = 'scale(1)';
-          chatWindow.style.opacity = '1';
-          
-          const chatInput = document.getElementById('chat-input');
-          if (chatInput) {
-            setTimeout(() => chatInput.focus(), 300);
-          }
-        }
-      });
-    </script>
-
-    <script>
-      interface HTMLFeatureElement extends HTMLElement {
-        dataset: {
-          featureId: string;
-        };
-      }
-
-      // Estado para controlar qué feature está expandida
-      let expandedFeature: string | null = null;
-
-      // Función para expandir/contraer features
-      function toggleFeature(featureId: string): void {
-        const features = document.querySelectorAll<HTMLFeatureElement>('.feature-card');
-        const grid = document.querySelector('.features-grid');
-        
-        if (!grid) return;
-
-        const targetFeature = Array.from(features).find(f => f.dataset.featureId === featureId);
-        if (!targetFeature) return;
-
-        if (expandedFeature === featureId) {
-          // Contraer
-          expandedFeature = null;
-          grid.classList.remove('has-expanded');
-          
-          features.forEach(f => {
-            f.classList.remove('expanded');
-            f.classList.add('hover:shadow-xl');
-            const normalContent = f.querySelector('.feature-normal');
-            const expandedContent = f.querySelector('.expanded-content');
-            if (normalContent) normalContent.classList.remove('hidden');
-            if (expandedContent) expandedContent.classList.add('hidden');
-
-            // Restaurar posición original
-            const originalOrder = parseInt(f.dataset.featureId) - 1;
-            f.style.order = '';
-          });
-
-          // Scroll suave hacia la posición original
-          targetFeature.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        } else {
-          // Expandir
-          expandedFeature = featureId;
-          grid.classList.add('has-expanded');
-
-          // Reordenar las features
-          features.forEach(f => {
-            if (f.dataset.featureId === featureId) {
-              f.classList.add('expanded');
-              f.classList.remove('hover:shadow-xl');
-              f.style.order = '0'; // Siempre primero
-              const normalContent = f.querySelector('.feature-normal');
-              const expandedContent = f.querySelector('.expanded-content');
-              if (normalContent) normalContent.classList.add('hidden');
-              if (expandedContent) expandedContent.classList.remove('hidden');
-            } else {
-              f.classList.remove('expanded');
-              f.style.order = (parseInt(f.dataset.featureId) + 1).toString();
-            }
-          });
-
-          // Scroll suave hacia la feature expandida
-          setTimeout(() => {
-            targetFeature.scrollIntoView({ 
-              behavior: 'smooth', 
-              block: window.innerWidth < 1024 ? 'start' : 'start',
-              inline: 'nearest'
-            });
-          }, 400);
-        }
-      }
-
-      // Agregar event listeners
-      document.addEventListener('DOMContentLoaded', () => {
-        // Event listener para clicks en las tarjetas
-        document.querySelectorAll<HTMLFeatureElement>('.feature-card').forEach(card => {
-          card.addEventListener('click', (e: Event) => {
-            const target = e.target as HTMLElement;
-            if (target && !target.closest('.close-button')) {
-              toggleFeature(card.dataset.featureId);
-            }
-          });
-        });
-
-        // Event listener para el botón de cerrar
-        document.querySelectorAll('.close-button').forEach(button => {
-          button.addEventListener('click', (e: Event) => {
-            e.stopPropagation();
-            if (expandedFeature) {
-              toggleFeature(expandedFeature);
-            }
-          });
-        });
-
-        // Event listener para cerrar al hacer clic fuera
-        document.addEventListener('click', (e: Event) => {
-          if (expandedFeature) {
-            const target = e.target as HTMLElement;
-            const expandedCard = document.querySelector('.feature-card.expanded');
-            
-            // Si el clic fue fuera de la tarjeta expandida
-            if (expandedCard && !expandedCard.contains(target)) {
-              toggleFeature(expandedFeature);
-            }
-          }
-        });
-
-        // Prevenir que los clicks dentro de la tarjeta expandida se propaguen al documento
-        document.querySelectorAll('.feature-card').forEach(card => {
-          card.addEventListener('click', (e: Event) => {
-            e.stopPropagation();
-          });
-        });
-      });
-    </script>
-
-    <style>
-      @keyframes shine {
-        from {
-          background-position: -200% 0;
-        }
-        to {
-          background-position: 200% 0;
-        }
-      }
-
-      .animate-shine {
-        animation: shine 8s ease infinite;
-      }
-
-      .features-grid.has-expanded {
-        grid-template-columns: minmax(300px, 1fr) 4fr !important;
-        grid-template-rows: repeat(5, 1fr);
-      }
-
-      @media (max-width: 1023px) {
-        .features-grid.has-expanded {
-          display: flex !important;
-          flex-direction: column !important;
-        }
-      }
-
-      .feature-card.expanded {
-        grid-column: 2;
-        grid-row: 1 / span 5;
-        background: transparent !important;
-        border: 2px solid #6B9E86 !important;
-      }
-
-      @media (max-width: 1023px) {
-        .feature-card.expanded {
-          order: -1 !important;
-          grid-column: unset !important;
-          grid-row: unset !important;
-        }
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded) {
-        grid-column: 1;
-      }
-
-      @media (max-width: 1023px) {
-        .features-grid.has-expanded .feature-card:not(.expanded) {
-          grid-column: unset !important;
-          order: 1 !important;
-        }
-      }
-
-      .features-grid.has-expanded .feature-card:not(.expanded) .feature-normal p {
-        display: none;
-      }
-
-      .feature-card .expanded-content {
-        opacity: 0;
-        height: 0;
-        overflow: hidden;
-      }
-
-      .feature-card.expanded .expanded-content {
-        opacity: 1;
-        height: auto;
-        padding: 0;
-      }
-
-      .close-button {
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      .feature-card.expanded .close-button {
-        opacity: 1;
-        visibility: visible;
-      }
-    </style>
-    
-    <!-- Features Grid -->
-    <div class="features-grid relative min-h-[600px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {features.slice(0, 6).map((feature) => (
+    <!-- Grid de Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      <!-- Card 1 - Carga Automática -->
+      <button
+        class="group bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
+        data-feature="1"
+      >
+        <!-- Icono -->
         <div
-          class={`feature-card dark:bg-[#6B9E86] backdrop-blur-sm p-6 rounded-2xl   group cursor-pointer relative z-10 h-full opacity-100 col-span-1 scroll-mt-[100px] will-change-transform origin-center hover:-translate-y-2 hover:shadow-xl before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:opacity-0 hover:before:opacity-100 before:bg-[length:200%_100%] hover:before:animate-shine overflow-hidden [&.expanded]:hover:translate-y-0 [&.expanded]:hover:scale-100 [&.expanded]:hover:shadow-none [&.expanded]:hover:before:opacity-0 [&.expanded]:before:animate-none`}
-          data-feature-id={feature.id}
+          class="w-14 h-14 bg-gray-100 group-hover:bg-[#6B9E86] rounded-2xl flex items-center justify-center mb-5 transition-colors duration-300"
         >
-          <!-- Contenido normal -->
-          <div class="feature-normal">
-            <h3 class="text-2xl font-bold dark:!text-white mb-4">{feature.title}</h3>
-            <p class=" dark:!text-[#F0F7F4] leading-relaxed">
-              {feature.description}
-            </p>
-          </div>
+          <svg
+            class="w-7 h-7 text-gray-900 group-hover:text-white transition-colors duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+            ></path>
+          </svg>
+        </div>
 
-          <!-- Contenido expandido -->
-          <div class="expanded-content hidden">
-            <!-- Botón de cerrar -->
-            <button class="close-button absolute top-4 right-4 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full p-2 shadow-lg hover:bg-white dark:hover:bg-gray-700 hover:scale-110 max-md:p-2 max-md:top-3 max-md:right-3">
-              <svg class="w-6 h-6 text-gray-800 dark:text-white max-md:!w-5 max-md:!h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            </button>
-            <div class="w-full h-full relative p-0">
-              <div class="flex flex-col gap-4">
-                <!-- Sección superior: título, descripción y video -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <div class="space-y-6 max-md:gap-4 max-md:flex max-md:flex-col">
-                    <h4 class="text-4xl font-bold dark:text-[#6B9E86] max-md:!text-[1.75rem] max-md:!leading-tight">{feature.title}</h4>
-                    <p class="text-xl dark:text-[#1A3C34] leading-relaxed max-md:!text-base max-md:!leading-normal">
-                      {feature.expandedContent.description}
-                    </p>
-                  </div>
-                  <div class="rounded-2xl overflow-hidden aspect-[16/9] max-md:!aspect-auto max-md:!h-auto max-md:!max-h-[250px] md:max-lg:!aspect-[16/10] md:max-lg:!max-h-[350px]">
-                    {feature.expandedContent.video && (
-                      <video
-                        class="w-full h-full object-contain max-md:!max-h-[250px] md:max-lg:!object-cover"
-                        controls
-                        poster="/images/features/demo-poster.jpg"
-                      >
-                        <source src={feature.expandedContent.video} type="video/mp4" />
-                        Tu navegador no soporta el elemento de video.
-                      </video>
-                    )}
-                  </div>
-                </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">
+          Carga Automática
+        </h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-6">
+          Olvídate de teclear. Sube facturas y albaranes; la IA los procesa en
+          segundos.
+        </p>
 
-                <!-- Grid 2x3 de características -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 md:max-lg:!gap-4">
-                  {feature.expandedContent.features.map((item) => (
-                    <div class="rounded-lg p-4 border-2 border-[#6B9E86] backdrop-blur-sm max-md:!p-3">
-                      <div class="flex items-start space-x-3">
-                        <svg class="w-6 h-6 text-[#6B9E86] mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span class="text-lg dark:text-[#1A3C34] max-md:!text-[0.9375rem]">{item}</span>
-                      </div>
-                    </div>
-                  ))}
+        <!-- Botón Ver detalles -->
+        <div
+          class="inline-flex items-center gap-2 text-[#0f3930] group-hover:text-[#0a2620] font-medium text-sm transition-colors min-h-[44px] py-2"
+        >
+          Ver detalles
+          <svg
+            class="w-4 h-4 transition-transform group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 5l7 7-7 7"></path>
+          </svg>
+        </div>
+      </button>
+
+      <!-- Card 2 - Análisis Predictivo -->
+      <button
+        class="group bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
+        data-feature="2"
+      >
+        <!-- Icono -->
+        <div
+          class="w-14 h-14 bg-gray-100 group-hover:bg-[#6B9E86] rounded-2xl flex items-center justify-center mb-5 transition-colors duration-300"
+        >
+          <svg
+            class="w-7 h-7 text-gray-900 group-hover:text-white transition-colors duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+          </svg>
+        </div>
+
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">
+          Análisis Predictivo
+        </h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-6">
+          Anticípate al futuro. Ajusta stock y personal basándote en
+          predicciones reales.
+        </p>
+
+        <!-- Botón Ver detalles -->
+        <div
+          class="inline-flex items-center gap-2 text-[#0f3930] group-hover:text-[#0a2620] font-medium text-sm transition-colors min-h-[44px] py-2"
+        >
+          Ver detalles
+          <svg
+            class="w-4 h-4 transition-transform group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 5l7 7-7 7"></path>
+          </svg>
+        </div>
+      </button>
+
+      <!-- Card 3 - Inventario Inteligente -->
+      <button
+        class="group bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
+        data-feature="3"
+      >
+        <!-- Icono -->
+        <div
+          class="w-14 h-14 bg-gray-100 group-hover:bg-[#6B9E86] rounded-2xl flex items-center justify-center mb-5 transition-colors duration-300"
+        >
+          <svg
+            class="w-7 h-7 text-gray-900 group-hover:text-white transition-colors duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+            ></path>
+          </svg>
+        </div>
+
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">
+          Inventario Inteligente
+        </h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-6">
+          Control total. El sistema descuenta stock al vender y sugiere pedidos.
+        </p>
+
+        <!-- Botón Ver detalles -->
+        <div
+          class="inline-flex items-center gap-2 text-[#0f3930] group-hover:text-[#0a2620] font-medium text-sm transition-colors min-h-[44px] py-2"
+        >
+          Ver detalles
+          <svg
+            class="w-4 h-4 transition-transform group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 5l7 7-7 7"></path>
+          </svg>
+        </div>
+      </button>
+
+      <!-- Card 4 - Maingoo IA -->
+      <button
+        class="group bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
+        data-feature="4"
+      >
+        <!-- Icono Dark Mode para IA -->
+        <div
+          class="w-14 h-14 bg-gray-100 group-hover:bg-[#6B9E86] rounded-2xl flex items-center justify-center mb-5 transition-colors duration-300"
+        >
+          <svg
+            class="w-7 h-7 text-gray-900 group-hover:text-white transition-colors duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"
+            ></path>
+          </svg>
+        </div>
+
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Maingoo IA</h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-6">
+          Tu consultor 24/7. Pregunta lo que quieras y obtén respuestas al
+          instante.
+        </p>
+
+        <!-- Botón Ver detalles -->
+        <div
+          class="inline-flex items-center gap-2 text-[#0f3930] group-hover:text-[#0a2620] font-medium text-sm transition-colors min-h-[44px] py-2"
+        >
+          Ver detalles
+          <svg
+            class="w-4 h-4 transition-transform group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 5l7 7-7 7"></path>
+          </svg>
+        </div>
+      </button>
+
+      <!-- Card 5 - Optimización de Costes -->
+      <button
+        class="group bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
+        data-feature="5"
+      >
+        <!-- Icono -->
+        <div
+          class="w-14 h-14 bg-gray-100 group-hover:bg-[#6B9E86] rounded-2xl flex items-center justify-center mb-5 transition-colors duration-300"
+        >
+          <svg
+            class="w-7 h-7 text-gray-900 group-hover:text-white transition-colors duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+            ></path>
+          </svg>
+        </div>
+
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">
+          Optimización de Costes
+        </h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-6">
+          Detecta fugas de dinero y compara precios de proveedores
+          automáticamente.
+        </p>
+
+        <!-- Botón Ver detalles -->
+        <div
+          class="inline-flex items-center gap-2 text-[#0f3930] group-hover:text-[#0a2620] font-medium text-sm transition-colors min-h-[44px] py-2"
+        >
+          Ver detalles
+          <svg
+            class="w-4 h-4 transition-transform group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 5l7 7-7 7"></path>
+          </svg>
+        </div>
+      </button>
+
+      <!-- Card 6 - Integración Total -->
+      <button
+        class="group bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
+        data-feature="6"
+      >
+        <!-- Icono -->
+        <div
+          class="w-14 h-14 bg-gray-100 group-hover:bg-[#6B9E86] rounded-2xl flex items-center justify-center mb-5 transition-colors duration-300"
+        >
+          <svg
+            class="w-7 h-7 text-gray-900 group-hover:text-white transition-colors duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+            ></path>
+          </svg>
+        </div>
+
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">
+          Integración Total
+        </h3>
+        <p class="text-sm text-gray-500 leading-relaxed mb-6">
+          Todo conectado: TPV, delivery, horarios y facturación en un solo
+          lugar.
+        </p>
+
+        <!-- Botón Ver detalles -->
+        <div
+          class="inline-flex items-center gap-2 text-[#0f3930] group-hover:text-[#0a2620] font-medium text-sm transition-colors min-h-[44px] py-2"
+        >
+          Ver detalles
+          <svg
+            class="w-4 h-4 transition-transform group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 5l7 7-7 7"></path>
+          </svg>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="feature-modal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+    <!-- Backdrop -->
+    <div
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+      id="modal-backdrop"
+    >
+    </div>
+
+    <!-- Modal Container -->
+    <div class="flex min-h-screen items-center justify-center p-4">
+      <div
+        class="relative bg-white rounded-3xl shadow-2xl max-w-5xl w-full mx-4 overflow-hidden"
+      >
+        <!-- Grid Layout: 2 columnas en desktop, 1 en móvil -->
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+          <!-- Columna Izquierda: Media/Demo -->
+          <div
+            class="relative h-64 lg:h-full bg-gray-100 flex items-center justify-center"
+          >
+            <img
+              src="/placeholder-demo.jpg"
+              alt="Demo"
+              class="w-full h-full object-cover"
+            />
+
+            <!-- Play Button Overlay -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <button
+                class="w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+              >
+                <svg
+                  class="w-8 h-8 text-emerald-600 ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z"></path>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div
+              class="absolute bottom-4 left-4 right-4 bg-white/90 rounded-full p-2"
+            >
+              <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                  class="h-full bg-emerald-500 rounded-full"
+                  style="width: 80%"
+                >
                 </div>
               </div>
+              <p class="text-xs text-gray-600 mt-1 text-center font-medium">
+                Procesando... 80%
+              </p>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Contenido -->
+          <div class="p-8 lg:p-10 relative">
+            <!-- Botón Cerrar -->
+            <button
+              id="close-modal"
+              class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+            >
+              <svg
+                class="w-5 h-5 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+
+            <!-- Badge -->
+            <div class="inline-block">
+              <span
+                class="bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full px-3 py-1"
+                >NOVEDAD</span
+              >
+            </div>
+
+            <!-- Título -->
+            <h2 class="text-3xl font-bold text-gray-900 mt-4 mb-4">
+              Integración Total
+            </h2>
+
+            <!-- Descripción -->
+            <p class="text-gray-600 leading-relaxed mb-6">
+              Se acabó la fragmentación. Maingoo centraliza TPV, apps de
+              delivery (Glovo, Uber) y gestión de personal en una única
+              plataforma inteligente que sincroniza todo en tiempo real.
+            </p>
+
+            <!-- Beneficios Clave -->
+            <div class="bg-emerald-50/30 rounded-2xl p-6 mt-6">
+              <div class="flex items-center gap-2 mb-4">
+                <svg
+                  class="w-5 h-5 text-emerald-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <h3
+                  class="text-xs font-bold text-gray-900 uppercase tracking-wide"
+                >
+                  Beneficios Clave
+                </h3>
+              </div>
+
+              <ul class="space-y-3">
+                <li class="flex items-start gap-3">
+                  <div
+                    class="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="3"
+                        d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </div>
+                  <span class="text-sm text-gray-700"
+                    >Conexión nativa con TPV</span
+                  >
+                </li>
+                <li class="flex items-start gap-3">
+                  <div
+                    class="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="3"
+                        d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </div>
+                  <span class="text-sm text-gray-700">Integración Delivery</span
+                  >
+                </li>
+                <li class="flex items-start gap-3">
+                  <div
+                    class="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="3"
+                        d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </div>
+                  <span class="text-sm text-gray-700"
+                    >Sincronización contable</span
+                  >
+                </li>
+                <li class="flex items-start gap-3">
+                  <div
+                    class="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5"
+                  >
+                    <svg
+                      class="w-3 h-3 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="3"
+                        d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </div>
+                  <span class="text-sm text-gray-700"
+                    >Gestión de personal integrada</span
+                  >
+                </li>
+              </ul>
             </div>
           </div>
         </div>
-      ))}
+      </div>
     </div>
   </div>
+
+  <script>
+    // Funcionalidad del modal
+    const modal = document.getElementById("feature-modal");
+    const modalBackdrop = document.getElementById("modal-backdrop");
+    const closeModalBtn = document.getElementById("close-modal");
+    const featureCards = document.querySelectorAll("button[data-feature]");
+
+    // Abrir modal al hacer clic en cualquier card
+    featureCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        modal?.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      });
+    });
+
+    // Cerrar modal
+    const closeModal = () => {
+      modal?.classList.add("hidden");
+      document.body.style.overflow = "";
+    };
+
+    closeModalBtn?.addEventListener("click", closeModal);
+    modalBackdrop?.addEventListener("click", closeModal);
+
+    // Cerrar con ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modal?.classList.contains("hidden")) {
+        closeModal();
+      }
+    });
+  </script>
 </section>
-
-
