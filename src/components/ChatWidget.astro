@@ -490,3 +490,22 @@
     }
   }
 </style>
+
+<script>
+  // Script adicional para conectar botones "open-chat" en otros componentes
+  document.addEventListener("DOMContentLoaded", () => {
+    const openChatButtons = document.querySelectorAll("#open-chat");
+    
+    openChatButtons.forEach(button => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        
+        // Activar el botón toggle del chat
+        const chatToggle = document.getElementById("chat-toggle");
+        if (chatToggle) {
+          chatToggle.click();
+        }
+      });
+    });
+  });
+</script>
