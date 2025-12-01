@@ -353,13 +353,13 @@
     <!-- Modal Container -->
     <div class="flex min-h-screen items-center justify-center p-4">
       <div
-        class="relative bg-white rounded-3xl shadow-2xl max-w-5xl w-full mx-4 overflow-hidden"
+        class="relative bg-white rounded-3xl shadow-2xl max-w-5xl w-full mx-4 overflow-hidden max-h-[90vh] overflow-y-auto"
       >
         <!-- Grid Layout: 2 columnas en desktop, 1 en móvil -->
         <div class="grid grid-cols-1 lg:grid-cols-2">
           <!-- Columna Izquierda: Media/Demo -->
           <div
-            class="relative h-64 lg:h-full bg-gray-100 flex items-center justify-center"
+            class="relative h-64 lg:h-auto lg:min-h-full bg-gray-100 flex items-center justify-center"
           >
             <img
               src="/placeholder-demo.jpg"
@@ -373,7 +373,7 @@
                 class="w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
               >
                 <svg
-                  class="w-8 h-8 text-emerald-600 ml-1"
+                  class="w-8 h-8 text-[#6B9E86] ml-1"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -383,12 +383,12 @@
             </div>
           </div>
 
-          <!-- Columna Derecha: Contenido -->+
-          <div class="p-8 lg:p-10 relative">
+          <!-- Columna Derecha: Contenido -->
+          <div class="p-8 lg:p-10 relative flex flex-col">
             <!-- Botón Cerrar -->
             <button
               id="close-modal"
-              class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+              class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors z-10"
             >
               <svg
                 class="w-5 h-5 text-gray-600"
@@ -405,30 +405,30 @@
             </button>
 
             <!-- Badge -->
-            <div class="inline-block">
+            <div class="inline-block mb-4">
               <span
-                class="bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full px-3 py-1"
+                class="bg-[#6B9E86]/10 text-[#6B9E86] text-xs font-bold rounded-full px-3 py-1"
                 >NOVEDAD</span
               >
             </div>
 
             <!-- Título -->
-            <h2 id="modal-title" class="text-3xl font-bold text-gray-900 mt-4 mb-4">
+            <h2 id="modal-title" class="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
               Integración Total
             </h2>
 
             <!-- Descripción -->
-            <p id="modal-description" class="text-gray-600 leading-relaxed mb-6">
+            <p id="modal-description" class="text-gray-600 leading-relaxed mb-6 text-sm lg:text-base">
               Se acabó la fragmentación. Maingoo centraliza TPV, apps de
               delivery (Glovo, Uber) y gestión de personal en una única
               plataforma inteligente que sincroniza todo en tiempo real.
             </p>
 
             <!-- Beneficios Clave -->
-            <div class="bg-emerald-50/30 rounded-2xl p-6 mt-6">
+            <div class="bg-[#6B9E86]/5 rounded-2xl p-6">
               <div class="flex items-center gap-2 mb-4">
                 <svg
-                  class="w-5 h-5 text-emerald-600"
+                  class="w-5 h-5 text-[#6B9E86]"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
