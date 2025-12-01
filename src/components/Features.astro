@@ -59,7 +59,7 @@
           Carga Automática
         </h3>
         <p class="text-sm text-gray-500 leading-relaxed mb-6">
-          Olvídate de teclear. Sube facturas y albaranes; la IA los procesa en
+          Olvídate de teclear. Sube facturas y albaranes y la IA los procesa en
           segundos.
         </p>
 
@@ -381,22 +381,6 @@
                 </svg>
               </button>
             </div>
-
-            <!-- Progress Bar -->
-            <div
-              class="absolute bottom-4 left-4 right-4 bg-white/90 rounded-full p-2"
-            >
-              <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div
-                  class="h-full bg-emerald-500 rounded-full"
-                  style="width: 80%"
-                >
-                </div>
-              </div>
-              <p class="text-xs text-gray-600 mt-1 text-center font-medium">
-                Procesando... 80%
-              </p>
-            </div>
           </div>
 
           <!-- Columna Derecha: Contenido -->
@@ -429,12 +413,12 @@
             </div>
 
             <!-- Título -->
-            <h2 class="text-3xl font-bold text-gray-900 mt-4 mb-4">
+            <h2 id="modal-title" class="text-3xl font-bold text-gray-900 mt-4 mb-4">
               Integración Total
             </h2>
 
             <!-- Descripción -->
-            <p class="text-gray-600 leading-relaxed mb-6">
+            <p id="modal-description" class="text-gray-600 leading-relaxed mb-6">
               Se acabó la fragmentación. Maingoo centraliza TPV, apps de
               delivery (Glovo, Uber) y gestión de personal en una única
               plataforma inteligente que sincroniza todo en tiempo real.
@@ -462,90 +446,7 @@
                 </h3>
               </div>
 
-              <ul class="space-y-3">
-                <li class="flex items-start gap-3">
-                  <div
-                    class="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5"
-                  >
-                    <svg
-                      class="w-3 h-3 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="3"
-                        d="M5 13l4 4L19 7"></path>
-                    </svg>
-                  </div>
-                  <span class="text-sm text-gray-700"
-                    >Conexión nativa con TPV</span
-                  >
-                </li>
-                <li class="flex items-start gap-3">
-                  <div
-                    class="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5"
-                  >
-                    <svg
-                      class="w-3 h-3 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="3"
-                        d="M5 13l4 4L19 7"></path>
-                    </svg>
-                  </div>
-                  <span class="text-sm text-gray-700">Integración Delivery</span
-                  >
-                </li>
-                <li class="flex items-start gap-3">
-                  <div
-                    class="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5"
-                  >
-                    <svg
-                      class="w-3 h-3 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="3"
-                        d="M5 13l4 4L19 7"></path>
-                    </svg>
-                  </div>
-                  <span class="text-sm text-gray-700"
-                    >Sincronización contable</span
-                  >
-                </li>
-                <li class="flex items-start gap-3">
-                  <div
-                    class="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5"
-                  >
-                    <svg
-                      class="w-3 h-3 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="3"
-                        d="M5 13l4 4L19 7"></path>
-                    </svg>
-                  </div>
-                  <span class="text-sm text-gray-700"
-                    >Gestión de personal integrada</span
-                  >
-                </li>
+              <ul id="modal-benefits" class="space-y-3">
               </ul>
             </div>
           </div>
@@ -555,15 +456,115 @@
   </div>
 
   <script>
+    // Data de las features
+    const featuresData = {
+      "1": {
+        title: "Carga Automática de Facturas",
+        description: "Nuestro sistema de análisis de documentos con IA extrae automáticamente toda la información de tus facturas y albaranes: fechas, importes, impuestos y conceptos clave. Todo queda digitalizado y organizado al instante.",
+        benefits: [
+          "Reconocimiento automático de proveedores",
+          "Validación automática de importes",
+          "Detección de duplicados",
+          "Archivo digital organizado y seguro",
+          "Clasificación automática de productos y categorías",
+          "Integración directa con inventario y costes"
+        ]
+      },
+      "2": {
+        title: "Análisis Predictivo",
+        description: "Nuestra IA aprende de tu negocio y te da predicciones claras sobre ventas, temporadas y consumo. Podrás saber qué se venderá más, cuándo pedir y cómo evitar quedarte corto o con exceso de stock.",
+        benefits: [
+          "Predicción de ventas por temporada",
+          "Optimización de niveles de stock",
+          "Identificación de patrones de compra",
+          "Recomendaciones personalizadas",
+          "Alertas de picos de demanda",
+          "Sugerencias de ofertas y promociones"
+        ]
+      },
+      "3": {
+        title: "Inventario Inteligente",
+        description: "Mantén un control total sobre tu inventario con actualizaciones en tiempo real y gestión automatizada. El sistema aprende de tus patrones de venta para sugerir pedidos óptimos y prevenir roturas de stock.",
+        benefits: [
+          "Monitorización en tiempo real",
+          "Alertas de stock bajo",
+          "Sugerencias de reposición",
+          "Gestión multi-almacén integrada",
+          "Control de caducidades y mermas",
+          "Actualización automática tras ventas y recepciones"
+        ]
+      },
+      "4": {
+        title: "Maingoo IA",
+        description: "Maingoo incluye un chat integrado que entiende tus preguntas en lenguaje natural. Puedes pedir cifras, comparativas o explicaciones y el sistema responde con claridad, gráficos o recomendaciones prácticas. Toma decisiones rápidas con informes automáticos y fáciles de entender.",
+        benefits: [
+          "Respuestas inmediatas en lenguaje natural",
+          "Métricas clave de rendimiento",
+          "Dashboards interactivos",
+          "Informes programados automáticos o bajo demanda",
+          "Interacción accesible desde cualquier módulo de la app",
+          "Recomendaciones prácticas basadas en tus datos"
+        ]
+      },
+      "5": {
+        title: "Optimización de Costes",
+        description: "Identifica y aprovecha oportunidades de ahorro con nuestro sistema de optimización de costes. Analiza gastos, compara proveedores y maximiza tus márgenes de beneficio de forma inteligente.",
+        benefits: [
+          "Análisis de gastos por categoría",
+          "Detección de gastos innecesarios",
+          "Comparativa automática de proveedores",
+          "Alertas de variaciones de precio",
+          "Sugerencias de ahorro personalizadas",
+          "Informes de rentabilidad por producto"
+        ]
+      },
+      "6": {
+        title: "Integración Total",
+        description: "Se acabó la fragmentación. Maingoo centraliza TPV, apps de delivery (Glovo, Uber) y gestión de personal en una única plataforma inteligente que sincroniza todo en tiempo real.",
+        benefits: [
+          "Conexión nativa con TPV",
+          "Integración Delivery",
+          "Sincronización contable",
+          "Gestión de personal integrada"
+        ]
+      }
+    };
+
     // Funcionalidad del modal
     const modal = document.getElementById("feature-modal");
     const modalBackdrop = document.getElementById("modal-backdrop");
     const closeModalBtn = document.getElementById("close-modal");
     const featureCards = document.querySelectorAll("button[data-feature]");
+    const modalTitle = document.getElementById("modal-title");
+    const modalDescription = document.getElementById("modal-description");
+    const modalBenefits = document.getElementById("modal-benefits");
 
     // Abrir modal al hacer clic en cualquier card
     featureCards.forEach((card) => {
       card.addEventListener("click", () => {
+        const featureId = card.getAttribute("data-feature");
+        if (!featureId) return;
+        
+        const featureData = featuresData[featureId as keyof typeof featuresData];
+        
+        if (featureData && modalTitle && modalDescription && modalBenefits) {
+          // Actualizar contenido del modal
+          modalTitle.textContent = featureData.title;
+          modalDescription.textContent = featureData.description;
+          
+          // Actualizar beneficios
+          modalBenefits.innerHTML = featureData.benefits.map((benefit: string) => `
+            <li class="flex items-start gap-3">
+              <div class="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <span class="text-sm text-gray-700">${benefit}</span>
+            </li>
+          `).join('');
+        }
+        
         modal?.classList.remove("hidden");
         document.body.style.overflow = "hidden";
       });
