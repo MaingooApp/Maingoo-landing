@@ -3,7 +3,8 @@
 ---
 
 <header
-  class="fixed top-0 w-full z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800"
+  class="fixed top-0 w-full z-50 border-gray-100 dark:border-gray-800"
+  style="background-color: #6B9E86;"
 >
   <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-5">
     <div class="flex items-center justify-between">
@@ -12,36 +13,44 @@
         <img
           src="/maingoo_logo.svg"
           alt="Maingoo Logo"
-          class="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 object-contain"
+          class="h-10 w-10 sm:h-12 sm:w-12 lg:h-16 lg:w-16 object-contain"
         />
         <a
           href="/"
-          class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-          >Maingoo</a
+          class="text-[32px] font-semibold dark:text-black transition-colors"
+          style="--hover-color: #F0F7F4;">Maingoo</a
         >
       </div>
 
       <!-- Navigation Links -->
-      <div class="hidden lg:flex items-center space-x-6 xl:space-x-8">
-        <a
-          href="/#contact"
-          class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm xl:text-base whitespace-nowrap"
-          >Contacto</a
-        >
+      <div class="hidden lg:flex items-center space-x-10 xl:space-x-12">
         <a
           href="/#features"
-          class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm xl:text-base whitespace-nowrap"
-          >Características</a
+          class="text-[16px] font-normal dark:text-[#000000] transition-colors whitespace-nowrap"
+          style="--hover-color: #F0F7F4;"
+          onmouseover="this.style.color='#F0F7F4'"
+          onmouseout="this.style.color=''">Características</a
         >
         <a
           href="/#pricing"
-          class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm xl:text-base whitespace-nowrap"
-          >Precios</a
+          class="text-[16px] font-normal dark:text-[#000000] transition-colors whitespace-nowrap"
+          style="--hover-color: #F0F7F4;"
+          onmouseover="this.style.color='#F0F7F4'"
+          onmouseout="this.style.color=''">Precios</a
+        >
+        <a
+          href="/#contact"
+          class="text-[16px] font-normal dark:text-[#000000] transition-colors whitespace-nowrap"
+          style="--hover-color: #F0F7F4;"
+          onmouseover="this.style.color='#F0F7F4'"
+          onmouseout="this.style.color=''">Contacto</a
         >
         <a
           href="/#faqs"
-          class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm xl:text-base whitespace-nowrap"
-          >FAQs</a
+          class="text-[16px] font-normal dark:text-[#000000] transition-colors whitespace-nowrap"
+          style="--hover-color: #F0F7F4;"
+          onmouseover="this.style.color='#F0F7F4'"
+          onmouseout="this.style.color=''">FAQs</a
         >
       </div>
 
@@ -49,17 +58,17 @@
       <div class="flex items-center space-x-2 sm:space-x-3 lg:space-x-4">
         <a
           href="https://app.maingoo.tech/"
-          class="hidden lg:block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm xl:text-base font-medium"
+          class="hidden lg:block text-[16px] font-normal dark:text-[#000000] transition-colors"
+          style="--hover-color: #F0F7F4;"
+          onmouseover="this.style.color='#F0F7F4'"
+          onmouseout="this.style.color=''"
         >
           Iniciar Sesión
         </a>
       </div>
 
       <!-- Mobile Menu Button -->
-      <button
-        class="lg:hidden p-2 text-gray-600 dark:text-gray-300"
-        id="mobile-menu-button"
-      >
+      <button class="lg:hidden p-2 dark:text-[#000000]" id="mobile-menu-button">
         <svg
           class="w-6 h-6"
           fill="none"
@@ -78,28 +87,37 @@
     <!-- Mobile Menu -->
     <div
       id="mobile-menu"
-      class="lg:hidden hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-100 dark:border-gray-800"
+      class="lg:hidden hidden dark:bg-[#6B9E86] backdrop-blur-md border-t dark:border-gray-800"
     >
       <div class="px-4 py-4 space-y-4">
         <a
           href="/#contact"
-          class="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-2"
-          >Contacto</a
+          class="block text-[16px] font-normal text-gray-600 dark:text-[#000000] transition-colors py-2"
+          style="--hover-color: #6B9E86;"
+          onmouseover="this.style.color='#6B9E86'"
+          onmouseout="this.style.color=''">Contacto</a
         >
         <a
           href="/#features"
-          class="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-2"
-          >Características</a
+          class="block text-[16px] font-normal text-gray-600 dark:text-[#000000] transition-colors py-2"
+          style="--hover-color: #6B9E86;"
+          onmouseover="this.style.color='#6B9E86'"
+          onmouseout="this.style.color=''">Características</a
         >
         <a
           href="/#pricing"
-          class="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-2"
-          >Precios</a
+          class="block text-[16px] font-normal text-gray-600 dark:text-[#000000] transition-colors py-2"
+          style="--hover-color: #6B9E86;"
+          onmouseover="this.style.color='#6B9E86'"
+          onmouseout="this.style.color=''">Precios</a
         >
         <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
           <a
             href="https://app.maingoo.tech/"
-            class="block w-full text-left text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-2 font-medium"
+            class="block w-full text-left text-[16px] font-normal text-gray-600 dark:text-[#000000] transition-colors py-2"
+            style="--hover-color: #6B9E86;"
+            onmouseover="this.style.color='#6B9E86'"
+            onmouseout="this.style.color=''"
           >
             Iniciar Sesión
           </a>
