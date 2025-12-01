@@ -1,41 +1,13 @@
----
-import ChatWidget from "../components/ChatWidget.astro";
----
-
-<script>
-  // Declarar el tipo de window.chatWidget
-  declare global {
-    interface Window {
-      chatWidget: any;
-    }
-  }
-
-  function openChat() {
-    const chatWindow = document.getElementById("chat-window");
-    if (chatWindow) {
-      chatWindow.style.transform = "scale(1)";
-      chatWindow.style.opacity = "1";
-
-      const chatInput = document.getElementById("chat-input");
-      if (chatInput) {
-        setTimeout(() => chatInput.focus(), 300);
-      }
-    }
-  }
-
-  // Agregar el evento de clic
-  document.getElementById("open-chat")?.addEventListener("click", (e) => {
-    e.preventDefault();
-    openChat();
-  });
-</script>
-
-<section
-  class="pt-16 pb-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
->
-  <div class="container mx-auto px-6 h-full">
+<section class="relative pt-16 pb-16 min-h-[90vh] bg-cover bg-center z-20" style="background-image: url('/Hero-bg.png');">
+  <!-- Degradado overlay superior -->
+  <div class="absolute inset-0 z-10" style="background: linear-gradient(to bottom, #6B9E86 0%, #6B9E86 26%, transparent 40%);"></div>
+  
+  <!-- Bloque sólido inferior con curva cóncava superior -->
+  <div class="absolute bottom-0 left-0 right-0 h-[35%] z-10 bg-[#F0F7F4]" style="clip-path: ellipse(60% 40% at 50% 90%);"></div>
+  
+  <div class="container mx-auto px-6 h-full relative z-20">
     <div
-      class="max-w-4xl mx-auto text-center h-full flex flex-col justify-center"
+      class="max-w-4xl mx-auto text-left h-full flex flex-col justify-center"
     >
       <!-- Hero Headline -->
       <style>
@@ -46,7 +18,7 @@ import ChatWidget from "../components/ChatWidget.astro";
 
         .flex-custom {
           display: flex !important;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: baseline;
           gap: 10px;
         }
@@ -63,14 +35,14 @@ import ChatWidget from "../components/ChatWidget.astro";
           .headline-row {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             margin-bottom: 0.25em;
           }
           .headline-row:last-child {
             margin-bottom: 0;
           }
           .fixed-text {
-            text-align: right;
+            text-align: left;
             white-space: nowrap;
           }
           .changing-container {
@@ -86,13 +58,13 @@ import ChatWidget from "../components/ChatWidget.astro";
             height: 1em;
           }
           .changing-business::after {
-            color: rgb(31 41 55);
+            color: #000000;
             position: absolute;
             left: 0;
           }
 
           :global(.dark) .changing-business::after {
-            color: white;
+            color: #000000;
           }
         }
 
@@ -103,7 +75,7 @@ import ChatWidget from "../components/ChatWidget.astro";
           }
           .headline-row {
             display: block;
-            text-align: center;
+            text-align: left;
           }
           .headline-row:last-child {
             margin-bottom: 0;
@@ -121,13 +93,13 @@ import ChatWidget from "../components/ChatWidget.astro";
             height: 1.2em;
           }
           .changing-business::after {
-            color: rgb(31 41 55);
+            color: #000000;
             position: relative;
             display: inline-block;
           }
 
           :global(.dark) .changing-business::after {
-            color: white;
+            color: #000000;
           }
         }
 
@@ -203,62 +175,69 @@ import ChatWidget from "../components/ChatWidget.astro";
         }
       </style>
       <h1
-        class="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-800 dark:text-white mb-8"
+        class="text-3xl sm:text-4xl md:text-6xl font-bold mb-24 text-center"
+        style="color: #FFFFFF;"
       >
-        <div class="headline-row flex-custom">
+        <div class="headline-row flex-custom" style="justify-content: center;">
           <div class="fixed-text">
-            <span class="text-gray-800 dark:text-white">Gestiona tu</span>
+            <span style="color: #FFFFFF;">Gestiona tu</span>
           </div>
           <div class="changing-container">
-            <span class="changing-business dark:text-white"></span>
+            <span class="changing-business"></span>
           </div>
         </div>
-        <div class="headline-row">
-          <div>
-            <span class="text-gray-800 dark:text-white">con</span>
-            <span
-              class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
-            >
-              Inteligencia Artificial
-            </span>
-          </div>
+        <div class="headline-row" style="display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: nowrap; justify-content: center;">
+          <span style="color: #FFFFFF;">con Inteligencia Artificial</span>
         </div>
       </h1>
 
+      <style>
+        @media (min-width: 640px) {
+          .ia-text {
+            font-size: 3rem !important;
+          }
+        }
+        @media (min-width: 768px) {
+          .ia-text {
+            font-size: 4rem !important;
+          }
+        }
+      </style>
+
       <!-- Hero Subtitle -->
-      <p
-        class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed"
+      <!-- <p
+        class="text-xl md:text-2xl mb-8 leading-relaxed"
+        style="color: #FFFFFF;"
       >
         Maingoo (r)evoluciona la gestión con automatización inteligente de
         facturas, inventario y análisis de datos para optimizar tu negocio.
-      </p>
+      </p> -->
 
       <!-- CTA Buttons -->
-      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-28">
         <a
           href="#contact"
-          class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block text-center"
+          class="bg-[#6B9E86] text-[#FFFFFF] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block text-center"
         >
           Solicitar Acceso a la Beta
         </a>
         <button
           id="open-chat"
-          class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block text-center"
+          class="relative bg-transparent text-[#000000] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-flex items-center justify-center gap-4"
+          style="border: 3px solid #6B9E86; background: #f0f7f426; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"
         >
-          Hablar con Maingoo IA
-        </button>
+        <img src="/maingoo_logo.svg" alt="IA" class="w-7 h-7" />
+        <span>Pregunta a Maingoo</span>
+      </button>
       </div>
 
       <!-- Hero Stats -->
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-2xl sm:max-w-4xl mx-auto"
-      >
-        <div class="text-center">
-          <div
-            class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2 flex justify-center"
-          >
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <!-- Card 1: Ahorra horas -->
+        <div class="bg-[#FFFFFF] rounded-xl p-6 shadow-lg">
+          <div class="flex justify-center mb-4">
             <svg
-              class="w-8 h-8"
+              class="w-12 h-12 text-[#6B9E86]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -270,103 +249,19 @@ import ChatWidget from "../components/ChatWidget.astro";
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
-          <div class="text-gray-600 dark:text-gray-400">
-            Ahorra horas de trabajo cada semana
-          </div>
+          <h3 class="text-xl font-bold text-[#1A3C34] mb-3 text-center">
+            Ahorra horas de trabajo a la semana
+          </h3>
+          <p class="text-[#1A3C34] text-center text-sm">
+            Automatiza tareas repetitivas y dedica más tiempo a hacer crecer tu negocio.
+          </p>
         </div>
-        <div class="text-center">
-          <div
-            class="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2 flex justify-center"
-          >
+
+        <!-- Card 2: Diseñado junto a gerentes reales -->
+        <div class="bg-[#FFFFFF] rounded-xl p-6 shadow-lg">
+          <div class="flex justify-center mb-4">
             <svg
-              class="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              ></path>
-            </svg>
-          </div>
-          <div class="text-gray-600 dark:text-gray-400">
-            Facturas volcadas automáticamente con IA
-          </div>
-        </div>
-        <div class="text-center">
-          <div
-            class="text-3xl font-bold text-green-600 dark:text-green-400 mb-2 flex justify-center"
-          >
-            <svg
-              class="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-              ></path>
-            </svg>
-          </div>
-          <div class="text-gray-600 dark:text-gray-400">
-            Inventario conectado en tiempo real
-          </div>
-        </div>
-        <div class="text-center">
-          <div
-            class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2 flex justify-center"
-          >
-            <svg
-              class="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-              ></path>
-            </svg>
-          </div>
-          <div class="text-gray-600 dark:text-gray-400">
-            Datos seguros en la nube
-          </div>
-        </div>
-        <div class="text-center">
-          <div
-            class="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-2 flex justify-center"
-          >
-            <svg
-              class="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-            </svg>
-          </div>
-          <div class="text-gray-600 dark:text-gray-400">
-            Plataforma escalable y modular
-          </div>
-        </div>
-        <div class="text-center">
-          <div
-            class="text-3xl font-bold text-pink-600 dark:text-pink-400 mb-2 flex justify-center"
-          >
-            <svg
-              class="w-8 h-8"
+              class="w-12 h-12 text-[#6B9E86]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -379,9 +274,36 @@ import ChatWidget from "../components/ChatWidget.astro";
               ></path>
             </svg>
           </div>
-          <div class="text-gray-600 dark:text-gray-400">
+          <h3 class="text-xl font-bold text-[#1A3C34] mb-3 text-center">
             Diseñado junto a gerentes reales
+          </h3>
+          <p class="text-[#1A3C34] text-center text-sm">
+            Desarrollado con profesionales de la hostelería para adaptarse a tus necesidades reales.
+          </p>
+        </div>
+
+        <!-- Card 3: Impulsado por IA -->
+        <div class="bg-[#FFFFFF] rounded-xl p-6 shadow-lg">
+          <div class="flex justify-center mb-4">
+            <svg
+              class="w-12 h-12 text-[#6B9E86]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
           </div>
+          <h3 class="text-xl font-bold text-[#1A3C34] mb-3 text-center">
+            Impulsado por IA
+          </h3>
+          <p class="text-[#1A3C34] text-center text-sm">
+            Tecnología de inteligencia artificial que aprende y mejora con cada interacción.
+          </p>
         </div>
       </div>
     </div>

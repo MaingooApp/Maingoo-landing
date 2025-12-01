@@ -3,51 +3,53 @@
 ---
 
 <!-- FAQ Section -->
-<section id="faqs" class="bg-white dark:bg-gray-900">
-  <div class="mt-20 mb-20 max-w-3xl mx-auto px-6">
+<section id="faqs">
+  <div class="mt-20 mb-20 max-w-7xl mx-auto px-6">
     <h3
-      class="text-4xl font-bold text-center text-gray-800 dark:text-white mb-6"
+      class="text-4xl font-bold text-center dark:text-[#000000] mb-12"
     >
       Preguntas Frecuentes
     </h3>
-    <div class="flex justify-center mb-12">
-      <button
-        id="open-chat-faq"
-        class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block text-center"
-      >
-        Hablar con Maingoo IA
-      </button>
-    </div>
-    <div class="space-y-6">
-      <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-        <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div class="bg-white rounded-lg p-6 flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <h4 class="font-semibold text-[#1A3C34] mb-3 text-lg">
           ¿Tiene coste unirme a la beta?
         </h4>
-        <p class="text-gray-600 dark:text-gray-300">
+        <p class="text-gray-700 flex-grow">
           No, la beta es completamente gratuita durante esta fase. Podrás
           acceder a todas las funcionalidades disponibles sin ningún coste.
         </p>
       </div>
-      <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-        <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
+      <div class="bg-white rounded-lg p-6 flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <h4 class="font-semibold text-[#1A3C34] mb-3 text-lg">
           ¿Qué gano participando?
         </h4>
-        <p class="text-gray-600 dark:text-gray-300">
+        <p class="text-gray-700 flex-grow">
           Obtendrás acceso anticipado a nuevas funciones, soporte directo del
           equipo de desarrollo y beneficios exclusivos, incluyendo descuentos
           especiales cuando lancemos los planes oficiales.
         </p>
       </div>
-      <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-        <h4 class="font-semibold text-gray-800 dark:text-white mb-2">
+      <div class="bg-white rounded-lg p-6 flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <h4 class="font-semibold text-[#1A3C34] mb-3 text-lg">
           ¿Cuándo habrá precios?
         </h4>
-        <p class="text-gray-600 dark:text-gray-300">
+        <p class="text-gray-700 flex-grow">
           Los planes de pago llegarán después de la fase beta. Como participante
           beta, tendrás acceso a beneficios exclusivos y descuentos especiales
           en los futuros planes.
         </p>
       </div>
+    </div>
+    <div class="flex justify-center">
+      <button
+          id="open-chat"
+          class="relative bg-transparent text-[#000000] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-flex items-center justify-center gap-2"
+          style="border: 3px solid #6B9E86; background-image: linear-gradient(#F0F7F4, #F0F7F4),  background-origin: border-box; background-clip: padding-box, border-box;"
+        >
+          <img src="/maingoo_logo.svg" alt="IA" class="w-7 h-7" />
+          Pregunta a Maingoo
+        </button>
     </div>
   </div>
 </section>
