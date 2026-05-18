@@ -3,8 +3,6 @@
 ---
 
 <script>
-  import municipiosData from "../data/municipios_spain.json";
-
   interface Town {
     label: string;
     code?: string;
@@ -24,6 +22,13 @@
     parent_code: string;
     provinces: Province[];
   }
+
+  interface LocationEntry {
+    label: string;
+    original: string;
+    normalizedOriginal: string;
+  }
+
   import emailjs from "@emailjs/browser";
   import {
     parsePhoneNumber,
@@ -31,7 +36,7 @@
     getCountries,
     getCountryCallingCode,
     getExampleNumber,
-  } from "libphonenumber-js/max";
+  } from "libphonenumber-js/min";
   import type { CountryCode } from "libphonenumber-js";
   import examples from "libphonenumber-js/examples.mobile.json" assert { type: "json" };
 
@@ -41,6 +46,27 @@
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
+  };
+
+  let locationIndexPromise: Promise<LocationEntry[]> | null = null;
+
+  const loadLocationIndex = async (): Promise<LocationEntry[]> => {
+    if (!locationIndexPromise) {
+      locationIndexPromise = import("../data/municipios_spain.json").then(
+        ({ default: data }) =>
+          (data as Region[]).flatMap((comunidad) =>
+            comunidad.provinces.flatMap((province) =>
+              province.towns.map((town) => ({
+                label: `${town.label} (${province.label})`,
+                original: town.label,
+                normalizedOriginal: normalizeText(town.label),
+              }))
+            )
+          )
+      );
+    }
+
+    return locationIndexPromise;
   };
 
   const initForm = () => {
@@ -106,7 +132,7 @@
     locationInput.parentNode?.appendChild(locationResults);
 
     // Función para buscar municipios
-    const searchLocation = (searchTerm: string) => {
+    const searchLocation = async (searchTerm: string) => {
       locationResults.innerHTML = "";
       if (!searchTerm) {
         locationResults.classList.add("hidden");
@@ -114,36 +140,20 @@
       }
 
       const normalizedSearch = normalizeText(searchTerm);
-      const results: {
-        label: string;
-        type: "municipio" | "provincia";
-        original: string;
-      }[] = [];
+      const locationIndex = await loadLocationIndex();
 
-      // Buscar en todos los municipios
-      municipiosData.forEach((comunidad: Region) => {
-        comunidad.provinces.forEach((province: Province) => {
-          province.towns.forEach((town: Town) => {
-            const normalizedTown = normalizeText(town.label);
-            if (normalizedTown.includes(normalizedSearch)) {
-              results.push({
-                label: `${town.label} (${province.label})`,
-                type: "municipio",
-                original: town.label,
-              });
-            }
-          });
-        });
-      });
+      if (locationInput.value !== searchTerm) {
+        return;
+      }
+
+      const results = locationIndex.filter((location) =>
+        location.normalizedOriginal.includes(normalizedSearch)
+      );
 
       // Ordenar resultados: primero municipios que empiezan con el término, luego los que lo contienen
       results.sort((a, b) => {
-        const aStartsWith = normalizeText(a.original).startsWith(
-          normalizedSearch
-        );
-        const bStartsWith = normalizeText(b.original).startsWith(
-          normalizedSearch
-        );
+        const aStartsWith = a.normalizedOriginal.startsWith(normalizedSearch);
+        const bStartsWith = b.normalizedOriginal.startsWith(normalizedSearch);
         if (aStartsWith && !bStartsWith) return -1;
         if (!aStartsWith && bStartsWith) return 1;
         return a.label.localeCompare(b.label);
@@ -171,7 +181,7 @@
     // Eventos para el campo de ubicación
     locationInput.addEventListener("input", (e) => {
       const target = e.target as HTMLInputElement;
-      searchLocation(target.value);
+      void searchLocation(target.value);
     });
 
     // Cerrar resultados al hacer clic fuera
