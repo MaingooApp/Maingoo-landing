@@ -121,8 +121,8 @@
           </svg>
         </button>
       </div>
-      <p class="text-xs text-[#6B9E86] mt-2 text-center">
-        Conectado con Maingoo AI
+      <p id="chat-status" class="text-xs text-[#6B9E86] mt-2 text-center">
+        IA local en Chrome
       </p>
     </div>
   </div>
@@ -132,9 +132,29 @@
   class ChatWidget {
     constructor() {
       this.isOpen = false;
-      this.n8nWebhookUrl =
-        "https://n8n.maingoo.tech/webhook/landing-chatbot";
-      this.sessionId = this.generateSessionId();
+      this.aiSession = null;
+      this.aiSessionPromise = null;
+      this.aiOptions = {
+        expectedInputs: [{ type: "text", languages: ["es"] }],
+        expectedOutputs: [{ type: "text", languages: ["es"] }],
+      };
+      this.systemPrompt = `
+Eres Maingoo, el asistente local de la landing de Maingoo.
+Responde siempre en español, con tono cercano, claro y profesional.
+Tu objetivo es ayudar a restaurantes, bares, cafeterías y negocios hosteleros a entender Maingoo.
+
+Contexto de producto:
+- Maingoo es una herramienta de gestión inteligente para restaurantes con IA.
+- La landing presenta funcionalidades como carga automática de facturas y albaranes, análisis predictivo, inventario inteligente, optimización de costes, gestión de proveedores, panel de control, analíticas y futuras integraciones con TPV, delivery, APPCC, recetas, escandallos y RRHH.
+- Actualmente se ofrece acceso gratuito a una beta temprana.
+- Para solicitar acceso, recomienda usar el formulario de contacto de la web.
+
+Reglas:
+- No inventes precios definitivos, fechas de lanzamiento ni condiciones legales.
+- Si no sabes algo, dilo con honestidad y sugiere dejar datos en el formulario.
+- Si la pregunta no trata de Maingoo o gestión hostelera, responde brevemente y redirige a cómo Maingoo puede ayudar.
+- Mantén respuestas breves, útiles y fáciles de leer.
+`.trim();
 
       // Inicializar cuando el DOM esté listo
       if (document.readyState === "loading") {
@@ -153,6 +173,7 @@
       this.chatInput = document.getElementById("chat-input");
       this.sendButton = document.getElementById("send-message");
       this.chatMessages = document.getElementById("chat-messages");
+      this.chatStatus = document.getElementById("chat-status");
 
       // Bindear eventos
       if (this.chatToggle) {
@@ -171,51 +192,12 @@
             this.sendMessage();
           }
         });
+        this.chatInput.addEventListener("input", () => {
+          this.sendButton.disabled = !this.chatInput.value.trim();
+        });
       }
-    }
 
-    bindEvents() {
-      // Minimize chat
-      this.minimizeChat.addEventListener("click", () => this.closeChat());
-
-      // Send message events
-      this.sendButton.addEventListener("click", () => this.sendMessage());
-      this.chatInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter" && !e.shiftKey) {
-          e.preventDefault();
-          this.sendMessage();
-        }
-      });
-
-      // Enable/disable send button based on input
-      this.chatInput.addEventListener("input", () => {
-        this.sendButton.disabled = !this.chatInput.value.trim();
-      });
-
-      // Click outside to close
-      document.addEventListener("click", (e) => {
-        if (
-          this.isOpen &&
-          !document.getElementById("chat-widget").contains(e.target)
-        ) {
-          this.closeChat();
-        }
-      });
-    }
-
-    startInitialAnimation() {
-      // Show notification dot after 3 seconds
-      setTimeout(() => {
-        if (!this.hasInitialAnimation) {
-          this.notificationDot.classList.remove("hidden");
-          this.chatToggle.classList.add("animate-bounce");
-
-          // Stop bounce after 2 seconds
-          setTimeout(() => {
-            this.chatToggle.classList.remove("animate-bounce");
-          }, 2000);
-        }
-      }, 3000);
+      this.checkLocalAiAvailability();
     }
 
     openChat() {
@@ -264,70 +246,99 @@
       this.showTypingIndicator();
 
       try {
-        // Send to n8n webhook
-        const response = await this.sendToN8n(message);
-
-        // Remove typing indicator
+        const session = await this.getLocalAiSession();
         this.hideTypingIndicator();
 
-        // Add bot response - manejo más flexible de la respuesta
-        if (response) {
-          // Intenta diferentes campos de respuesta que n8n podría usar
-          const botMessage =
-            response.message ||
-            response.output ||
-            response.reply ||
-            response.text ||
-            response.response ||
-            "¡Gracias por contactarnos! Un representante se pondrá en contacto contigo pronto. 📧";
-          this.addMessage(botMessage, "bot");
-        } else {
-          this.addMessage(
-            "¡Perfecto! Tu mensaje ha sido recibido. Te contactaremos pronto. ✨",
-            "bot"
-          );
+        const botMessage = this.addStreamingBotMessage();
+        let responseText = "";
+        const stream = session.promptStreaming(message);
+
+        for await (const chunk of stream) {
+          responseText += chunk;
+          botMessage.textElement.textContent = responseText;
+          this.scrollToBottom();
         }
+
+        if (!responseText.trim()) {
+          botMessage.textElement.textContent =
+            "No he podido generar una respuesta clara. Puedes dejar tus datos en el formulario y el equipo de Maingoo te ayudará.";
+        }
+
+        this.updateStatus("IA local lista");
         this.sendButton.disabled = false;
       } catch (error) {
         this.hideTypingIndicator();
-
-        // Mensaje más amigable en caso de error
-        this.addMessage(
-          "¡Gracias por tu mensaje! 😊 Lo hemos recibido correctamente y nuestro equipo te contactará pronto.",
-          "bot"
-        );
+        this.addMessage(this.getLocalAiErrorMessage(error), "bot");
+        this.updateStatus("IA local no disponible");
         this.sendButton.disabled = false;
       }
     }
 
-    async sendToN8n(message) {
-      if (!this.n8nWebhookUrl) {
-        return null;
+    async checkLocalAiAvailability() {
+      const languageModel = window.LanguageModel;
+
+      if (!languageModel?.availability) {
+        this.updateStatus("IA local no disponible en este navegador");
+        return;
       }
 
-      const payload = {
-        message: message,
-        sessionId: this.sessionId,
-        timestamp: new Date().toISOString(),
-        source: "website-chat",
-        url: window.location.href,
-      };
+      try {
+        const availability = await languageModel.availability(this.aiOptions);
 
-      const response = await fetch(this.n8nWebhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+        if (availability === "available") {
+          this.updateStatus("IA local lista");
+        } else if (availability === "downloadable") {
+          this.updateStatus("IA local pendiente de descarga");
+        } else if (availability === "downloading") {
+          this.updateStatus("Descargando IA local");
+        } else {
+          this.updateStatus("IA local no disponible");
+        }
+      } catch (error) {
+        this.updateStatus("IA local no disponible");
+      }
+    }
+
+    async getLocalAiSession() {
+      if (this.aiSession) {
+        return this.aiSession;
+      }
+
+      if (!this.aiSessionPromise) {
+        this.aiSessionPromise = this.createLocalAiSession();
+      }
+
+      this.aiSession = await this.aiSessionPromise;
+      return this.aiSession;
+    }
+
+    async createLocalAiSession() {
+      const languageModel = window.LanguageModel;
+
+      if (!languageModel?.availability || !languageModel?.create) {
+        throw new Error("prompt-api-unavailable");
+      }
+
+      const availability = await languageModel.availability(this.aiOptions);
+
+      if (availability === "unavailable") {
+        throw new Error("prompt-api-unavailable");
+      }
+
+      if (availability === "downloadable" || availability === "downloading") {
+        this.updateStatus("Preparando IA local");
+      }
+
+      return languageModel.create({
+        ...this.aiOptions,
+        initialPrompts: [{ role: "system", content: this.systemPrompt }],
+        monitor: (monitor) => {
+          monitor.addEventListener("downloadprogress", (event) => {
+            const progress = Math.round(event.loaded * 100);
+            this.updateStatus(`Descargando IA local ${progress}%`);
+          });
         },
-        body: JSON.stringify(payload),
       });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`HTTP ${response.status}: ${errorText}`);
-      }
-
-      const responseData = await response.json();
-      return responseData;
     }
 
     addMessage(message, sender) {
@@ -367,6 +378,30 @@
 
       this.chatMessages.appendChild(messageDiv);
       this.scrollToBottom();
+    }
+
+    addStreamingBotMessage() {
+      const messageDiv = document.createElement("div");
+      messageDiv.className = "flex items-start space-x-2";
+      messageDiv.innerHTML = `
+        <div class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">
+          <img
+            src="/maingoo_logo.svg"
+            alt="Maingoo Logo"
+            class="h-6 w-6 object-contain"
+          />
+        </div>
+        <div class="bg-white rounded-lg p-3 shadow-sm max-w-xs border border-[#6B9E86]/20">
+          <p class="text-sm text-[#1A3C34]"></p>
+          <span class="text-xs text-[#6B9E86] mt-1 block">Ahora</span>
+        </div>
+      `;
+
+      const textElement = messageDiv.querySelector("p");
+      this.chatMessages.appendChild(messageDiv);
+      this.scrollToBottom();
+
+      return { messageDiv, textElement };
     }
 
     showTypingIndicator() {
@@ -416,27 +451,22 @@
       return text.replace(/[&<>"']/g, (m) => map[m]);
     }
 
-    // Generate a unique session ID for this chat session
-    generateSessionId() {
-      // Intentar obtener sessionId existente del sessionStorage
-      let sessionId = sessionStorage.getItem("maingoo_chat_session_id");
-
-      if (!sessionId) {
-        // Si no existe, crear uno nuevo y guardarlo
-        const timestamp = Date.now();
-        const random = Math.random().toString(36).substring(2, 15);
-        sessionId = `chat_${timestamp}_${random}`;
-
-        // Guardar en sessionStorage para que persista durante toda la sesión del navegador
-        sessionStorage.setItem("maingoo_chat_session_id", sessionId);
+    updateStatus(status) {
+      if (this.chatStatus) {
+        this.chatStatus.textContent = status;
       }
-
-      return sessionId;
     }
 
-    // Method to configure N8n webhook URL
-    setN8nWebhookUrl(url) {
-      this.n8nWebhookUrl = url;
+    getLocalAiErrorMessage(error) {
+      if (error?.name === "NotSupportedError") {
+        return "La IA local de Chrome no soporta esta configuración en tu dispositivo. Puedes usar el formulario de contacto y el equipo de Maingoo te ayudará.";
+      }
+
+      if (error?.name === "QuotaExceededError") {
+        return "La conversación se ha hecho demasiado larga para la IA local. Cierra y vuelve a abrir el chat para empezar de nuevo.";
+      }
+
+      return "Este chat usa la IA local de Chrome y ahora mismo no está disponible en tu navegador o dispositivo. Puedes dejar tus datos en el formulario de contacto y el equipo de Maingoo te ayudará.";
     }
   }
 
