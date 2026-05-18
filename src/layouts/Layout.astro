@@ -6,12 +6,19 @@ import Header from "../components/Header.astro";
 export interface Props {
   title: string;
   description?: string;
+  image?: string;
+  type?: "website" | "article";
 }
 
 const {
   title,
   description = "Maingoo - Gestión inteligente de restaurantes con IA",
+  image = "/maingo_origin.png",
+  type = "website",
 } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = new URL(image, Astro.site);
 ---
 
 <!doctype html>
@@ -21,11 +28,30 @@ const {
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/maingoo_logo.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta
+      property="og:image:alt"
+      content="Maingoo, gestión inteligente de restaurantes con IA"
+    />
+    <meta property="og:locale" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
     <title>{title}</title>
 
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H6FCBZSDLH"
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-H6FCBZSDLH"
     ></script>
     <script is:inline define:vars={{ GA_ID: "G-H6FCBZSDLH" }}>
       // Extend Window interface to include dataLayer
@@ -43,7 +69,7 @@ const {
     <!-- End Google Analytics -->
 
     <!-- Microsoft Clarity Analytics -->
-    <script type="text/javascript">
+    <script is:inline type="text/javascript">
       (function (c, l, a, r, i, t, y) {
         c[a] =
           c[a] ||
@@ -67,57 +93,34 @@ const {
     />
     <!-- Cookie Script -->
     <script
+      is:inline
       type="text/javascript"
       charset="UTF-8"
       src="//cdn.cookie-script.com/s/cec8a2c75a9cad8b24709d83c765d8fd.js"
     ></script>
     <!-- Google reCAPTCHA v2 -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script
+      is:inline
+      src="https://www.google.com/recaptcha/api.js"
+      async
+      defer
+    ></script>
     <!-- Dark mode script to prevent FOUC -->
     <script is:inline>
-      // Check for saved theme preference or default to system preference
       (function () {
-        console.log("=== FOUC Prevention Script ===");
-
         const savedTheme = localStorage.getItem("darkMode");
         const systemPreference = window.matchMedia(
           "(prefers-color-scheme: dark)"
         ).matches;
 
-        console.log("FOUC - Saved theme:", savedTheme);
-        console.log("FOUC - System preference (dark):", systemPreference);
-        console.log(
-          "FOUC - System preference (light):",
-          window.matchMedia("(prefers-color-scheme: light)").matches
-        );
-
-        let shouldBeDark = false;
-
-        if (savedTheme !== null) {
-          // User has a saved preference
-          shouldBeDark = savedTheme === "true";
-          console.log("FOUC - Using saved preference:", shouldBeDark);
-        } else {
-          // No saved preference, follow system
-          shouldBeDark = systemPreference;
-          console.log("FOUC - Using system preference:", shouldBeDark);
-        }
-
-        console.log("FOUC - Final decision:", shouldBeDark);
+        const shouldBeDark =
+          savedTheme !== null ? savedTheme === "true" : systemPreference;
 
         if (shouldBeDark) {
           document.documentElement.classList.add("dark");
-          console.log("FOUC - Added dark class");
         } else {
           document.documentElement.classList.remove("dark");
-          console.log("FOUC - Removed dark class (if it existed)");
         }
-
-        console.log(
-          "FOUC - Final HTML classes:",
-          document.documentElement.className
-        );
-        console.log("===============================");
       })();
     </script>
   </head>
