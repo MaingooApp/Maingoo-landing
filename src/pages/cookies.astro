@@ -2,7 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Política de Cookies - Maingoo" description="Información sobre el uso de cookies en Maingoo y cómo gestionarlas">
+<Layout
+  title="Política de Cookies | Maingoo"
+  description="Consulta qué cookies utiliza Maingoo, para qué sirven y cómo puedes configurar tus preferencias de consentimiento."
+>
   <main class="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
     <!-- Header spacing -->
     <div class="pt-20 lg:pt-24">
@@ -103,8 +106,8 @@ import Layout from '../layouts/Layout.astro';
               <p class="text-blue-800 dark:text-blue-200 mb-4">
                 Puedes gestionar tus preferencias de cookies en cualquier momento usando nuestro panel de configuración.
               </p>
-              <button 
-                onclick="CookieScript.instance.show()" 
+              <button
+                id="cookie-preferences-button"
                 class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200"
               >
                 Configurar Cookies
@@ -161,17 +164,15 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </main>
 
-  <!-- Script para verificar CookieScript -->
   <script is:inline>
-    // Script para mostrar el panel de cookies si CookieScript está disponible
-    document.addEventListener('DOMContentLoaded', function() {
-      // Verificar si CookieScript está cargado
-      if (typeof CookieScript !== 'undefined') {
-        console.log('CookieScript está disponible');
-      } else {
-        console.log('CookieScript no está disponible aún');
-        // Opcional: ocultar el botón si CookieScript no está disponible
-      }
+    document.addEventListener("DOMContentLoaded", function () {
+      const button = document.getElementById("cookie-preferences-button");
+
+      button?.addEventListener("click", function () {
+        if (window.CookieScript?.instance?.show) {
+          window.CookieScript.instance.show();
+        }
+      });
     });
   </script>
 </Layout>

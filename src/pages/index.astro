@@ -5,11 +5,107 @@ import Features from "../components/Features.astro";
 import Pricing from "../components/Pricing.astro";
 import ContactCTA from "../components/ContactCTA.astro";
 import FAQs from "../components/FAQs.astro";
+
+const siteUrl = Astro.site ?? new URL("https://maingoo.tech");
+const homeUrl = new URL("/", siteUrl).toString();
+const logoUrl = new URL("/maingoo_logo.svg", siteUrl).toString();
+const imageUrl = new URL("/maingo_origin.png", siteUrl).toString();
+
+const title = "Maingoo - Gestión Inteligente de Restaurantes con IA";
+const description =
+  "Revoluciona tu restaurante con Maingoo. Automatiza facturas, inventario, proveedores y analíticas con IA. Solicita acceso gratuito a la beta.";
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${homeUrl}#organization`,
+    name: "Maingoo",
+    legalName: "LSXEM S.L.",
+    url: homeUrl,
+    logo: logoUrl,
+    email: "hello@maingoo.tech",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Carrescobar 22",
+      postalCode: "47491",
+      addressLocality: "La Seca",
+      addressRegion: "Valladolid",
+      addressCountry: "ES",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${homeUrl}#website`,
+    name: "Maingoo",
+    url: homeUrl,
+    inLanguage: "es-ES",
+    publisher: {
+      "@id": `${homeUrl}#organization`,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": `${homeUrl}#software`,
+    name: "Maingoo",
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    url: homeUrl,
+    image: imageUrl,
+    description,
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "EUR",
+      description: "Acceso gratuito durante la beta de Maingoo.",
+      availability: "https://schema.org/InStock",
+    },
+    publisher: {
+      "@id": `${homeUrl}#organization`,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${homeUrl}#faq`,
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "¿Tiene coste unirme a la beta de Maingoo?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No, la beta es gratuita durante esta fase y permite acceder a las funcionalidades disponibles sin coste.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "¿Qué gano participando en la beta?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Obtienes acceso anticipado a nuevas funciones, soporte directo del equipo y beneficios exclusivos para futuros planes.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "¿Cuándo habrá precios de Maingoo?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Los planes de pago llegarán después de la fase beta. Los participantes beta tendrán beneficios exclusivos y descuentos especiales.",
+        },
+      },
+    ],
+  },
+];
 ---
 
 <Layout
-  title="Maingoo - Gestión Inteligente de Restaurantes con IA"
-  description="Revoluciona tu restaurante con Maingoo. Gestión inteligente, volcado automático de datos con IA, análisis predictivo y optimización de operaciones. Prueba gratuita de 14 días."
+  title={title}
+  description={description}
+  image="/maingo_origin.png"
+  imageAlt="Maingoo, software de gestión inteligente para restaurantes con IA"
+  structuredData={structuredData}
 >
   <main class="relative">
     <div class="mt-[72px] lg:mt-[88px]">
