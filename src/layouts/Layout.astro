@@ -160,6 +160,65 @@ const jsonLd = structuredData ? JSON.stringify(structuredData) : null;
     <!-- Chat Widget Component -->
     <ChatWidget />
 
+    <script is:inline>
+      (function () {
+        const styleId = "cookiescript-mobile-overrides";
+        const css = `
+          @media (max-width: 767px) {
+            #cookiescript_injected {
+              left: 1rem !important;
+              right: 1rem !important;
+              bottom: 1rem !important;
+              width: auto !important;
+              max-width: none !important;
+              max-height: min(68vh, 560px) !important;
+              box-sizing: border-box !important;
+              overflow-y: auto !important;
+              border-radius: 1rem !important;
+              transform: none !important;
+            }
+
+            #cookiescript_buttons {
+              display: grid !important;
+              grid-template-columns: 1fr !important;
+              gap: 0.75rem !important;
+              margin: 0 0 0.75rem !important;
+              width: 100% !important;
+            }
+
+            #cookiescript_accept,
+            #cookiescript_reject,
+            #cookiescript_save {
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              min-height: 44px !important;
+              margin: 0 !important;
+              padding: 0 1rem !important;
+              white-space: normal !important;
+            }
+          }
+        `;
+
+        function injectCookieOverrides() {
+          let style = document.getElementById(styleId);
+          if (!style) {
+            style = document.createElement("style");
+            style.id = styleId;
+            style.textContent = css;
+          }
+          document.body.appendChild(style);
+        }
+
+        injectCookieOverrides();
+        window.addEventListener("load", injectCookieOverrides);
+        setTimeout(injectCookieOverrides, 1000);
+        setTimeout(injectCookieOverrides, 3000);
+      })();
+    </script>
+
     <style>
       html {
         font-family: "Inter", system-ui, sans-serif;

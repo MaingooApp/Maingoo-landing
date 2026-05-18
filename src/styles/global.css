@@ -41,3 +41,79 @@ html.dark {
 html:not(.dark) {
   color-scheme: light;
 }
+
+@media (max-width: 767px) {
+  #cookiescript_injected {
+    left: 1rem !important;
+    right: 1rem !important;
+    bottom: 1rem !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: min(68vh, 560px) !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    border-radius: 1rem !important;
+    transform: none !important;
+  }
+
+  #cookiescript_injected_fsd,
+  #cookiescript_fsd_wrapper {
+    align-items: flex-end !important;
+  }
+
+  #cookiescript_injected h4,
+  #cookiescript_injected .cookiescript_header {
+    font-size: 1.125rem !important;
+    line-height: 1.25 !important;
+  }
+
+  #cookiescript_injected button,
+  #cookiescript_injected .cookiescript_button,
+  #cookiescript_injected [role="button"] {
+    min-height: 44px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    white-space: normal !important;
+  }
+
+  #cookiescript_injected .cookiescript_buttons,
+  #cookiescript_injected .cookiescript_buttons_wrap,
+  #cookiescript_injected .cookiescript_button_wrap,
+  #cookiescript_injected [class*="button"] {
+    max-width: 100% !important;
+  }
+
+  #cookiescript_injected .cookiescript_buttons,
+  #cookiescript_injected .cookiescript_buttons_wrap,
+  #cookiescript_injected .cookiescript_button_wrap,
+  #cookiescript_injected #cookiescript_buttons {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  #cookiescript_injected #cookiescript_accept,
+  #cookiescript_injected #cookiescript_reject,
+  #cookiescript_injected #cookiescript_save,
+  #cookiescript_injected #cookiescript_readmore,
+  #cookiescript_injected #cookiescript_reportdate,
+  #cookiescript_injected [id^="cookiescript_"][id*="button"] {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 44px !important;
+    margin: 0 !important;
+    white-space: normal !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  #cookiescript_injected {
+    max-width: 360px !important;
+    max-height: 58vh !important;
+    overflow-y: auto !important;
+  }
+}

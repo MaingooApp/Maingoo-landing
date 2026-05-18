@@ -3,20 +3,20 @@
 ---
 
 <!-- Chat Widget -->
-<div id="chat-widget" class="fixed bottom-6 right-6 z-50">
+<div id="chat-widget" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
   <!-- Botón Burbuja Flotante -->
   <button
     id="chat-toggle"
-    class="w-16 h-16 bg-[#6B9E86] hover:bg-[#5a8a71] text-white rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center hover:scale-110"
+    class="w-14 h-14 sm:w-16 sm:h-16 bg-[#6B9E86] hover:bg-[#5a8a71] text-white rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 flex items-center justify-center hover:scale-110"
     aria-label="Abrir chat de Maingoo IA"
   >
-    <img src="/maingoo_logo.svg" alt="Chat IA" class="w-8 h-8" />
+    <img src="/maingoo_logo.svg" alt="Chat IA" class="w-7 h-7 sm:w-8 sm:h-8" />
   </button>
 
   <!-- Chat Window -->
   <div
     id="chat-window"
-    class="absolute bottom-20 right-0 w-80 h-[480px] bg-[#F0F7F4] rounded-lg shadow-2xl border border-[#6B9E86]/30 transform origin-bottom-right scale-0 opacity-0 transition-all duration-300 overflow-hidden backdrop-blur-sm"
+    class="absolute bottom-16 sm:bottom-20 right-0 w-[calc(100vw-2rem)] max-w-80 h-[min(480px,calc(100vh-7rem))] bg-[#F0F7F4] rounded-lg shadow-2xl border border-[#6B9E86]/30 transform origin-bottom-right scale-0 opacity-0 transition-all duration-300 overflow-hidden backdrop-blur-sm"
   >
     <!-- Chat Header -->
     <div
@@ -63,7 +63,7 @@
     <!-- Chat Messages -->
     <div
       id="chat-messages"
-      class="flex-1 p-4 space-y-3 overflow-y-auto h-80 bg-[#F0F7F4]"
+      class="p-4 space-y-3 overflow-y-auto h-[min(320px,calc(100vh-17rem))] bg-[#F0F7F4]"
     >
       <!-- Welcome Message -->
       <div class="flex items-start space-x-2">
@@ -524,7 +524,7 @@ Reglas:
 <script>
   // Script adicional para conectar botones "open-chat" en otros componentes
   document.addEventListener("DOMContentLoaded", () => {
-    const openChatButtons = document.querySelectorAll("#open-chat");
+    const openChatButtons = document.querySelectorAll("[data-open-chat]");
     
     openChatButtons.forEach(button => {
       button.addEventListener("click", (e) => {

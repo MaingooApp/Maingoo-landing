@@ -27,7 +27,6 @@
           content: "Restaurante";
           animation: changeWord 34s infinite;
           font-weight: bold;
-          white-space: nowrap;
         }
 
         /* Estilos para Desktop */
@@ -70,12 +69,21 @@
 
         /* Estilos para Móvil */
         @media (max-width: 768px) {
+          .flex-custom {
+            display: block !important;
+          }
           .fixed-text {
-            padding-left: 8px;
+            padding-left: 0;
           }
           .headline-row {
             display: block;
-            text-align: left;
+            text-align: center;
+          }
+          .ia-headline-row {
+            display: block !important;
+          }
+          .ia-headline-row span {
+            display: block;
           }
           .headline-row:last-child {
             margin-bottom: 0;
@@ -85,8 +93,8 @@
             display: block;
             margin-top: 0.2em;
             min-height: 1.2em;
-            min-width: 177px;
-            text-align: left;
+            min-width: 0;
+            text-align: center;
           }
           .changing-business {
             display: block;
@@ -96,6 +104,9 @@
             color: #000000;
             position: relative;
             display: inline-block;
+            max-width: 100%;
+            overflow-wrap: anywhere;
+            white-space: normal;
           }
 
           :global(.dark) .changing-business::after {
@@ -175,7 +186,7 @@
         }
       </style>
       <h1
-        class="text-3xl sm:text-4xl md:text-6xl font-bold mb-24 text-center"
+        class="text-3xl sm:text-4xl md:text-6xl font-bold mb-16 sm:mb-24 text-center leading-tight"
         style="color: #FFFFFF;"
       >
         <div class="headline-row flex-custom" style="justify-content: center;">
@@ -186,8 +197,9 @@
             <span class="changing-business"></span>
           </div>
         </div>
-        <div class="headline-row" style="display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: nowrap; justify-content: center;">
-          <span style="color: #FFFFFF;">con Inteligencia Artificial</span>
+        <div class="headline-row ia-headline-row" style="display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+          <span style="color: #FFFFFF;">con Inteligencia</span>
+          <span style="color: #FFFFFF;">Artificial</span>
         </div>
       </h1>
 
@@ -214,16 +226,16 @@
       </p> -->
 
       <!-- CTA Buttons -->
-      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-28">
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16 sm:mb-28">
         <a
           href="#contact"
-          class="bg-[#6B9E86] text-[#FFFFFF] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block text-center"
+          class="bg-[#6B9E86] text-[#FFFFFF] px-6 sm:px-8 py-4 rounded-lg text-base sm:text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block text-center"
         >
           Solicitar Acceso a la Beta
         </a>
         <button
-          id="open-chat"
-          class="relative bg-transparent text-[#000000] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-flex items-center justify-center gap-4"
+          data-open-chat
+          class="relative bg-transparent text-[#000000] px-6 sm:px-8 py-4 rounded-lg text-base sm:text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-flex items-center justify-center gap-3 sm:gap-4"
           style="border: 3px solid #6B9E86; background: #f0f7f426; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"
         >
         <img src="/maingoo_logo.svg" alt="IA" class="w-7 h-7" />

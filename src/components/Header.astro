@@ -68,7 +68,13 @@
       </div>
 
       <!-- Mobile Menu Button -->
-      <button class="lg:hidden p-2 dark:text-[#000000]" id="mobile-menu-button">
+      <button
+        class="lg:hidden min-h-11 min-w-11 p-2 dark:text-[#000000]"
+        id="mobile-menu-button"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label="Abrir menú de navegación"
+      >
         <svg
           class="w-6 h-6"
           fill="none"
@@ -111,6 +117,13 @@
           onmouseover="this.style.color='#6B9E86'"
           onmouseout="this.style.color=''">Precios</a
         >
+        <a
+          href="/#faqs"
+          class="block text-[16px] font-normal text-gray-600 dark:text-[#000000] transition-colors py-2"
+          style="--hover-color: #6B9E86;"
+          onmouseover="this.style.color='#6B9E86'"
+          onmouseout="this.style.color=''">FAQs</a
+        >
         <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
           <a
             href="https://app.maingoo.tech/"
@@ -144,39 +157,32 @@
     const mobileMenu = document.getElementById("mobile-menu");
 
     if (mobileMenuButton && mobileMenu) {
-      mobileMenuButton.addEventListener("click", () => {
-        // Toggle mobile menu visibility
-        mobileMenu.classList.toggle("hidden");
+      const setMenuOpen = (isOpen: boolean) => {
+        mobileMenu.classList.toggle("hidden", !isOpen);
+        mobileMenuButton.setAttribute("aria-expanded", String(isOpen));
+        mobileMenuButton.setAttribute(
+          "aria-label",
+          isOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"
+        );
 
-        // Change hamburger icon to X when menu is open
-        const svg = mobileMenuButton.querySelector("svg");
-        if (svg) {
-          const path = svg.querySelector("path");
-          if (path) {
-            if (mobileMenu.classList.contains("hidden")) {
-              // Hamburger icon
-              path.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
-            } else {
-              // X icon
-              path.setAttribute("d", "M6 18L18 6M6 6l12 12");
-            }
-          }
+        const path = mobileMenuButton.querySelector("path");
+        if (path) {
+          path.setAttribute(
+            "d",
+            isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"
+          );
         }
+      };
+
+      mobileMenuButton.addEventListener("click", () => {
+        setMenuOpen(mobileMenu.classList.contains("hidden"));
       });
 
       // Close menu when clicking on links
       const mobileMenuLinks = mobileMenu.querySelectorAll("a");
       mobileMenuLinks.forEach((link) => {
         link.addEventListener("click", () => {
-          mobileMenu.classList.add("hidden");
-          // Reset to hamburger icon
-          const svg = mobileMenuButton.querySelector("svg");
-          if (svg) {
-            const path = svg.querySelector("path");
-            if (path) {
-              path.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
-            }
-          }
+          setMenuOpen(false);
         });
       });
 
@@ -188,15 +194,7 @@
           !mobileMenuButton.contains(target) &&
           !mobileMenu.contains(target)
         ) {
-          mobileMenu.classList.add("hidden");
-          // Reset to hamburger icon
-          const svg = mobileMenuButton.querySelector("svg");
-          if (svg) {
-            const path = svg.querySelector("path");
-            if (path) {
-              path.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
-            }
-          }
+          setMenuOpen(false);
         }
       });
     }

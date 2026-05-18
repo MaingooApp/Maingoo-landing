@@ -19,8 +19,8 @@
       </p>
       <div class="flex justify-center mb-8">
         <button
-          id="open-chat"
-          class="relative bg-transparent text-[#000000] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-flex items-center justify-center gap-2"
+          data-open-chat
+          class="relative bg-transparent text-[#000000] px-6 sm:px-8 py-4 rounded-lg text-base sm:text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-flex items-center justify-center gap-2"
           style="border: 3px solid #6B9E86; background-image: linear-gradient(#F0F7F4, #F0F7F4),  background-origin: border-box; background-clip: padding-box, border-box;"
         >
           <img src="/maingoo_logo.svg" alt="IA" class="w-7 h-7" />
@@ -33,7 +33,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
       <!-- Card 1 - Carga Automática -->
       <button
-        class="group bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
+      class="group bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
         data-feature="1"
       >
         <!-- Icono -->
@@ -85,7 +85,7 @@
 
       <!-- Card 2 - Análisis Predictivo -->
       <button
-        class="group bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
+        class="group bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
         data-feature="2"
       >
         <!-- Icono -->
@@ -136,7 +136,7 @@
 
       <!-- Card 3 - Inventario Inteligente -->
       <button
-        class="group bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
+        class="group bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
         data-feature="3"
       >
         <!-- Icono -->
@@ -187,7 +187,7 @@
 
       <!-- Card 4 - Maingoo IA -->
       <button
-        class="group bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
+        class="group bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
         data-feature="4"
       >
         <!-- Icono Dark Mode para IA -->
@@ -237,7 +237,7 @@
 
       <!-- Card 5 - Optimización de Costes -->
       <button
-        class="group bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
+        class="group bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
         data-feature="5"
       >
         <!-- Icono -->
@@ -289,7 +289,7 @@
 
       <!-- Card 6 - Integración Total -->
       <button
-        class="group bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
+        class="group bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all duration-300 text-left w-full cursor-pointer"
         data-feature="6"
       >
         <!-- Icono -->
@@ -351,15 +351,15 @@
     </div>
 
     <!-- Modal Container -->
-    <div class="flex min-h-screen items-center justify-center p-4">
+    <div class="flex min-h-screen items-end sm:items-center justify-center p-0 sm:p-4">
       <div
-        class="relative bg-white rounded-3xl shadow-2xl max-w-5xl w-full mx-4 overflow-hidden max-h-[90vh] overflow-y-auto"
+        class="relative bg-white rounded-t-2xl sm:rounded-3xl shadow-2xl max-w-5xl w-full sm:mx-4 overflow-hidden max-h-[92vh] sm:max-h-[90vh] overflow-y-auto"
       >
         <!-- Grid Layout: 2 columnas en desktop, 1 en móvil -->
         <div class="grid grid-cols-1 lg:grid-cols-2">
           <!-- Columna Izquierda: Media/Demo -->
           <div
-            class="relative h-64 lg:h-auto lg:min-h-full bg-gray-100 flex items-center justify-center"
+            class="relative h-44 sm:h-64 lg:h-auto lg:min-h-full bg-gray-100 flex items-center justify-center"
           >
             <img
               src="/maingo_origin.png"
@@ -384,11 +384,12 @@
           </div>
 
           <!-- Columna Derecha: Contenido -->
-          <div class="p-8 lg:p-10 relative flex flex-col">
+          <div class="p-5 sm:p-8 lg:p-10 relative flex flex-col">
             <!-- Botón Cerrar -->
             <button
               id="close-modal"
-              class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors z-10"
+              class="absolute top-4 right-4 min-h-11 min-w-11 flex items-center justify-center rounded-full bg-white/90 hover:bg-gray-100 transition-colors z-10"
+              aria-label="Cerrar detalles"
             >
               <svg
                 class="w-5 h-5 text-gray-600"
@@ -425,7 +426,7 @@
             </p>
 
             <!-- Beneficios Clave -->
-            <div class="bg-[#6B9E86]/5 rounded-2xl p-6">
+            <div class="bg-[#6B9E86]/5 rounded-2xl p-4 sm:p-6">
               <div class="flex items-center gap-2 mb-4">
                 <svg
                   class="w-5 h-5 text-[#6B9E86]"
