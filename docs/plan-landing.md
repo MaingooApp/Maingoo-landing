@@ -117,7 +117,7 @@ Regla: primero el canvas y la aprobación; después el código.
 
 ## Fase 2: vídeos cortos por función
 
-- [ ] 2.1 Elegir el modo de video-shotcraft (decisión 4). Leer `SKILL.md` y, según el modo, `references/pipeline.md` o `references/guided-free-creation.md`.
+- [x] 2.1 Elegir el modo de video-shotcraft (decisión 4): cocreación. Leer `SKILL.md` y, según el modo, `references/pipeline.md` o `references/guided-free-creation.md`.
 - [ ] 2.2 Crear el proyecto Remotion `Maingoo-Front/video-landing/`, ignorado por git como `video-pitch`.
   - Copiar la base de `video-pitch`: `capture/`, `src/lib`, `theme.ts` y `remotion.config.ts`.
   - Una composición por clip (`Clip01Facturas` …) desde un `Root.tsx` común.
@@ -130,6 +130,45 @@ Regla: primero el canvas y la aprobación; después el código.
   - Maquinaria, gestor, usuarios y auditoría.
   - Congelar los datos antes de capturar. Nada de datos del entorno local en pantalla.
 - [ ] 2.4 Mapa de planos de los 18 clips: tarjeta de video-shotcraft por clip, duración, guion de 1–2 frases y vista o estado. Validar los nombres de tarjeta en `gallery/api/library.json` y leer el TSX de su demo. **Aprobación del usuario.**
+### Guion de los clips (propuesta para aprobar en 2.4)
+
+**Modo:** cocreación (skill video-shotcraft). Producto, datos y dirección visual vienen de este plan y de `video-pitch/DESIGN-SPEC.md`. Se salta la comparativa de styleframes porque la marca está fijada en `DESIGN.md` y el pitch ya se aprobó con ella.
+
+**Reglas comunes a todos los clips:**
+- Formato 1600×1000 (16:10), 30 fps, sin audio.
+- Sin subtítulos: la tarjeta de la landing ya lleva el título, y a ese tamaño el texto no se leería.
+- Habla la interfaz real capturada con los mocks (Taberna La Encina), con un solo movimiento protagonista por plano.
+- Bucle limpio: los últimos 12 fotogramas funden con el primero.
+- Movimiento con la curva de la app `cubic-bezier(0.16,1,0.3,1)`.
+- Los estados de color siguen DESIGN.md: urgencia de cocina en ámbar a partir de 10 min y en rojo a partir de 15; la IA en violeta.
+- Mensaje: Maingoo lo resuelve solo; la idea de que pregunta cuando duda solo aparece donde la app de verdad pregunta (clip 03).
+
+| # | Clip (`clip` id) | s | Tarjeta · variante | Qué se ve (vista y estado mock) | Movimiento protagonista → final |
+|---|---|---|---|---|---|
+| 00 | Panel (`panel`, hero) | 10 | `cursor-flyover` | Panel de control de Taberna La Encina: ventas del día, sala, stock y compras | Vista aérea que recorre las cuatro zonas con el cursor de guía → vuelve al plano general |
+| 01 | Facturas (`01-facturas`) | 9 | `scan-bracket-sweep` → `row-embed` | Factura HR-2026/04817 de Hnos. Ruiz → su detalle | Escuadras y barrido violeta sobre el papel; las 8 líneas encajan en la tabla y aparece «Stock aplicado» |
+| 02 | Albaranes (`02-albaranes`) | 8 | `speed-ramp-freeze · freeze-annotate` | Detalle de factura con líneas agrupadas por albarán; un albarán marcado «Albarán repetido» | La tabla se desliza, se frena en el albarán repetido y una anotación dice «Ya contado en otra factura» |
+| 03 | Revisiones de la IA (`03-revisiones`) | 8 | `doc-park-left-pill-deal` | «Revisiones de la IA» → factura con un paso «¿Qué producto es esta línea?» | La factura se aparca a la izquierda; las sugerencias llegan como pastillas; se elige una y queda resuelto |
+| 04 | Costes (`04-costes`) | 8 | `spotlight-hero-card` | Ficha del AOVE 5 L con el KPI +12,4 % y su historial | Foco, acercamiento y el KPI se eleva; un único barrido de luz ámbar; vuelve a su sitio |
+| 05 | Inventario y recuento (`05-inventario`) | 8 | `type-and-filter` | Recuento en tablet: se busca «aceite», se filtra y se teclea la cantidad contada | Se escribe la búsqueda, la lista se filtra y la fila contada se confirma en verde |
+| 06 | Recetas y alérgenos (`06-recetas`) | 9 | `product-card-progressive-assemble` | «Crear artículo con Maingoo AI» → ficha de la receta con escandallo y alérgenos | La ficha se arma por partes (ingredientes, coste por ración, margen, iconos de alérgenos) |
+| 07 | TPV (`07-tpv`) | 10 | `input-trigger-moves · cursor-performance` | TPV de escritorio: plano de Terraza → Mesa 1 → carta con fotos → «Cobrar» | El cursor actúa en primera persona: toca la mesa, añade dos platos y abre el cobro |
+| 08 | Comandero (`08-comandero`) | 8 | `radial-ripple-phone-chips` | Móvil del comandero con la carta y el pedido de Terraza · Mesa 4 | El móvil queda en el centro; las pastillas «Mesa 4», «2 × Hamburguesa» y «Enviado a cocina» brotan a los lados |
+| 09 | Pantalla de cocina (`09-cocina`) | 7 | `deck-deal-flyin` | KDS con las columnas Nuevas, En preparación y Listas | Las comandas se reparten como cartas en sus columnas; una pasa a ámbar por el tiempo |
+| 10 | Plano de sala (`10-plano`) | 7 | `canvas-materialize-moves · panel-to-canvas` | Editor del plano: foto de la terraza → mesas y barra colocadas | La foto se convierte en el plano editable; las mesas se materializan en su sitio |
+| 11 | Cierre de caja (`11-caja`) | 8 | `odometer-digit-roll` | Caja: arqueo guiado del turno | El total contado gira hasta 1.467,00 € y la diferencia se fija en 0,00 € con «Cuadra» |
+| 12 | Informes (`12-informes`) | 8 | `document-typewriter-reveal` → `icon-performance-moves · pop-burst-confirm` | Informe de ventas del mes generado → propuesta «Enviar informe por correo» | El informe se escribe solo; al pulsar «Enviar», el check de confirmación estalla |
+| 13 | Chat (`13-chat`) | 9 | `ai-stream-response` | Chat lateral: «¿Qué platos me dejan menos margen?» | Primero llega el resumen; después la gráfica y la tabla bloque a bloque; queda en reposo |
+| 14 | Llamada (`14-llamada`) | 7 | `voice-waveform-live` | Franja de llamada con Maingoo (verde tú, violeta Maingoo) y la respuesta | Barras de voz vivas; la respuesta y su gráfica aparecen mientras habla |
+| 15 | APPCC y sensores (`15-appcc`) | 10 | `chart-live-moves · oscilloscope-stream` | Página del sensor «Botellero»: lectura en vivo de 24 h con el rango 2–8 °C | La línea avanza en directo, cruza los 8 °C, salta la alerta «Fuera de rango» y se ve el botón del PDF del mes |
+| 16 | Maquinaria (`16-maquinaria`) | 6 | `wall-reveal-moves · bento-light-up` | Máquinas y utensilios (horno, abatidor, cámara, cortadora…) | Las tarjetas del equipo se iluminan en cascada |
+| 17 | Gestoría (`17-gestoria`) | 6 | `paper-plane-messenger` | Ajustes › Asesoría con los datos del gestor → propuesta del chat «Enviar informe de compras a tu gestor» | Al enviar, un avión de papel cruza de Maingoo a la tarjeta del gestor |
+| 18 | Equipo y control (`18-equipo`) | 8 | `avatar-bracket-carousel` | Usuarios con sus roles (Encargada, Camarero, Cocina), PIN del TPV, dispositivos y actividad | Un mismo marco va mostrando cada rol con sus permisos |
+
+Pendiente al aprobar:
+- Corregir en `src/data/features.ts` el texto del clip 17: hoy dice «Comparte las facturas con tu asesoría», que la app no hace.
+- Los clips 00, 08 y 10 necesitan mocks nuevos (comandero, foto de plano).
+
 - [ ] 2.5 Capturar las texturas 2x de cada vista: `node capture/capture.mjs <clip>` contra el front local.
 - [ ] 2.6 Producir y renderizar clip a clip.
   - Revisar cada uno con fotogramas fijos antes del render final.
