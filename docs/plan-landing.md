@@ -97,8 +97,8 @@ Regla: primero el canvas y la aprobación; después el código.
   - Prueba social si existe: no inventar logos ni testimonios.
   - Precios, contacto y pie.
   - Todo en claro y oscuro.
-- [ ] 1.4 Aprobación del usuario y ajustes.
-- [ ] 1.5 Implementar en Astro, un commit local por sección:
+- [x] 1.4 Aprobación del usuario y ajustes (textos: Maingoo lo resuelve solo y solo pregunta si tiene dudas, sin enfatizarlo fuera de «Cómo trabaja»; fuera «Nunca subiremos tu precio…»).
+- [x] 1.5 Implementar en Astro (commit `85f2626`, uno solo para la vista):
   1. Tokens: Lato, la paleta y los radios en `tailwind.config.ts` (Tailwind 3) y `src/styles/global.css`. Material Symbols como SVG inline o paquete local, sin CDN nuevos.
   2. Layout y navegación.
   3. Hero.
@@ -107,12 +107,13 @@ Regla: primero el canvas y la aprobación; después el código.
   6. Precios y contacto.
   7. Retirar lo que no se use: `Benefits.astro` y las promesas falsas.
   8. SEO: actualizar título, descripción, datos estructurados (FAQ incluido) e imagen Open Graph con el eslogan nuevo.
-- [ ] 1.6 Verificar:
+- [x] 1.6 Verificar (build y check limpios; revisado a 1440 y 375, claro y oscuro, filtro, formulario con 246 prefijos y sin scroll horizontal; el reCAPTCHA da «clave no válida» en localhost porque la clave es solo de maingoo.tech):
   - `npm run build` y `npm run check` sin errores.
   - Revisión en el navegador a 1440 y 390, en claro y oscuro.
   - Sin scroll horizontal, contraste AA, foco visible y textos en español.
   - El formulario de contacto, el chat y el menú móvil siguen funcionando. No enviar el formulario de verdad.
-- [ ] 1.7 Actualizar `AGENTS.md` y `README.md` de la landing si cambian la estructura o los componentes.
+- [x] 1.7 Actualizar `AGENTS.md` de la landing (estructura, tokens, FeatureClip, tema y despliegue).
+- [ ] 1.8 Pendiente menor: nueva imagen Open Graph con el eslogan (sigue `maingo_origin.png`).
 
 ## Fase 2: vídeos cortos por función
 
@@ -141,4 +142,5 @@ Regla: primero el canvas y la aprobación; después el código.
 | Fecha | Paso | Resultado / commit |
 |---|---|---|
 | 2026-10-25 | Plan | Creado este documento (se movió desde el repo equivocado `/Users/david/Developer/maingoo`) |
-| 2026-10-25 | 1.3 | Canvas publicado con escritorio, móvil y oscuro; pendiente de aprobación (1.4) |
+| 2026-10-25 | 1.3 | Canvas publicado con escritorio, móvil y oscuro |
+| 2026-10-25 | 1.4–1.7 | Landing programada y verificada en local, commit `85f2626` (sin push) |
