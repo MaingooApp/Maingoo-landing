@@ -87,8 +87,8 @@ Para la presentación del 28-10, si falta tiempo, la prioridad es: 1, 13, 15, 7,
 Regla: primero el canvas y la aprobación; después el código.
 
 - [x] 1.1 Leer `DESIGN.md` y los canvases de referencia. Inventariar el contenido actual de `src/pages` y `src/components` (resumen en Contexto).
-- [ ] 1.2 Responder las decisiones 1–3 con el usuario.
-- [ ] 1.3 Crear el canvas «Maingoo — Landing» (tipo Design, `quickstart` intent `design`) con tableros a 1440 de ancho y 390 en móvil:
+- [x] 1.2 Responder las decisiones 1–3 con el usuario (2026-10-25: acepta las 3 propuestas: solo funciones reales, precios beta como hoy y CTA «Solicitar acceso a la beta»).
+- [x] 1.3 Crear el canvas «Maingoo — Landing» (`https://claude.ai/artifact/Lx9oAWZ682i6m1vucUAWfF`; archivos en el scratchpad `canvas-landing/project/`; pósteres con capturas reales y datos de prueba del pitch) (tipo Design, `quickstart` intent `design`) con tableros a 1440 de ancho y 390 en móvil:
   - Navegación con logo, enlaces y CTA.
   - Hero con el eslogan y el hueco del vídeo principal.
   - El problema: tiempo perdido en facturas, costes que suben y papeles de APPCC.
@@ -141,3 +141,4 @@ Regla: primero el canvas y la aprobación; después el código.
 | Fecha | Paso | Resultado / commit |
 |---|---|---|
 | 2026-10-25 | Plan | Creado este documento (se movió desde el repo equivocado `/Users/david/Developer/maingoo`) |
+| 2026-10-25 | 1.3 | Canvas publicado con escritorio, móvil y oscuro; pendiente de aprobación (1.4) |
