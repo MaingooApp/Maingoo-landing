@@ -1,0 +1,86 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+
+export interface Props {
+  /** File stem in public/videos (clip.mp4, clip.webm). */
+  clip: string;
+  poster?: string;
+  alt: string;
+  seconds?: number;
+  /** SVG path drawn when there is no poster. */
+  icon?: string;
+  eager?: boolean;
+}
+
+const { clip, poster, alt, seconds, icon, eager = false } = Astro.props;
+const videoDir = path.join(process.cwd(), "public", "videos");
+const sources = ["webm", "mp4"].filter((ext) => fs.existsSync(path.join(videoDir, `${clip}.${ext}`)));
+const hasVideo = sources.length > 0;
+---
+
+<div class="relative aspect-[16/10] overflow-hidden bg-deep">
+  {
+    hasVideo ? (
+      <video
+        class="size-full object-cover object-left-top"
+        muted
+        loop
+        playsinline
+        preload="none"
+        poster={poster}
+        aria-label={alt}
+        data-feature-clip
+      >
+        {sources.map((ext) => (
+          <source src={`/videos/${clip}.${ext}`} type={`video/${ext}`} />
+        ))}
+      </video>
+    ) : poster ? (
+      <img
+        src={poster}
+        alt={alt}
+        class="size-full object-cover object-left-top"
+        loading={eager ? "eager" : "lazy"}
+        decoding="async"
+      />
+    ) : (
+      <div class="flex size-full items-center justify-center" role="img" aria-label={alt}>
+        <span class="flex size-[72px] items-center justify-center rounded-[18px] bg-white/10 text-brand-200">
+          <svg class="size-[38px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d={icon}></path>
+          </svg>
+        </span>
+      </div>
+    )
+  }
+  {
+    hasVideo && seconds && (
+      <span class="pointer-events-none absolute bottom-3 left-3 inline-flex min-h-[30px] items-center gap-1.5 rounded-full bg-slate-900/70 px-2.5 text-xs font-bold text-white">
+        <svg class="size-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M7 4l13 8-13 8z"></path>
+        </svg>
+        Vídeo · {seconds} s
+      </span>
+    )
+  }
+</div>
+
+<script>
+  // Clips play muted while visible; with reduced motion they keep the poster.
+  const clips = document.querySelectorAll<HTMLVideoElement>("video[data-feature-clip]");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (clips.length && !reduceMotion && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const video = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) void video.play().catch(() => undefined);
+          else video.pause();
+        }
+      },
+      { threshold: 0.4 }
+    );
+    clips.forEach((video) => observer.observe(video));
+  }
+</script>

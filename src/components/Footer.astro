@@ -1,163 +1,61 @@
 ---
-
+const columns = [
+  {
+    title: "Producto",
+    links: [
+      { href: "/#features", label: "Funciones" },
+      { href: "/#pricing", label: "Precios" },
+      { href: "/#contact", label: "Acceso a la beta" },
+    ],
+  },
+  {
+    title: "Ayuda",
+    links: [
+      { href: "/#contact", label: "Contacto" },
+      { href: "/#faqs", label: "Preguntas frecuentes" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { href: "/politica-privacidad", label: "Política de privacidad" },
+      { href: "/terminos-servicio", label: "Términos del servicio" },
+      { href: "/cookies", label: "Cookies" },
+    ],
+  },
+];
+const year = new Date().getFullYear();
 ---
 
-<style>
-  @media (max-width: 768px) {
-    .text-center-flex {
-      justify-content: center;
-    }
-    .text-center {
-      text-align: center;
-    }
-  }
-</style>
-
-<footer class="dark:bg-[hsl(166,40%,9%)] text-[#F0F7F4]">
-  <div class="container mx-auto px-6 py-16">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <!-- Company Info -->
-      <div class="md:col-span-1">
-        <div class="flex items-center justify-center md:justify-start space-x-2 mb-6">
-          <img src="/maingoo_logo.svg" alt="Maingoo Logo" class="w-8 h-8" />
-          <span class="text-xl font-bold">Maingoo</span>
-        </div>
-        <p
-          class=" dark:text-[#F0F7F4] mb-6 leading-relaxed text-center"
-        >
-          (R)evolucionando la gestión de restaurantes con inteligencia
-          artificial.
-        </p>
+<footer class="border-t border-slate-200 bg-white pb-7 pt-12 dark:border-zinc-800 dark:bg-zinc-900">
+  <div class="mx-auto flex max-w-[1200px] flex-col gap-8 px-5 md:px-8">
+    <div class="flex flex-wrap justify-between gap-8">
+      <div class="flex max-w-[340px] flex-col gap-3">
+        <span class="flex items-center gap-2.5">
+          <span class="flex size-10 items-center justify-center rounded-control bg-brand-50">
+            <img src="/maingoo_logo.svg" alt="" width="30" height="30" class="size-[30px] object-contain" />
+          </span>
+          <strong class="text-xl">Maingoo</strong>
+        </span>
+        <span class="text-[15px] text-muted dark:text-zinc-400">Gana tiempo. Maingoo hace el resto.</span>
       </div>
-
-      <!-- Product Links -->
-      <div class="text-center">
-        <h3 class="text-lg font-semibold mb-6">Producto</h3>
-        <ul class="space-y-3">
-          <li>
-            <a
-              href="/#features"
-              class="text-[16px] font-normal dark:text-[#F0F7F4] transition-colors whitespace-nowrap"
-              style="--hover-color: #6B9E86;"
-              onmouseover="this.style.color='#6B9E86'"
-              onmouseout="this.style.color=''"
-              >Características</a
-            >
-          </li>
-          <li>
-            <a
-              href="/#pricing"
-              class="text-[16px] font-normal dark:text-[#F0F7F4] transition-colors whitespace-nowrap"
-              style="--hover-color: #6B9E86;"
-              onmouseover="this.style.color='#6B9E86'"
-              onmouseout="this.style.color=''"
-              >Precios</a
-            >
-          </li>
-          <li>
-            <a
-              href="#contact"
-              class="text-[16px] font-normal dark:text-[#F0F7F4] transition-colors whitespace-nowrap"
-              style="--hover-color: #6B9E86;"
-              onmouseover="this.style.color='#6B9E86'"
-              onmouseout="this.style.color=''"
-              >Acceso a la Beta</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <!-- Company Links -->
-      <div class="text-center">
-        <h3 class="text-lg font-semibold mb-6">Empresa</h3>
-        <ul class="space-y-3">
-          <li>
-            <a
-              href="javascript:console.log('Próximamente: Página corporativa de Maingoo')"
-              class="text-[16px] font-normal dark:text-[#F0F7F4] transition-colors whitespace-nowrap"
-              style="--hover-color: #6B9E86;"
-              onmouseover="this.style.color='#6B9E86'"
-              onmouseout="this.style.color=''"
-              >Acerca de</a
-            >
-          </li>
-          <li>
-            <a
-              href="javascript:console.log('Próximamente: Sala de prensa Maingoo')"
-              class="text-[16px] font-normal dark:text-[#F0F7F4] transition-colors whitespace-nowrap"
-              style="--hover-color: #6B9E86;"
-              onmouseover="this.style.color='#6B9E86'"
-              onmouseout="this.style.color=''"
-              >Prensa</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <!-- Support Links -->
-      <div class="text-center">
-        <h3 class="text-lg font-semibold mb-6">Soporte</h3>
-        <ul class="space-y-3">
-          <li>
-            <a
-              href="javascript:console.log('Próximamente: Centro de seguridad y cumplimiento')"
-              class="text-[16px] font-normal dark:text-[#F0F7F4] transition-colors whitespace-nowrap"
-              style="--hover-color: #6B9E86;"
-              onmouseover="this.style.color='#6B9E86'"
-              onmouseout="this.style.color=''"
-              >Seguridad</a
-            >
-          </li>
-          <li>
-            <a
-              href="#contact"
-              class="text-[16px] font-normal dark:text-[#F0F7F4] transition-colors whitespace-nowrap"
-              style="--hover-color: #6B9E86;"
-              onmouseover="this.style.color='#6B9E86'"
-              onmouseout="this.style.color=''"
-              >Contacto</a
-            >
-          </li>
-        </ul>
-      </div>
+      <nav aria-label="Pie de página" class="flex flex-wrap gap-12 text-[15px]">
+        {
+          columns.map((column) => (
+            <div class="flex flex-col gap-2.5">
+              <strong>{column.title}</strong>
+              {column.links.map((link) => (
+                <a href={link.href} class="text-ink no-underline hover:text-brand-700 dark:text-zinc-50 dark:hover:text-brand-300">
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          ))
+        }
+      </nav>
     </div>
-
-    <!-- Bottom Section -->
-    <div class="border-t dark:border-gray-700 mt-12 pt-8">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <p class=" dark:text-[#F0F7F4] text-sm">
-          © 2025 Maingoo. Todos los derechos reservados.
-        </p>
-        <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 mt-4 md:mt-0">
-          <a  
-            href="politica-privacidad" 
-            class="text-[16px] font-normal dark:text-[#F0F7F4] transition-colors"
-            style="--hover-color: #6B9E86;"
-            onmouseover="this.style.color='#6B9E86'"
-            onmouseout="this.style.color=''"
-            >
-            Política de Privacidad
-          </a>
-          <a 
-            href="terminos-servicio" 
-            class="text-[16px] font-normal dark:text-[#F0F7F4] transition-colors"
-            style="--hover-color: #6B9E86;"
-            onmouseover="this.style.color='#6B9E86'"
-            onmouseout="this.style.color=''"
-            >
-            Términos de Servicio
-          </a>
-          <a 
-            href="cookies" 
-            class="text-[16px] font-normal dark:text-[#F0F7F4] transition-colors"
-            style="--hover-color: #6B9E86;"
-            onmouseover="this.style.color='#6B9E86'"
-            onmouseout="this.style.color=''"
-            >
-            Cookies
-          </a>
-        </div>
-      </div>
-    </div>
+    <p class="m-0 border-t border-slate-200 pt-5 text-[13px] text-muted dark:border-zinc-800 dark:text-zinc-400">
+      © {year} Maingoo · LSXEM S.L. · La Seca (Valladolid)
+    </p>
   </div>
 </footer>

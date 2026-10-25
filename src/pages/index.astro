@@ -5,15 +5,18 @@ import Features from "../components/Features.astro";
 import Pricing from "../components/Pricing.astro";
 import ContactCTA from "../components/ContactCTA.astro";
 import FAQs from "../components/FAQs.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import SensorsBand from "../components/SensorsBand.astro";
+import { faqs } from "../data/faqs";
 
 const siteUrl = Astro.site ?? new URL("https://maingoo.tech");
 const homeUrl = new URL("/", siteUrl).toString();
 const logoUrl = new URL("/maingoo_logo.svg", siteUrl).toString();
 const imageUrl = new URL("/maingo_origin.png", siteUrl).toString();
 
-const title = "Maingoo - Gestión Inteligente de Restaurantes con IA";
+const title = "Maingoo · Gana tiempo. Maingoo hace el resto.";
 const description =
-  "Revoluciona tu restaurante con Maingoo. Automatiza facturas, inventario, proveedores y analíticas con IA. Solicita acceso gratuito a la beta.";
+  "Software de gestión para hostelería con IA: facturas y albaranes, costes, inventario, recetas, TPV, comandero, cocina y APPCC con sensores de temperatura. Solicita acceso gratuito a la beta.";
 
 const structuredData = [
   {
@@ -70,32 +73,11 @@ const structuredData = [
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "@id": `${homeUrl}#faq`,
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "¿Tiene coste unirme a la beta de Maingoo?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "No, la beta es gratuita durante esta fase y permite acceder a las funcionalidades disponibles sin coste.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "¿Qué gano participando en la beta?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Obtienes acceso anticipado a nuevas funciones, soporte directo del equipo y beneficios exclusivos para futuros planes.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "¿Cuándo habrá precios de Maingoo?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Los planes de pago llegarán después de la fase beta. Los participantes beta tendrán beneficios exclusivos y descuentos especiales.",
-        },
-      },
-    ],
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
   },
 ];
 ---
@@ -108,14 +90,14 @@ const structuredData = [
   structuredData={structuredData}
 >
   <main class="relative">
-    <div class="mt-[72px] lg:mt-[88px]">
+    <div class="mt-[72px]">
       <Hero />
     </div>
-    <div class="relative">
-      <Features />
-      <Pricing />
-      <ContactCTA />
-      <FAQs />
-    </div>
+    <HowItWorks />
+    <Features />
+    <SensorsBand />
+    <Pricing />
+    <ContactCTA />
+    <FAQs />
   </main>
 </Layout>

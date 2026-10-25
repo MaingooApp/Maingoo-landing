@@ -1,0 +1,65 @@
+---
+// Example readings to illustrate the feature; they are not live data.
+const sensors = [
+  { name: "Cámara de carne", range: "0 a 4 °C", temp: "3,2 °C", state: "En rango", ok: true },
+  { name: "Congelador", range: "−22 a −18 °C", temp: "−18,6 °C", state: "En rango", ok: true },
+  { name: "Botellero", range: "2 a 8 °C", temp: "9,4 °C", state: "Fuera de rango · 2 h", ok: false },
+];
+const tags = ["Lecturas cada minuto", "Alertas al momento", "Registro PDF del mes"];
+---
+
+<section aria-labelledby="sensors-title" class="bg-deep py-[72px] text-white dark:bg-brand-950">
+  <div class="mx-auto grid max-w-[1200px] items-center gap-8 px-5 md:px-8 lg:grid-cols-2 lg:gap-12">
+    <div class="flex flex-col gap-[18px]">
+      <span class="text-[13px] font-black uppercase tracking-[0.08em] text-brand-200">APPCC y sensores</span>
+      <h2 id="sensors-title" class="m-0 text-[30px] font-black leading-tight md:text-[40px]">
+        Temperaturas bajo control, sin papeles.
+      </h2>
+      <p class="m-0 text-base leading-relaxed text-white/80 md:text-lg">
+        Los sensores de las cámaras y los congeladores envían su temperatura sin que nadie la apunte. Si algo sale de
+        rango, Maingoo te avisa al momento, y el registro del mes se descarga en PDF para la inspección.
+      </p>
+      <ul class="m-0 flex list-none flex-wrap gap-2 p-0">
+        {
+          tags.map((tag) => (
+            <li class="inline-flex min-h-[30px] items-center rounded-full border border-white/30 px-3 text-[13px] font-bold">{tag}</li>
+          ))
+        }
+      </ul>
+    </div>
+    <ul class="m-0 flex list-none flex-col gap-3 p-0" aria-label="Ejemplo de sensores">
+      {
+        sensors.map((sensor) => (
+          <li class="flex items-center gap-3.5 rounded-card bg-white px-[18px] py-4 text-ink">
+            <span
+              class:list={[
+                "flex size-11 shrink-0 items-center justify-center rounded-xl",
+                sensor.ok ? "bg-teal-50 text-teal-700" : "bg-red-50 text-red-700",
+              ]}
+              aria-hidden="true"
+            >
+              <svg class="size-[22px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M10 13.5V4a2 2 0 014 0v9.5a4 4 0 11-4 0z"></path>
+              </svg>
+            </span>
+            <span class="flex flex-1 flex-col gap-0.5">
+              <strong class="text-base">{sensor.name}</strong>
+              <span class="text-[13px] text-muted">Rango {sensor.range}</span>
+            </span>
+            <span class="flex flex-col items-end gap-1">
+              <strong class="text-2xl font-black">{sensor.temp}</strong>
+              <span
+                class:list={[
+                  "inline-flex min-h-[26px] items-center rounded-full border px-2.5 text-xs font-bold",
+                  sensor.ok ? "border-teal-200 bg-teal-50 text-teal-700" : "border-red-200 bg-red-50 text-red-700",
+                ]}
+              >
+                {sensor.state}
+              </span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

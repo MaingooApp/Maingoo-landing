@@ -1,0 +1,43 @@
+---
+const steps = [
+  {
+    title: "Sube una factura o pregúntale",
+    text: "Una foto, un PDF o una pregunta en el chat. También puedes llamarle.",
+    tone: "bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300",
+  },
+  {
+    title: "Maingoo AI lo resuelve",
+    text: "Lee las líneas, cruza proveedores y stock, y lo deja todo registrado.",
+    tone: "bg-violet-50 text-violet-700 dark:bg-violet-950 dark:text-violet-300",
+  },
+  {
+    title: "Solo te pregunta si tiene dudas",
+    text: "Si algo no está claro, te lo plantea con una pregunta sencilla. El resto ya está hecho.",
+    tone: "bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300",
+  },
+];
+---
+
+<section id="how" aria-labelledby="how-title" class="py-14">
+  <div class="mx-auto flex max-w-[1200px] flex-col gap-8 px-5 md:px-8">
+    <div class="flex max-w-[720px] flex-col gap-3">
+      <span class="text-[13px] font-black uppercase tracking-[0.08em] text-brand-700 dark:text-brand-300">Cómo trabaja</span>
+      <h2 id="how-title" class="m-0 text-[30px] font-black leading-tight md:text-[40px]">
+        Maingoo hace el trabajo. Tú solo entras cuando hace falta.
+      </h2>
+    </div>
+    <ol class="m-0 grid list-none gap-4 p-0 md:grid-cols-3 md:gap-5">
+      {
+        steps.map((step, index) => (
+          <li class="flex flex-col gap-2.5 rounded-card border border-slate-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+            <span class={`flex size-10 items-center justify-center rounded-full text-lg font-black ${step.tone}`} aria-hidden="true">
+              {index + 1}
+            </span>
+            <strong class="text-[19px]">{step.title}</strong>
+            <span class="text-[15px] leading-relaxed text-muted dark:text-zinc-400">{step.text}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

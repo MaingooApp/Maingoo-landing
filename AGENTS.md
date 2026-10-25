@@ -2,7 +2,13 @@
 
 ## Project Structure & Module Organization
 
-This is an Astro landing page for Maingoo with Tailwind CSS. Route files live in `src/pages/`; `index.astro` is the landing page and legal pages include `cookies.astro`, `politica-privacidad.astro`, and `terminos-servicio.astro`. Shared page chrome belongs in `src/layouts/`, currently `Layout.astro`. Reusable sections and widgets are in `src/components/`, such as `Hero.astro`, `Pricing.astro`, and `ChatWidget.astro`. Global styling is in `src/styles/global.css`, static assets are served from `public/`, and structured data lives in `src/data/`.
+This is an Astro landing page for Maingoo with Tailwind CSS. Route files live in `src/pages/`; `index.astro` is the landing page and legal pages include `cookies.astro`, `politica-privacidad.astro`, and `terminos-servicio.astro`. Shared page chrome belongs in `src/layouts/`, currently `Layout.astro`. Reusable sections and widgets are in `src/components/`: `Header`, `Hero`, `HowItWorks`, `Features`, `SensorsBand`, `Pricing`, `ContactCTA`, `FAQs`, `Footer` and `ChatWidget` (opened by any element with `data-open-chat`). Global styling is in `src/styles/global.css`; brand tokens (Lato, `brand-*` palette from the Maingoo app, `deep`, `ink`, `muted`, radii `control`/`card`) are in `tailwind.config.ts`. Content data lives in `src/data/`: `features.ts` (the 18 feature clips), `faqs.ts` (also feeds the FAQPage structured data) and `municipios_spain.json`. Static assets are served from `public/`; feature posters are in `public/posters/`.
+
+Feature videos: `FeatureClip.astro` looks for `public/videos/<clip>.webm|mp4` at build time, using the `clip` id from `features.ts`. If a file exists, it plays muted in a loop while visible, keeping the poster when `prefers-reduced-motion` is set; otherwise it shows the poster or icon. The plan for the clips is in `docs/plan-landing.md`.
+
+Theme: `.dark` on `<html>` is the real dark mode. The inline script in `Layout.astro` sets it from `localStorage.darkMode` or the system preference, and the header toggle switches it. Every component styles both themes.
+
+Deployment: pushing to the `production` branch deploys `maingoo.tech` over FTP (`.github/workflows`). Never push without the owner's go-ahead.
 
 ## Build, Test, and Development Commands
 
