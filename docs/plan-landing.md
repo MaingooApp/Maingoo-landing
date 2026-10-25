@@ -1,0 +1,143 @@
+# Plan: nueva landing de Maingoo con vídeos por función
+
+Documento de trabajo vivo. Si el chat se compacta o se cambia de sesión, **empezar leyendo este archivo** y seguir desde el primer paso sin marcar. Al terminar cada paso, marcarlo `[x]` y anotar el commit o el enlace.
+
+Creado el 2026-10-25. Presentación de Maingoo: 2026-10-28.
+
+## Contexto que no hay que volver a buscar
+
+- **Repo de la landing:** `/Users/david/Developer/Maingoo-landing` (remoto `MaingooApp/Maingoo-landing`, rama de trabajo `main`). Ojo: `/Users/david/Developer/maingoo` es una plantilla Astroship que no es la landing; no tocarla.
+  - Stack: Astro 5, Tailwind 3 (`@astrojs/tailwind`, `tailwind.config.ts`), npm.
+  - `npm run dev` sirve `localhost:4321`; `npm run build` es la validación principal; `npm run check` lanza Astro check.
+  - Normas propias en `AGENTS.md` del repo: copy en español, componentes en PascalCase y commits estilo `feat:`/`fix:` en español.
+- **Despliegue:** `.github/workflows` despliega por FTP a `maingoo.tech` (Hostinger) con cada push a la rama `production`. **Nunca hacer push** (ni a `main` ni a `production`). Commits solo locales en `main`; el usuario decide cuándo publicar.
+- **Landing actual (punto de partida):**
+  - `src/pages/index.astro` lleva `Header`, `Hero`, `Features`, `Pricing`, `ContactCTA`, `FAQs` y `Footer`, más datos estructurados (Organization LSXEM S.L., SoftwareApplication, FAQPage). `Benefits.astro` existe pero no se usa.
+  - Páginas legales: `cookies`, `politica-privacidad` y `terminos-servicio`. Se mantienen.
+  - Hero: «Gestiona tu restaurante con Inteligencia Artificial», con CTA «Solicitar Acceso a la Beta» y «Pregunta a Maingoo», que abre `ChatWidget`.
+  - `Features`: 6 tarjetas con modal. **Promete cosas que la app no tiene**, como delivery (Glovo, Uber), predicción de personal y RRHH.
+  - `Pricing`: beta gratis, más los planes Profesional y Empresarial «Próximamente».
+  - `ContactCTA`: formulario con EmailJS, captcha, tipo de negocio y municipios (`src/data/municipios_spain.json`).
+  - `ChatWidget`: asistente con webhook de n8n e IA local de Chrome.
+  - **Conservar la lógica** del formulario, del chat, del captcha, el SEO y las páginas legales; el rediseño es visual y de contenido.
+- **App de referencia (rediseño ya hecho):** `/Users/david/Developer/Maingoo-Front`.
+  - `DESIGN.md`: marca, tokens, tonos y reglas de iconos.
+  - Paleta de marca: primario `#4a8c68`, acción `#3a7154`, verde oscuro `#1A3C34`, menta `#F0F7F4`, fondo `#f1f5f9`, violeta IA `#7c3aed`, ámbar `#f59e0b`.
+  - Tipografía Lato 400/700/900, radios de 10 px (control) y 14 px (tarjeta).
+  - Iconos: solo Material Symbols Rounded.
+  - El logo es el robot sin recolorear, sobre una pastilla `#f0f9f4`.
+  - Eslogan aprobado: **«Gana tiempo. Maingoo hace el resto.»**
+- **Canvases del rediseño (estilo de referencia):** Caja `https://claude.ai/artifact/7LfrBtMBin1492YUtu4jWj`, TPV `https://claude.ai/artifact/9qv9gGYWnBm5MpAqioDHmM`, Comandero `https://claude.ai/artifact/Qgoh59pMfbRjAqyrjWibdf`, KDS `https://claude.ai/artifact/5kqxqAroxnqGh8fvet9L1x`, Acceso `https://claude.ai/artifact/Fbd7T2pu1yJ6EAqt8inp1D`. Logo como asset: `/_blob/e3d405d5bcbbd7876033efad40c1b638` en el canvas del TPV; se copia con `from_url` + `asset_ids`.
+- **Vídeo pitch existente:** `/Users/david/Developer/Maingoo-Front/video-pitch`. La carpeta está ignorada por git.
+  - Remotion 4.0.484, 1920×1080, 30 fps.
+  - `DESIGN-SPEC.md` recoge la dirección visual aprobada y la tabla de tarjetas de plano usadas.
+  - `capture/` contiene Playwright contra el front local con la API interceptada: `session.mjs`, `mocks.mjs` y `fake-data.mjs`, con los datos ficticios de **Taberna La Encina**, el proveedor «Distribuciones Hnos. Ruiz, S.L.», el CIF B00000000 y el usuario «Álex».
+  - `src/capabilities.json` lista las 24 capacidades que se enseñan.
+  - `public/audio` tiene la música y los efectos.
+- **Skill de vídeo:** `video-shotcraft`, instalada en `~/.claude/plugins/cache/anthropic-plugin-directory/video-shotcraft/1.0.0-5ddbf521038b/`.
+  - Antes de producir hay que elegir modo: plantilla Ink Press, creación autónoma o cocreación.
+  - Las tarjetas están en `references/shots/` y se validan contra `gallery/api/library.json`. Cada tarjeta tiene su demo en `demos/`.
+  - Reglas clave: capturas reales de la app, datos ficticios congelados antes de capturar, un solo efecto protagonista por plano, dejar respirar al final y, si hay música, cortes en el beat.
+- **Front local:** `npm start` en Maingoo-Front sirve `localhost:4200`, y `.claude/launch.json` («front-http») sirve `localhost:4300`. El usuario local de pruebas está en la memoria del proyecto. Para capturar se usan siempre los mocks; nada de datos reales en pantalla.
+- **Disco del Mac:** quedan unos 27 GB libres tras la limpieza del 2026-10-25. Los renders de Remotion y la caché de Angular (`.angular/`) crecen rápido: borrar `.angular/cache` si hace falta.
+- **Reglas del usuario (memoria):**
+  - Responder siempre en español.
+  - Diseñar en el canvas y esperar aprobación antes de programar.
+  - Un commit local por vista o sección, sin push ni despliegues.
+  - Producción apagada hasta la presentación.
+
+## Funciones que deben aparecer (todas con vídeo)
+
+Las 24 capacidades del pitch, más las añadidas en el rediseño, agrupadas en **18 clips de 5–10 s** (máximo 15 s). Cada función aparece al menos en un clip.
+
+| # | Clip | Funciones que cubre | Vista real que se graba (Maingoo-Front) |
+|---|---|---|---|
+| 1 | Facturas que se leen solas | Facturas, Proveedores | `/facturas`: subida → lectura de la IA → detalle con líneas y stock aplicado |
+| 2 | Albaranes sin duplicados | Albaranes | Detalle de factura con albaranes agrupados y aviso «Albarán repetido» |
+| 3 | Revisiones de la IA | Revisiones de la IA | `/incidencias-inventario` → paso guiado en `/facturas/detalle/:id?revisar=1` |
+| 4 | Costes que avisan | Costes y márgenes, Análisis de proveedores | Ficha de producto con el KPI de subida de coste e historial; comparativa de proveedores |
+| 5 | Inventario y recuento | Inventario, Recuento | `/inventario` y `/inventario/recuento` en tablet |
+| 6 | Recetas, escandallos y alérgenos | Recetas y escandallos, Alérgenos, Crear artículo con IA | `/articulos/:id` y «Crear artículo con Maingoo AI» |
+| 7 | TPV | TPV | `/ventas`: plano de sala → carta con fotos → cobrar y dividir cuenta |
+| 8 | Comandero | Comandero | `/dispositivo/terminal/*` en móvil, con PIN, carta, pedido y envío a cocina |
+| 9 | Pantalla de cocina | Cocina | `/dispositivo/cocina` con la urgencia por tiempo y «Marcar lista» |
+| 10 | Plano de sala | Plano de sala | Editor `/ventas/configuracion/salas/:id/plano` con importación desde imagen |
+| 11 | Cierre de caja | Cierre de caja | `/ventas/caja` con apertura, arqueo y cierre guiado |
+| 12 | Informes que llegan solos | Informes PDF y Excel, Envío por correo, Informes de ventas | `/ventas/informes` + propuesta del chat «Enviar informe por correo» |
+| 13 | Pregúntale a Maingoo AI | Chat con la IA | Chat lateral: pregunta → respuesta con gráfica |
+| 14 | Llámale | Llamada con la IA | Franja de llamada con barras de voz y respuesta |
+| 15 | APPCC y sensores de temperatura | APPCC, Temperaturas (sensores IoT) | `/appcc` con estado general y alerta de temperatura → `/appcc/:deviceId` con 24 h y PDF del mes |
+| 16 | Maquinaria y utensilios | Maquinaria | `/articulos/equipo` |
+| 17 | Tu gestoría al día | Gestoría | Ajustes › Asesoría y envío de facturas a la gestoría |
+| 18 | Equipo y control | Usuarios y permisos, Auditoría, Dispositivos | Ajustes › Usuarios (PIN del TPV), Actividad, emparejar dispositivos |
+
+Para la presentación del 28-10, si falta tiempo, la prioridad es: 1, 13, 15, 7, 9, 8, 4, 12, 14 y luego el resto.
+
+## Decisiones pendientes del usuario (preguntar antes del paso que las necesita)
+
+1. **Fase 1.** Funciones prometidas que no existen: delivery (Glovo, Uber), predicción de personal y RRHH. Propuesta: quitarlas y enseñar solo las funciones reales de la tabla de abajo; RRHH, como mucho, como «próximamente».
+2. **Fase 1.** Precios. Hoy: beta gratis más Profesional y Empresarial «Próximamente». Propuesta: mantenerlo hasta cerrar Stripe y la cuenta de prueba (memoria `trial-signup-future`), actualizando la lista de lo incluido.
+3. **Fase 1.** Llamada a la acción principal. Hoy: «Solicitar acceso a la beta», que lleva al formulario de contacto. Propuesta: mantenerla con el eslogan nuevo; el registro abierto llegará con la cuenta de prueba.
+4. **Fase 2.** Modo de video-shotcraft. Propuesta: **cocreación** solo hasta aprobar el mapa de planos de los 18 clips, y luego autónomo por clip.
+5. **Fase 2.** Sonido. Propuesta: clips **sin audio** (en la landing se reproducen en silencio, en bucle y con `playsinline`), así que no hace falta sincronizar con el beat.
+6. **Fase 2.** Formato. Propuesta: 1600×1000 (16:10, como la app) para escritorio y 720×1280 para los clips de comandero; MP4 H.264 + WebM, menos de 1,5 MB por clip y póster JPG.
+
+## Fase 1: rediseño de la landing
+
+Regla: primero el canvas y la aprobación; después el código.
+
+- [x] 1.1 Leer `DESIGN.md` y los canvases de referencia. Inventariar el contenido actual de `src/pages` y `src/components` (resumen en Contexto).
+- [ ] 1.2 Responder las decisiones 1–3 con el usuario.
+- [ ] 1.3 Crear el canvas «Maingoo — Landing» (tipo Design, `quickstart` intent `design`) con tableros a 1440 de ancho y 390 en móvil:
+  - Navegación con logo, enlaces y CTA.
+  - Hero con el eslogan y el hueco del vídeo principal.
+  - El problema: tiempo perdido en facturas, costes que suben y papeles de APPCC.
+  - Cómo trabaja: la IA propone y tú confirmas (patrón de propuesta de DESIGN.md).
+  - Rejilla de funciones agrupada en Compras y costes, Servicio (TPV, comandero, cocina, caja), Cocina segura (APPCC e IoT), Tu asistente (chat y voz) y Administración. Cada tarjeta lleva el hueco de su clip, con póster de marca hasta la fase 2.
+  - Prueba social si existe: no inventar logos ni testimonios.
+  - Precios, contacto y pie.
+  - Todo en claro y oscuro.
+- [ ] 1.4 Aprobación del usuario y ajustes.
+- [ ] 1.5 Implementar en Astro, un commit local por sección:
+  1. Tokens: Lato, la paleta y los radios en `tailwind.config.ts` (Tailwind 3) y `src/styles/global.css`. Material Symbols como SVG inline o paquete local, sin CDN nuevos.
+  2. Layout y navegación.
+  3. Hero.
+  4. Secciones.
+  5. Componente `FeatureClip.astro`: `<video muted loop playsinline preload="none" poster>` que solo se reproduce al estar visible (IntersectionObserver) y respeta `prefers-reduced-motion`, en cuyo caso muestra el póster.
+  6. Precios y contacto.
+  7. Retirar lo que no se use: `Benefits.astro` y las promesas falsas.
+  8. SEO: actualizar título, descripción, datos estructurados (FAQ incluido) e imagen Open Graph con el eslogan nuevo.
+- [ ] 1.6 Verificar:
+  - `npm run build` y `npm run check` sin errores.
+  - Revisión en el navegador a 1440 y 390, en claro y oscuro.
+  - Sin scroll horizontal, contraste AA, foco visible y textos en español.
+  - El formulario de contacto, el chat y el menú móvil siguen funcionando. No enviar el formulario de verdad.
+- [ ] 1.7 Actualizar `AGENTS.md` y `README.md` de la landing si cambian la estructura o los componentes.
+
+## Fase 2: vídeos cortos por función
+
+- [ ] 2.1 Elegir el modo de video-shotcraft (decisión 4). Leer `SKILL.md` y, según el modo, `references/pipeline.md` o `references/guided-free-creation.md`.
+- [ ] 2.2 Crear el proyecto Remotion `Maingoo-Front/video-landing/`, ignorado por git como `video-pitch`.
+  - Copiar la base de `video-pitch`: `capture/`, `src/lib`, `theme.ts` y `remotion.config.ts`.
+  - Una composición por clip (`Clip01Facturas` …) desde un `Root.tsx` común.
+  - Reutilizar `DESIGN-SPEC.md` como dirección visual y ampliarlo con una tabla de los 18 clips.
+- [ ] 2.3 Datos ficticios: ampliar `fake-data.mjs` y `mocks.mjs` para cada vista nueva.
+  - TPV y comandero con mesas, carta con fotos y pedidos.
+  - KDS con comandas a 2, 12 y 17 min.
+  - Caja.
+  - APPCC con 3–4 sensores (cámara, congelador, botellero), lecturas de 24 h y una alerta fuera de rango.
+  - Maquinaria, gestor, usuarios y auditoría.
+  - Congelar los datos antes de capturar. Nada de datos del entorno local en pantalla.
+- [ ] 2.4 Mapa de planos de los 18 clips: tarjeta de video-shotcraft por clip, duración, guion de 1–2 frases y vista o estado. Validar los nombres de tarjeta en `gallery/api/library.json` y leer el TSX de su demo. **Aprobación del usuario.**
+- [ ] 2.5 Capturar las texturas 2x de cada vista: `node capture/capture.mjs <clip>` contra el front local.
+- [ ] 2.6 Producir y renderizar clip a clip.
+  - Revisar cada uno con fotogramas fijos antes del render final.
+  - Exportar MP4 + WebM + póster a `Maingoo-landing/public/videos/<clip>.{mp4,webm,jpg}`.
+- [ ] 2.7 Conectar los clips en `FeatureClip` y revisar en el navegador: peso total, carga diferida y reproducción en móvil.
+- [ ] 2.8 Commit local en la landing con los clips. El proyecto Remotion se queda fuera de git.
+
+## Registro
+
+| Fecha | Paso | Resultado / commit |
+|---|---|---|
+| 2026-10-25 | Plan | Creado este documento (se movió desde el repo equivocado `/Users/david/Developer/maingoo`) |
