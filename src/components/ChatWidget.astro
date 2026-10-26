@@ -122,7 +122,7 @@
         </button>
       </div>
       <p id="chat-status" class="text-xs text-[#6B9E86] mt-2 text-center">
-        IA local en Chrome
+        Maingoo AI · respuestas generadas con IA
       </p>
     </div>
   </div>
@@ -132,29 +132,9 @@
   class ChatWidget {
     constructor() {
       this.isOpen = false;
-      this.aiSession = null;
-      this.aiSessionPromise = null;
-      this.aiOptions = {
-        expectedInputs: [{ type: "text", languages: ["es"] }],
-        expectedOutputs: [{ type: "text", languages: ["es"] }],
-      };
-      this.systemPrompt = `
-Eres Maingoo, el asistente local de la landing de Maingoo.
-Responde siempre en español, con tono cercano, claro y profesional.
-Tu objetivo es ayudar a restaurantes, bares, cafeterías y negocios hosteleros a entender Maingoo.
-
-Contexto de producto:
-- Maingoo es una herramienta de gestión inteligente para restaurantes con IA.
-- La landing presenta funcionalidades como carga automática de facturas y albaranes, análisis predictivo, inventario inteligente, optimización de costes, gestión de proveedores, panel de control, analíticas y futuras integraciones con TPV, delivery, APPCC, recetas, escandallos y RRHH.
-- Actualmente se ofrece acceso gratuito a una beta temprana.
-- Para solicitar acceso, recomienda usar el formulario de contacto de la web.
-
-Reglas:
-- No inventes precios definitivos, fechas de lanzamiento ni condiciones legales.
-- Si no sabes algo, dilo con honestidad y sugiere dejar datos en el formulario.
-- Si la pregunta no trata de Maingoo o gestión hostelera, responde brevemente y redirige a cómo Maingoo puede ayudar.
-- Mantén respuestas breves, útiles y fáciles de leer.
-`.trim();
+      // Conversation sent to /api/chat (Vercel function → GPT-6 Luna in Azure)
+      this.history = [];
+      this.busy = false;
 
       // Inicializar cuando el DOM esté listo
       if (document.readyState === "loading") {
@@ -197,7 +177,6 @@ Reglas:
         });
       }
 
-      this.checkLocalAiAvailability();
     }
 
     openChat() {
@@ -233,112 +212,54 @@ Reglas:
 
     async sendMessage() {
       const message = this.chatInput.value.trim();
-      if (!message) return;
+      if (!message || this.busy) return;
 
-      // Add user message to chat
+      this.busy = true;
       this.addMessage(message, "user");
-
-      // Clear input
+      this.history.push({ role: "user", content: message });
       this.chatInput.value = "";
       this.sendButton.disabled = true;
-
-      // Show typing indicator
       this.showTypingIndicator();
 
       try {
-        const session = await this.getLocalAiSession();
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: this.history.slice(-12) }),
+        });
+        if (!response.ok || !response.body) {
+          const data = await response.json().catch(() => ({}));
+          throw new Error(data.error || "unavailable");
+        }
+
         this.hideTypingIndicator();
-
         const botMessage = this.addStreamingBotMessage();
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
         let responseText = "";
-        const stream = session.promptStreaming(message);
-
-        for await (const chunk of stream) {
-          responseText += chunk;
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          responseText += decoder.decode(value, { stream: true });
           botMessage.textElement.textContent = responseText;
           this.scrollToBottom();
         }
 
-        if (!responseText.trim()) {
+        if (responseText.trim()) {
+          this.history.push({ role: "assistant", content: responseText });
+        } else {
           botMessage.textElement.textContent =
-            "No he podido generar una respuesta clara. Puedes dejar tus datos en el formulario y el equipo de Maingoo te ayudará.";
+            "No he podido responder ahora. Escríbenos a hello@maingoo.tech o deja tus datos en el formulario.";
         }
-
-        this.updateStatus("IA local lista");
-        this.sendButton.disabled = false;
       } catch (error) {
         this.hideTypingIndicator();
-        this.addMessage(this.getLocalAiErrorMessage(error), "bot");
-        this.updateStatus("IA local no disponible");
-        this.sendButton.disabled = false;
+        this.history.pop();
+        const reason = error instanceof Error && error.message !== "unavailable" && error.message !== "Failed to fetch" ? error.message + " " : "";
+        this.addMessage(`${reason}Si lo prefieres, escríbenos a hello@maingoo.tech o deja tus datos en el formulario.`, "bot");
+      } finally {
+        this.busy = false;
+        this.sendButton.disabled = !this.chatInput.value.trim();
       }
-    }
-
-    async checkLocalAiAvailability() {
-      const languageModel = window.LanguageModel;
-
-      if (!languageModel?.availability) {
-        this.updateStatus("IA local no disponible en este navegador");
-        return;
-      }
-
-      try {
-        const availability = await languageModel.availability(this.aiOptions);
-
-        if (availability === "available") {
-          this.updateStatus("IA local lista");
-        } else if (availability === "downloadable") {
-          this.updateStatus("IA local pendiente de descarga");
-        } else if (availability === "downloading") {
-          this.updateStatus("Descargando IA local");
-        } else {
-          this.updateStatus("IA local no disponible");
-        }
-      } catch (error) {
-        this.updateStatus("IA local no disponible");
-      }
-    }
-
-    async getLocalAiSession() {
-      if (this.aiSession) {
-        return this.aiSession;
-      }
-
-      if (!this.aiSessionPromise) {
-        this.aiSessionPromise = this.createLocalAiSession();
-      }
-
-      this.aiSession = await this.aiSessionPromise;
-      return this.aiSession;
-    }
-
-    async createLocalAiSession() {
-      const languageModel = window.LanguageModel;
-
-      if (!languageModel?.availability || !languageModel?.create) {
-        throw new Error("prompt-api-unavailable");
-      }
-
-      const availability = await languageModel.availability(this.aiOptions);
-
-      if (availability === "unavailable") {
-        throw new Error("prompt-api-unavailable");
-      }
-
-      if (availability === "downloadable" || availability === "downloading") {
-        this.updateStatus("Preparando IA local");
-      }
-
-      return languageModel.create({
-        ...this.aiOptions,
-        initialPrompts: [{ role: "system", content: this.systemPrompt }],
-        monitor: (monitor) => {
-          monitor.addEventListener("downloadprogress", (event) => {
-            const progress = Math.round(event.loaded * 100);
-            this.updateStatus(`Descargando IA local ${progress}%`);
-          });
-        },
-      });
     }
 
     addMessage(message, sender) {
@@ -392,7 +313,7 @@ Reglas:
           />
         </div>
         <div class="bg-white rounded-lg p-3 shadow-sm max-w-xs border border-[#6B9E86]/20">
-          <p class="text-sm text-[#1A3C34]"></p>
+          <p class="whitespace-pre-line text-sm text-[#1A3C34]"></p>
           <span class="text-xs text-[#6B9E86] mt-1 block">Ahora</span>
         </div>
       `;
@@ -455,18 +376,6 @@ Reglas:
       if (this.chatStatus) {
         this.chatStatus.textContent = status;
       }
-    }
-
-    getLocalAiErrorMessage(error) {
-      if (error?.name === "NotSupportedError") {
-        return "La IA local de Chrome no soporta esta configuración en tu dispositivo. Puedes usar el formulario de contacto y el equipo de Maingoo te ayudará.";
-      }
-
-      if (error?.name === "QuotaExceededError") {
-        return "La conversación se ha hecho demasiado larga para la IA local. Cierra y vuelve a abrir el chat para empezar de nuevo.";
-      }
-
-      return "Este chat usa la IA local de Chrome y ahora mismo no está disponible en tu navegador o dispositivo. Puedes dejar tus datos en el formulario de contacto y el equipo de Maingoo te ayudará.";
     }
   }
 
