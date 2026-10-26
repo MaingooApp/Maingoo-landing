@@ -17,7 +17,8 @@ const hits = new Map<string, number[]>();
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
-const env = (name: string): string | undefined => process.env[name] ?? import.meta.env[name];
+// Trimmed: values pasted into Vercel often carry a trailing space or line break
+const env = (name: string): string | undefined => (process.env[name] ?? import.meta.env[name])?.trim() || undefined;
 const error = (status: number, message: string) =>
   new Response(JSON.stringify({ error: message }), { status, headers: { "Content-Type": "application/json" } });
 
@@ -74,7 +75,15 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   }
   if (!messages) return error(400, "Mensaje no válido");
 
-  const upstream = await fetch(`${endpoint.replace(/\/$/, "")}/openai/v1/chat/completions`, {
+  // Accepts the endpoint with or without https:// or a trailing path, as pasted from the Azure portal
+  let base: string;
+  try {
+    base = new URL(/^https?:\/\//.test(endpoint) ? endpoint : `https://${endpoint}`).origin;
+  } catch {
+    console.error("[chat] AZURE_LANDING_AI_ENDPOINT no es una URL válida");
+    return error(503, "El chat no está configurado");
+  }
+  const upstream = await fetch(`${base}/openai/v1/chat/completions`, {
     method: "POST",
     headers: { "Content-Type": "application/json", "api-key": key },
     body: JSON.stringify({
@@ -84,14 +93,22 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       stream: true,
     }),
     signal: AbortSignal.timeout(45_000),
-  }).catch(() => null);
-  // Azure's content filter blocks jailbreak attempts with a 400: answer as the assistant would.
-  if (upstream?.status === 400 && (await upstream.text()).includes("content_filter")) {
-    return new Response("Solo puedo ayudarte con dudas sobre Maingoo. ¿Qué te gustaría saber de la app?", {
-      headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" },
-    });
+  }).catch((reason: unknown) => {
+    console.error("[chat] no se pudo llamar a Azure:", reason instanceof Error ? reason.message : reason);
+    return null;
+  });
+  if (!upstream) return error(502, "El asistente no está disponible ahora mismo");
+  if (!upstream.ok || !upstream.body) {
+    const detail = await upstream.text().catch(() => "");
+    // Azure's content filter blocks jailbreak attempts with a 400: answer as the assistant would.
+    if (upstream.status === 400 && detail.includes("content_filter")) {
+      return new Response("Solo puedo ayudarte con dudas sobre Maingoo. ¿Qué te gustaría saber de la app?", {
+        headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" },
+      });
+    }
+    console.error(`[chat] Azure respondió ${upstream.status}:`, detail.slice(0, 300));
+    return error(502, "El asistente no está disponible ahora mismo");
   }
-  if (!upstream?.ok || !upstream.body) return error(502, "El asistente no está disponible ahora mismo");
 
   // Azure answers with server-sent events; the widget only needs the text deltas.
   const decoder = new TextDecoder();
