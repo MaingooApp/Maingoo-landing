@@ -1,27 +1,94 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import Features from "../components/Features.astro";
 import Pricing from "../components/Pricing.astro";
 import ContactCTA from "../components/ContactCTA.astro";
-import Footer from "../components/Footer.astro";
 import FAQs from "../components/FAQs.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import SensorsBand from "../components/SensorsBand.astro";
+import { faqs } from "../data/faqs";
+
+const siteUrl = Astro.site ?? new URL("https://maingoo.tech");
+const homeUrl = new URL("/", siteUrl).toString();
+const logoUrl = new URL("/maingoo_logo.svg", siteUrl).toString();
+const imageUrl = new URL("/maingo_origin.png", siteUrl).toString();
+
+const title = "Maingoo · Gana tiempo. Maingoo hace el resto.";
+const description =
+  "Software de gestión para hostelería con IA: facturas y albaranes, costes, inventario, recetas, TPV, comandero, cocina y APPCC con sensores de temperatura. Solicita acceso gratuito a la beta.";
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${homeUrl}#organization`,
+    name: "Maingoo",
+    url: homeUrl,
+    logo: logoUrl,
+    email: "hello@maingoo.tech",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${homeUrl}#website`,
+    name: "Maingoo",
+    url: homeUrl,
+    inLanguage: "es-ES",
+    publisher: {
+      "@id": `${homeUrl}#organization`,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": `${homeUrl}#software`,
+    name: "Maingoo",
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    url: homeUrl,
+    image: imageUrl,
+    description,
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "EUR",
+      description: "Acceso gratuito durante la beta de Maingoo.",
+      availability: "https://schema.org/InStock",
+    },
+    publisher: {
+      "@id": `${homeUrl}#organization`,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${homeUrl}#faq`,
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  },
+];
 ---
 
 <Layout
-  title="Maingoo - Gestión Inteligente de Restaurantes con IA"
-  description="Revoluciona tu restaurante con Maingoo. Gestión inteligente, volcado automático de datos con IA, análisis predictivo y optimización de operaciones. Prueba gratuita de 14 días."
+  title={title}
+  description={description}
+  image="/maingo_origin.png"
+  imageAlt="Maingoo, software de gestión inteligente para restaurantes con IA"
+  structuredData={structuredData}
 >
   <main class="relative">
-    <div class="mt-[72px] lg:mt-[88px]">
+    <div class="mt-[72px]">
       <Hero />
     </div>
-    <div class="relative">
-      <Features />
-      <Pricing />
-      <ContactCTA />
-      <FAQs />
-    </div>
+    <HowItWorks />
+    <Features />
+    <SensorsBand />
+    <Pricing />
+    <ContactCTA />
+    <FAQs />
   </main>
 </Layout>

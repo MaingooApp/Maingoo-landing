@@ -1,310 +1,107 @@
-<section class="relative pt-16 pb-16 min-h-[90vh] bg-cover bg-center z-20" style="background-image: url('/Hero-bg.png');">
-  <!-- Degradado overlay superior -->
-  <div class="absolute inset-0 z-10" style="background: linear-gradient(to bottom, #6B9E86 0%, #6B9E86 26%, transparent 40%);"></div>
-  
-  <!-- Bloque sólido inferior con curva cóncava superior -->
-  <div class="absolute bottom-0 left-0 right-0 h-[35%] z-10 bg-[#F0F7F4]" style="clip-path: ellipse(60% 40% at 50% 90%);"></div>
-  
-  <div class="container mx-auto px-6 h-full relative z-20">
-    <div
-      class="max-w-4xl mx-auto text-left h-full flex flex-col justify-center"
-    >
-      <!-- Hero Headline -->
-      <style>
-        /* Estilos compartidos */
-        .headline-row {
-          width: 100%;
-        }
+---
+import FeatureClip from "./FeatureClip.astro";
 
-        .flex-custom {
-          display: flex !important;
-          justify-content: flex-start;
-          align-items: baseline;
-          gap: 10px;
-        }
+const points = [
+  "Ahorra horas de trabajo cada semana",
+  "Diseñado junto a gerentes de hostelería reales",
+  "Funciona en ordenador, tablet y móvil",
+];
+---
 
-        .changing-business::after {
-          content: "Restaurante";
-          animation: changeWord 34s infinite;
-          font-weight: bold;
-          white-space: nowrap;
-        }
-
-        /* Estilos para Desktop */
-        @media (min-width: 769px) {
-          .headline-row {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            margin-bottom: 0.25em;
-          }
-          .headline-row:last-child {
-            margin-bottom: 0;
-          }
-          .fixed-text {
-            text-align: left;
-            white-space: nowrap;
-          }
-          .changing-container {
-            width: auto;
-            min-width: 300px;
-            text-align: left;
-            margin-left: 1rem;
-            position: relative;
-          }
-          .changing-business {
-            position: relative;
-            display: block;
-            height: 1em;
-          }
-          .changing-business::after {
-            color: #000000;
-            position: absolute;
-            left: 0;
-          }
-
-          :global(.dark) .changing-business::after {
-            color: #000000;
-          }
-        }
-
-        /* Estilos para Móvil */
-        @media (max-width: 768px) {
-          .fixed-text {
-            padding-left: 8px;
-          }
-          .headline-row {
-            display: block;
-            text-align: left;
-          }
-          .headline-row:last-child {
-            margin-bottom: 0;
-          }
-
-          .changing-container {
-            display: block;
-            margin-top: 0.2em;
-            min-height: 1.2em;
-            min-width: 177px;
-            text-align: left;
-          }
-          .changing-business {
-            display: block;
-            height: 1.2em;
-          }
-          .changing-business::after {
-            color: #000000;
-            position: relative;
-            display: inline-block;
-          }
-
-          :global(.dark) .changing-business::after {
-            color: #000000;
-          }
-        }
-
-        @keyframes changeWord {
-          0%,
-          5.88% {
-            content: "Buffet";
-          }
-          5.89%,
-          11.76% {
-            content: "Cocktelería";
-          }
-          11.77%,
-          17.64% {
-            content: "Cafetería";
-          }
-          17.65%,
-          23.52% {
-            content: "Restaurante";
-          }
-          23.53%,
-          29.41% {
-            content: "Catering";
-          }
-          29.42%,
-          35.29% {
-            content: "Cervecería";
-          }
-          35.30%,
-          41.17% {
-            content: "Foodtruck";
-          }
-          41.18%,
-          47.05% {
-            content: "Chiringuito";
-          }
-          47.06%,
-          52.94% {
-            content: "Cocktelería";
-          }
-          52.95%,
-          58.82% {
-            content: "Churrería";
-          }
-          58.83%,
-          64.70% {
-            content: "Restaurante";
-          }
-          64.71%,
-          70.58% {
-            content: "Heladería";
-          }
-          70.59%,
-          76.47% {
-            content: "Foodtruck";
-          }
-          76.48%,
-          82.35% {
-            content: "Panadería";
-          }
-          82.36%,
-          88.23% {
-            content: "Pastelería";
-          }
-          88.24%,
-          94.11% {
-            content: "Pizzería";
-          }
-          94.12%,
-          100% {
-            content: "Sidrería";
-          }
-        }
-      </style>
-      <h1
-        class="text-3xl sm:text-4xl md:text-6xl font-bold mb-24 text-center"
-        style="color: #FFFFFF;"
+<section aria-labelledby="hero-title" class="pb-14 pt-12 md:pb-16 md:pt-[72px]">
+  <div class="mx-auto grid max-w-[1200px] items-center gap-10 px-5 md:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.08fr)] lg:gap-14">
+    <div class="flex flex-col gap-[22px]">
+      <span
+        class="inline-flex min-h-[30px] items-center self-start rounded-full border border-brand-200 bg-brand-50 px-3 text-[13px] font-bold text-brand-700 dark:border-brand-700 dark:bg-brand-950 dark:text-brand-300"
       >
-        <div class="headline-row flex-custom" style="justify-content: center;">
-          <div class="fixed-text">
-            <span style="color: #FFFFFF;">Gestiona tu</span>
-          </div>
-          <div class="changing-container">
-            <span class="changing-business"></span>
-          </div>
-        </div>
-        <div class="headline-row" style="display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: nowrap; justify-content: center;">
-          <span style="color: #FFFFFF;">con Inteligencia Artificial</span>
-        </div>
+        Beta abierta para hostelería
+      </span>
+      <h1 id="hero-title" class="m-0 text-[40px] font-black leading-[1.05] tracking-tight md:text-[64px]">
+        Gana tiempo. Maingoo hace el resto.
       </h1>
-
-      <style>
-        @media (min-width: 640px) {
-          .ia-text {
-            font-size: 3rem !important;
-          }
-        }
-        @media (min-width: 768px) {
-          .ia-text {
-            font-size: 4rem !important;
-          }
-        }
-      </style>
-
-      <!-- Hero Subtitle -->
-      <!-- <p
-        class="text-xl md:text-2xl mb-8 leading-relaxed"
-        style="color: #FFFFFF;"
-      >
-        Maingoo (r)evoluciona la gestión con automatización inteligente de
-        facturas, inventario y análisis de datos para optimizar tu negocio.
-      </p> -->
-
-      <!-- CTA Buttons -->
-      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-28">
+      <p class="m-0 text-base leading-relaxed text-muted md:text-lg dark:text-zinc-400">
+        Maingoo lee tus facturas y albaranes, cuadra el stock y los costes, lleva el TPV, la cocina y el APPCC, y te
+        avisa de lo que importa.
+      </p>
+      <div class="flex flex-wrap gap-3">
         <a
-          href="#contact"
-          class="bg-[#6B9E86] text-[#FFFFFF] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block text-center"
+          href="/#contact"
+          class="inline-flex min-h-14 items-center rounded-control bg-brand-600 px-5 text-[17px] font-bold text-white no-underline transition-colors hover:bg-brand-700 dark:bg-brand-400 dark:text-brand-950 dark:hover:bg-brand-300"
         >
-          Solicitar Acceso a la Beta
+          Solicitar acceso a la beta
         </a>
         <button
-          id="open-chat"
-          class="relative bg-transparent text-[#000000] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-flex items-center justify-center gap-4"
-          style="border: 3px solid #6B9E86; background: #f0f7f426; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);"
+          type="button"
+          data-open-chat
+          class="inline-flex min-h-14 items-center gap-2 rounded-control border border-slate-300 bg-white px-5 text-[17px] font-bold text-ink transition-colors hover:border-brand-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50"
         >
-        <img src="/maingoo_logo.svg" alt="IA" class="w-7 h-7" />
-        <span>Pregunta a Maingoo</span>
-      </button>
+          <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4zM18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z"></path>
+          </svg>
+          Pregunta a Maingoo
+        </button>
+      </div>
+      <ul class="m-0 mt-2 flex list-none flex-col gap-2.5 p-0 text-[15px] text-muted dark:text-zinc-400">
+        {
+          points.map((point) => (
+            <li class="flex items-center gap-2.5">
+              <span
+                class="flex size-6 items-center justify-center rounded-full border border-teal-200 bg-teal-50 text-teal-700 dark:border-teal-900 dark:bg-teal-950 dark:text-teal-300"
+                aria-hidden="true"
+              >
+                <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                  <path d="M4 12l5 5L20 6"></path>
+                </svg>
+              </span>
+              {point}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="relative">
+      <figure
+        class="m-0 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_24px_60px_rgba(15,23,42,0.14)] dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <div class="flex gap-1.5 border-b border-slate-200 bg-slate-50 px-3.5 py-2.5 dark:border-zinc-800 dark:bg-zinc-800" aria-hidden="true">
+          <span class="size-2.5 rounded-full bg-slate-300 dark:bg-zinc-600"></span>
+          <span class="size-2.5 rounded-full bg-slate-300 dark:bg-zinc-600"></span>
+          <span class="size-2.5 rounded-full bg-slate-300 dark:bg-zinc-600"></span>
+        </div>
+        <FeatureClip
+          clip="panel"
+          poster="/posters/dashboard.jpg"
+          alt="Panel de control de Maingoo con las ventas del día, la sala y el stock"
+          seconds={10}
+          eager
+        />
+      </figure>
+
+      <div
+        class="absolute -bottom-7 -left-9 hidden w-[300px] flex-col gap-2 rounded-card border border-slate-200 bg-white p-4 shadow-[0_16px_40px_rgba(15,23,42,0.16)] lg:flex dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <span
+          class="inline-flex min-h-[30px] items-center self-start rounded-full border border-violet-200 bg-violet-50 px-3 text-[13px] font-bold text-violet-700 dark:border-violet-900 dark:bg-violet-950 dark:text-violet-300"
+        >
+          Maingoo AI
+        </span>
+        <strong class="text-[15px] leading-snug">El aceite de oliva 5 L ha subido un 12,4 % en Hnos. Ruiz.</strong>
+        <span class="text-[13px] text-muted dark:text-zinc-400">Ya lo tienes en el coste de tus recetas.</span>
       </div>
 
-      <!-- Hero Stats -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        <!-- Card 1: Ahorra horas -->
-        <div class="bg-[#FFFFFF] rounded-xl p-6 shadow-lg">
-          <div class="flex justify-center mb-4">
-            <svg
-              class="w-12 h-12 text-[#6B9E86]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-[#1A3C34] mb-3 text-center">
-            Ahorra horas de trabajo a la semana
-          </h3>
-          <p class="text-[#1A3C34] text-center text-sm">
-            Automatiza tareas repetitivas y dedica más tiempo a hacer crecer tu negocio.
-          </p>
-        </div>
-
-        <!-- Card 2: Diseñado junto a gerentes reales -->
-        <div class="bg-[#FFFFFF] rounded-xl p-6 shadow-lg">
-          <div class="flex justify-center mb-4">
-            <svg
-              class="w-12 h-12 text-[#6B9E86]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-              ></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-[#1A3C34] mb-3 text-center">
-            Diseñado junto a gerentes reales
-          </h3>
-          <p class="text-[#1A3C34] text-center text-sm">
-            Desarrollado con profesionales de la hostelería para adaptarse a tus necesidades reales.
-          </p>
-        </div>
-
-        <!-- Card 3: Impulsado por IA -->
-        <div class="bg-[#FFFFFF] rounded-xl p-6 shadow-lg">
-          <div class="flex justify-center mb-4">
-            <svg
-              class="w-12 h-12 text-[#6B9E86]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-[#1A3C34] mb-3 text-center">
-            Impulsado por IA
-          </h3>
-          <p class="text-[#1A3C34] text-center text-sm">
-            Tecnología de inteligencia artificial que aprende y mejora con cada interacción.
-          </p>
-        </div>
+      <div
+        class="absolute -right-6 top-14 hidden items-center gap-2.5 rounded-card border border-slate-200 bg-white px-3.5 py-3 shadow-[0_16px_40px_rgba(15,23,42,0.16)] lg:flex dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        <span class="flex size-9 items-center justify-center rounded-control bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300" aria-hidden="true">
+          <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M10 13.5V4a2 2 0 014 0v9.5a4 4 0 11-4 0z"></path>
+          </svg>
+        </span>
+        <span class="flex flex-col leading-tight">
+          <strong class="text-[15px]">Cámara de carne · 3,2 °C</strong>
+          <span class="text-xs text-muted dark:text-zinc-400">En rango · hace 1 min</span>
+        </span>
       </div>
     </div>
   </div>

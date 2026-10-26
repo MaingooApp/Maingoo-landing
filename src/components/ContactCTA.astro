@@ -3,8 +3,6 @@
 ---
 
 <script>
-  import municipiosData from "../data/municipios_spain.json";
-
   interface Town {
     label: string;
     code?: string;
@@ -24,6 +22,13 @@
     parent_code: string;
     provinces: Province[];
   }
+
+  interface LocationEntry {
+    label: string;
+    original: string;
+    normalizedOriginal: string;
+  }
+
   import emailjs from "@emailjs/browser";
   import {
     parsePhoneNumber,
@@ -31,7 +36,7 @@
     getCountries,
     getCountryCallingCode,
     getExampleNumber,
-  } from "libphonenumber-js/max";
+  } from "libphonenumber-js/min";
   import type { CountryCode } from "libphonenumber-js";
   import examples from "libphonenumber-js/examples.mobile.json" assert { type: "json" };
 
@@ -41,6 +46,27 @@
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
+  };
+
+  let locationIndexPromise: Promise<LocationEntry[]> | null = null;
+
+  const loadLocationIndex = async (): Promise<LocationEntry[]> => {
+    if (!locationIndexPromise) {
+      locationIndexPromise = import("../data/municipios_spain.json").then(
+        ({ default: data }) =>
+          (data as Region[]).flatMap((comunidad) =>
+            comunidad.provinces.flatMap((province) =>
+              province.towns.map((town) => ({
+                label: `${town.label} (${province.label})`,
+                original: town.label,
+                normalizedOriginal: normalizeText(town.label),
+              }))
+            )
+          )
+      );
+    }
+
+    return locationIndexPromise;
   };
 
   const initForm = () => {
@@ -106,7 +132,7 @@
     locationInput.parentNode?.appendChild(locationResults);
 
     // Función para buscar municipios
-    const searchLocation = (searchTerm: string) => {
+    const searchLocation = async (searchTerm: string) => {
       locationResults.innerHTML = "";
       if (!searchTerm) {
         locationResults.classList.add("hidden");
@@ -114,36 +140,20 @@
       }
 
       const normalizedSearch = normalizeText(searchTerm);
-      const results: {
-        label: string;
-        type: "municipio" | "provincia";
-        original: string;
-      }[] = [];
+      const locationIndex = await loadLocationIndex();
 
-      // Buscar en todos los municipios
-      municipiosData.forEach((comunidad: Region) => {
-        comunidad.provinces.forEach((province: Province) => {
-          province.towns.forEach((town: Town) => {
-            const normalizedTown = normalizeText(town.label);
-            if (normalizedTown.includes(normalizedSearch)) {
-              results.push({
-                label: `${town.label} (${province.label})`,
-                type: "municipio",
-                original: town.label,
-              });
-            }
-          });
-        });
-      });
+      if (locationInput.value !== searchTerm) {
+        return;
+      }
+
+      const results = locationIndex.filter((location) =>
+        location.normalizedOriginal.includes(normalizedSearch)
+      );
 
       // Ordenar resultados: primero municipios que empiezan con el término, luego los que lo contienen
       results.sort((a, b) => {
-        const aStartsWith = normalizeText(a.original).startsWith(
-          normalizedSearch
-        );
-        const bStartsWith = normalizeText(b.original).startsWith(
-          normalizedSearch
-        );
+        const aStartsWith = a.normalizedOriginal.startsWith(normalizedSearch);
+        const bStartsWith = b.normalizedOriginal.startsWith(normalizedSearch);
         if (aStartsWith && !bStartsWith) return -1;
         if (!aStartsWith && bStartsWith) return 1;
         return a.label.localeCompare(b.label);
@@ -171,7 +181,7 @@
     // Eventos para el campo de ubicación
     locationInput.addEventListener("input", (e) => {
       const target = e.target as HTMLInputElement;
-      searchLocation(target.value);
+      void searchLocation(target.value);
     });
 
     // Cerrar resultados al hacer clic fuera
@@ -201,9 +211,9 @@
       charCounter.textContent = `${length}/500`;
       // Cambiar el color cuando se acerca al límite
       if (length >= 450) {
-        charCounter.classList.add("text-yellow-300");
+        charCounter.classList.add("text-amber-700");
       } else {
-        charCounter.classList.remove("text-yellow-300");
+        charCounter.classList.remove("text-amber-700");
       }
     };
 
@@ -358,10 +368,10 @@
       if (hasAttemptedSubmit) {
         if (!fieldIsValid) {
           field.classList.add("border-red-500", "bg-red-50/10");
-          field.classList.remove("border-white/30", "dark:border-white/20");
+          field.classList.remove("border-slate-300", "dark:border-zinc-700");
         } else {
           field.classList.remove("border-red-500", "bg-red-50/10");
-          field.classList.add("border-white/30", "dark:border-white/20");
+          field.classList.add("border-slate-300", "dark:border-zinc-700");
         }
       }
 
@@ -450,7 +460,7 @@
           document.getElementById("error-alert")?.classList.add("hidden");
         }, 5000);
       } finally {
-        submitButton.textContent = "Enviar Mensaje";
+        submitButton.textContent = "Enviar mensaje";
       }
     };
 
@@ -465,242 +475,148 @@
   }
 </script>
 
-<section
-  id="contact"
-  class="relative pt-16 pb-16"
->
-  <div class="container mx-auto px-6">
-    <div class="max-w-4xl mx-auto text-center">
-      <!-- Main CTA -->
-      <!-- <h2 class="text-2xl md:text-4xl mb-12 font-bold">
-        ¡(R)evoluciona tu negocio!<br />
-      </h2> -->
+<section id="contact" aria-labelledby="contact-title" class="py-14">
+  <div
+    id="success-alert"
+    role="status"
+    class="hidden fixed right-4 top-4 z-50 rounded-card border border-teal-200 bg-teal-50 px-5 py-4 text-teal-800 shadow-lg"
+  >
+    <p class="m-0 flex items-center gap-2 font-bold">
+      <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 13l4 4L19 7"></path></svg>
+      ¡Mensaje enviado con éxito!
+    </p>
+  </div>
+  <div
+    id="error-alert"
+    role="alert"
+    class="hidden fixed right-4 top-4 z-50 rounded-card border border-red-200 bg-red-50 px-5 py-4 text-red-800 shadow-lg"
+  >
+    <p class="m-0 flex items-center gap-2 font-bold">
+      <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+      Error al enviar el mensaje. Por favor, inténtalo de nuevo.
+    </p>
+  </div>
 
-      <!-- Alerts -->
-      <div
-        id="success-alert"
-        class="hidden fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 transform transition-all duration-300 ease-in-out"
-      >
-        <div class="flex items-center space-x-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 13l4 4L19 7"></path>
-          </svg>
-          <p class="font-medium">¡Mensaje enviado con éxito!</p>
-        </div>
-      </div>
-
-      <div
-        id="error-alert"
-        class="hidden fixed top-4 right-4 bg-red-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 transform transition-all duration-300 ease-in-out"
-      >
-        <div class="flex items-center space-x-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-          <p class="font-medium">
-            Error al enviar el mensaje. Por favor, intenta nuevamente.
-          </p>
-        </div>
-      </div>
-
-      <!-- Contact Form -->
-      <div
-        class="bg-white rounded-2xl p-8 max-w-2xl mx-auto shadow-2xl"
-      >
-        <h3 class="text-2xl font-bold mb-6 text-[#1A3C34]">Quiero saber más sobre Maingoo</h3>
-        <form id="contact-form" class="space-y-6" novalidate>
-          <input
-            type="hidden"
-            name="subject"
-            value="Nuevo contacto desde Maingoo Landing"
-          />
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <input
-                name="from_name"
-                type="text"
-                placeholder="Nombre completo"
-                required
-                maxlength="80"
-                class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6B9E86] focus:border-[#6B9E86] transition-colors duration-200"
-              />
-            </div>
-            <div>
-              <input
-                name="from_email"
-                type="email"
-                placeholder="Email"
-                required
-                maxlength="100"
-                class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6B9E86] focus:border-[#6B9E86] transition-colors duration-200"
-              />
-            </div>
-            <div class="flex gap-2">
-              <select
-                id="country-code"
-                name="country_code"
-                required
-                class="w-16 px-2 py-3 rounded-lg bg-gray-100 border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#6B9E86] focus:border-[#6B9E86] transition-colors duration-200 text-sm"
-              >
-                <!-- Se llenará con JavaScript -->
-              </select>
-              <input
-                id="phone-input"
-                name="phone"
-                type="tel"
-                placeholder="Número de teléfono"
-                required
-                class="flex-1 px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6B9E86] focus:border-[#6B9E86] transition-colors duration-200 w-full"
-              />
-            </div>
-            <div class="relative">
-              <input
-                id="location-input"
-                name="location"
-                type="text"
-                placeholder="Ubicación del negocio"
-                required
-                maxlength="100"
-                class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6B9E86] focus:border-[#6B9E86] transition-colors duration-200"
-              />
-            </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <select
-                id="business-type-select"
-                name="business_type"
-                required
-                class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#6B9E86] focus:border-[#6B9E86] transition-colors duration-200"
-              >
-                <option value="" class="text-gray-800">Tipo de negocio</option>
-                <option value="bar" class="text-gray-800">Bar</option>
-                <option value="restaurante" class="text-gray-800">Restaurante</option>
-                <option value="cafeteria" class="text-gray-800">Cafetería</option>
-                <option value="buffet" class="text-gray-800">Buffet</option>
-                <option value="cockteleria" class="text-gray-800">Cocktelería</option>
-                <option value="catering" class="text-gray-800">Catering</option>
-                <option value="cerveceria" class="text-gray-800">Cervecería</option>
-                <option value="foodtruck" class="text-gray-800">Foodtruck</option>
-                <option value="chiringuito" class="text-gray-800">Chiringuito</option>
-                <option value="heladeria" class="text-gray-800">Heladería</option>
-                <option value="panaderia" class="text-gray-800">Panadería</option>
-                <option value="pizzeria" class="text-gray-800">Pizzería</option>
-                <option value="hamburgueseria" class="text-gray-800">Hamburguesería</option>
-                <option value="otro" class="text-gray-800">Otro</option>
-              </select>
-              <div id="other-business-type-div" class="hidden mt-2">
-                <input
-                  id="other-business-type"
-                  name="other_business_type"
-                  type="text"
-                  placeholder="Especifica tu tipo de negocio"
-                  maxlength="100"
-                  class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6B9E86] focus:border-[#6B9E86] transition-colors duration-200"
-                />
-              </div>
-            </div>
-            <div>
-              <select
-                name="restaurant_size"
-                required
-                class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#6B9E86] focus:border-[#6B9E86] transition-colors duration-200"
-              >
-                <option value="" class="text-gray-800"
-                  >Número de negocios</option
-                >
-                <option value="1 ubicacion" class="text-gray-800"
-                  >1 ubicación</option
-                >
-                <option value="2 ubicaciones" class="text-gray-800"
-                  >2 ubicaciones</option
-                >
-                <option value="3+ ubicaciones" class="text-gray-800"
-                  >3+ ubicaciones</option
-                >
-              </select>
-            </div>
-          </div>
-          <div>
-            <div class="relative">
-              <textarea
-                name="message"
-                id="message-input"
-                placeholder="Cuéntanos sobre tu negocio y cómo crees que podemos ayudarte"
-                rows="4"
-                required
-                maxlength="500"
-                class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6B9E86] focus:border-[#6B9E86] resize-none transition-colors duration-200"
-              ></textarea>
-              <div
-                class="absolute bottom-2 right-2 text-xs text-gray-500"
-                id="char-counter"
-              >
-                0/500
-              </div>
-            </div>
-          </div>
-          <div class="flex items-start mb-4">
-            <div class="flex items-center h-5">
-              <input
-                id="privacy-checkbox"
-                name="privacy-consent"
-                type="checkbox"
-                required
-                class="w-4 h-4 border border-gray-300 rounded bg-gray-100 focus:ring-2 focus:ring-[#6B9E86] transition-colors duration-200"
-              />
-            </div>
-            <label for="privacy-checkbox" class="ml-2 text-sm text-gray-700">
-              Acepto el uso de mis datos para ser contactado en relación con la
-              beta de Maingoo, según la <a
-                href="/politica-privacidad"
-                class="underline hover:text-[#6B9E86]">Política de Privacidad</a
-              >
-            </label>
-          </div>
-          <!-- reCAPTCHA v2 -->
-          <div class="flex justify-center mb-4">
-            <div
-              class="g-recaptcha"
-              data-sitekey="6Ld3ueYrAAAAALaYzCiypC39jBZKrANe9bEjLtZn"
-            >
-            </div>
-          </div>
-          <div
-            id="recaptcha-error"
-            class="hidden text-red-600 text-sm mb-4 text-center"
-          >
-            Por favor, verifica que no eres un robot
-          </div>
-          <button
-            id="submit-button"
-            type="submit"
-            class="w-full bg-[#6B9E86] hover:bg-[#5a8a71] text-white py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1"
-          >
-            Enviar Mensaje
-          </button>
-        </form>
-      </div>
+  <div class="mx-auto grid max-w-[1200px] items-start gap-8 px-5 md:px-8 lg:grid-cols-2 lg:gap-12">
+    <div class="flex flex-col gap-4">
+      <span class="text-[13px] font-black uppercase tracking-[0.08em] text-brand-700 dark:text-brand-300">Contacto</span>
+      <h2 id="contact-title" class="m-0 text-[30px] font-black leading-tight md:text-[40px]">Quiero saber más sobre Maingoo.</h2>
+      <p class="m-0 text-base leading-relaxed text-muted md:text-lg dark:text-zinc-400">
+        Cuéntanos cómo es tu negocio. Te contestamos nosotros, sin compromiso, y te damos acceso a la beta.
+      </p>
+      <p class="m-0 text-[15px] text-muted dark:text-zinc-400">
+        También en <a href="mailto:hello@maingoo.tech" class="font-bold text-brand-700 dark:text-brand-300">hello@maingoo.tech</a>
+      </p>
     </div>
+
+    <form
+      id="contact-form"
+      novalidate
+      aria-label="Formulario de contacto"
+      class="flex flex-col gap-4 rounded-card border border-slate-200 bg-white p-5 sm:p-7 dark:border-zinc-800 dark:bg-zinc-900"
+    >
+      <input type="hidden" name="subject" value="Nuevo contacto desde Maingoo Landing" />
+      <label class="flex flex-col gap-1.5 text-sm font-bold">
+        Nombre completo
+        <input name="from_name" type="text" placeholder="Nombre completo" required maxlength="80" autocomplete="name" class="w-full min-h-12 rounded-control border border-slate-300 bg-white px-3.5 text-[15px] text-ink placeholder:text-slate-500 transition-colors focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:ring-brand-800" />
+      </label>
+      <label class="flex flex-col gap-1.5 text-sm font-bold">
+        Email
+        <input name="from_email" type="email" placeholder="nombre@tunegocio.com" required maxlength="100" autocomplete="email" class="w-full min-h-12 rounded-control border border-slate-300 bg-white px-3.5 text-[15px] text-ink placeholder:text-slate-500 transition-colors focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:ring-brand-800" />
+      </label>
+      <div class="grid grid-cols-[96px_minmax(0,1fr)] gap-2.5">
+        <label class="flex flex-col gap-1.5 text-sm font-bold">
+          Prefijo
+          <select id="country-code" name="country_code" required class="w-full min-h-12 rounded-control border border-slate-300 bg-white px-3.5 text-[15px] text-ink placeholder:text-slate-500 transition-colors focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:ring-brand-800 px-2 text-sm">
+            <!-- Se llena con JavaScript -->
+          </select>
+        </label>
+        <label class="flex flex-col gap-1.5 text-sm font-bold">
+          Teléfono
+          <input id="phone-input" name="phone" type="tel" placeholder="Número de teléfono" required autocomplete="tel" class="w-full min-h-12 rounded-control border border-slate-300 bg-white px-3.5 text-[15px] text-ink placeholder:text-slate-500 transition-colors focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:ring-brand-800" />
+        </label>
+      </div>
+      <label class="flex flex-col gap-1.5 text-sm font-bold">
+        Ubicación del negocio
+        <span class="relative">
+          <input id="location-input" name="location" type="text" placeholder="Municipio" required maxlength="100" autocomplete="off" class="w-full min-h-12 rounded-control border border-slate-300 bg-white px-3.5 text-[15px] text-ink placeholder:text-slate-500 transition-colors focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:ring-brand-800" />
+        </span>
+      </label>
+      <div class="grid gap-2.5 sm:grid-cols-2">
+        <div class="flex flex-col gap-1.5">
+          <label for="business-type-select" class="text-sm font-bold">Tipo de negocio</label>
+          <select id="business-type-select" name="business_type" required class="w-full min-h-12 rounded-control border border-slate-300 bg-white px-3.5 text-[15px] text-ink placeholder:text-slate-500 transition-colors focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:ring-brand-800">
+            <option value="">Elige uno</option>
+            <option value="bar">Bar</option>
+            <option value="restaurante">Restaurante</option>
+            <option value="cafeteria">Cafetería</option>
+            <option value="buffet">Buffet</option>
+            <option value="cockteleria">Coctelería</option>
+            <option value="catering">Catering</option>
+            <option value="cerveceria">Cervecería</option>
+            <option value="foodtruck">Foodtruck</option>
+            <option value="chiringuito">Chiringuito</option>
+            <option value="heladeria">Heladería</option>
+            <option value="panaderia">Panadería</option>
+            <option value="pizzeria">Pizzería</option>
+            <option value="hamburgueseria">Hamburguesería</option>
+            <option value="otro">Otro</option>
+          </select>
+          <div id="other-business-type-div" class="hidden">
+            <input id="other-business-type" name="other_business_type" type="text" placeholder="Especifica tu tipo de negocio" maxlength="100" aria-label="Otro tipo de negocio" class="w-full min-h-12 rounded-control border border-slate-300 bg-white px-3.5 text-[15px] text-ink placeholder:text-slate-500 transition-colors focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:ring-brand-800" />
+          </div>
+        </div>
+        <label class="flex flex-col gap-1.5 text-sm font-bold">
+          Número de negocios
+          <select name="restaurant_size" required class="w-full min-h-12 rounded-control border border-slate-300 bg-white px-3.5 text-[15px] text-ink placeholder:text-slate-500 transition-colors focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:ring-brand-800">
+            <option value="">Elige uno</option>
+            <option value="1 ubicacion">1 ubicación</option>
+            <option value="2 ubicaciones">2 ubicaciones</option>
+            <option value="3+ ubicaciones">3+ ubicaciones</option>
+          </select>
+        </label>
+      </div>
+      <label class="flex flex-col gap-1.5 text-sm font-bold">
+        Mensaje
+        <span class="relative">
+          <textarea
+            name="message"
+            id="message-input"
+            placeholder="Cuéntanos sobre tu negocio y cómo crees que podemos ayudarte"
+            rows="4"
+            required
+            maxlength="500"
+            class="w-full min-h-12 rounded-control border border-slate-300 bg-white px-3.5 text-[15px] text-ink placeholder:text-slate-500 transition-colors focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:ring-brand-800 min-h-28 resize-none py-3"
+          ></textarea>
+          <span id="char-counter" class="absolute bottom-2 right-3 text-xs font-normal text-muted dark:text-zinc-400">0/500</span>
+        </span>
+      </label>
+      <div class="flex items-start gap-2.5 text-sm leading-snug">
+        <input
+          id="privacy-checkbox"
+          name="privacy-consent"
+          type="checkbox"
+          required
+          class="mt-0.5 size-5 shrink-0 accent-brand-600"
+        />
+        <label for="privacy-checkbox">
+          Acepto el uso de mis datos para ser contactado en relación con la beta de Maingoo, según la
+          <a href="/politica-privacidad" class="font-bold text-brand-700 dark:text-brand-300">Política de Privacidad</a>.
+        </label>
+      </div>
+      <div class="flex justify-center overflow-x-auto">
+        <div class="g-recaptcha" data-sitekey="6Ld3ueYrAAAAALaYzCiypC39jBZKrANe9bEjLtZn"></div>
+      </div>
+      <p id="recaptcha-error" class="hidden m-0 text-center text-sm font-bold text-red-700 dark:text-red-300" role="alert">
+        Por favor, verifica que no eres un robot
+      </p>
+      <button
+        id="submit-button"
+        type="submit"
+        class="min-h-[52px] rounded-control bg-brand-600 text-base font-bold text-white transition-colors hover:bg-brand-700 dark:bg-brand-400 dark:text-brand-950 dark:hover:bg-brand-300"
+      >
+        Enviar mensaje
+      </button>
+    </form>
   </div>
 </section>

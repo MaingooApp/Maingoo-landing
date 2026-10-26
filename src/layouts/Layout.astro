@@ -6,12 +6,28 @@ import Header from "../components/Header.astro";
 export interface Props {
   title: string;
   description?: string;
+  image?: string;
+  imageAlt?: string;
+  robots?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+  themeColor?: string;
+  type?: "website" | "article";
 }
 
 const {
   title,
   description = "Maingoo - Gestión inteligente de restaurantes con IA",
+  image = "/maingo_origin.png",
+  imageAlt = "Maingoo, gestión inteligente de restaurantes con IA",
+  robots = "index, follow",
+  structuredData,
+  themeColor = "#4a8c68",
+  type = "website",
 } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = new URL(image, Astro.site);
+const jsonLd = structuredData ? JSON.stringify(structuredData) : null;
 ---
 
 <!doctype html>
@@ -19,13 +35,39 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content={themeColor} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/maingoo_logo.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Maingoo" />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:locale" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
     <title>{title}</title>
 
+    {
+      jsonLd && (
+        <script is:inline type="application/ld+json" set:html={jsonLd} />
+      )
+    }
+
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H6FCBZSDLH"
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-H6FCBZSDLH"
     ></script>
     <script is:inline define:vars={{ GA_ID: "G-H6FCBZSDLH" }}>
       // Extend Window interface to include dataLayer
@@ -43,7 +85,7 @@ const {
     <!-- End Google Analytics -->
 
     <!-- Microsoft Clarity Analytics -->
-    <script type="text/javascript">
+    <script is:inline type="text/javascript">
       (function (c, l, a, r, i, t, y) {
         c[a] =
           c[a] ||
@@ -62,77 +104,46 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap"
       rel="stylesheet"
     />
     <!-- Cookie Script -->
     <script
+      is:inline
       type="text/javascript"
       charset="UTF-8"
       src="//cdn.cookie-script.com/s/cec8a2c75a9cad8b24709d83c765d8fd.js"
     ></script>
     <!-- Google reCAPTCHA v2 -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script
+      is:inline
+      src="https://www.google.com/recaptcha/api.js"
+      async
+      defer
+    ></script>
     <!-- Dark mode script to prevent FOUC -->
     <script is:inline>
-      // Check for saved theme preference or default to system preference
       (function () {
-        console.log("=== FOUC Prevention Script ===");
-
         const savedTheme = localStorage.getItem("darkMode");
         const systemPreference = window.matchMedia(
           "(prefers-color-scheme: dark)"
         ).matches;
 
-        console.log("FOUC - Saved theme:", savedTheme);
-        console.log("FOUC - System preference (dark):", systemPreference);
-        console.log(
-          "FOUC - System preference (light):",
-          window.matchMedia("(prefers-color-scheme: light)").matches
-        );
-
-        let shouldBeDark = false;
-
-        if (savedTheme !== null) {
-          // User has a saved preference
-          shouldBeDark = savedTheme === "true";
-          console.log("FOUC - Using saved preference:", shouldBeDark);
-        } else {
-          // No saved preference, follow system
-          shouldBeDark = systemPreference;
-          console.log("FOUC - Using system preference:", shouldBeDark);
-        }
-
-        console.log("FOUC - Final decision:", shouldBeDark);
+        const shouldBeDark =
+          savedTheme !== null ? savedTheme === "true" : systemPreference;
 
         if (shouldBeDark) {
           document.documentElement.classList.add("dark");
-          console.log("FOUC - Added dark class");
         } else {
           document.documentElement.classList.remove("dark");
-          console.log("FOUC - Removed dark class (if it existed)");
         }
-
-        console.log(
-          "FOUC - Final HTML classes:",
-          document.documentElement.className
-        );
-        console.log("===============================");
       })();
     </script>
   </head>
   <body
-    class="relative font-inter antialiased dark:bg-[#F0F7F4] dark:text-[#1A3C34] transition-colors duration-300 dark-mode-transition overflow-x-hidden"
+    class="relative bg-slate-100 font-sans text-ink antialiased tabular-nums transition-colors duration-300 overflow-x-hidden dark:bg-zinc-950 dark:text-zinc-50"
   >
-    <!-- Background Effects -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      <div class="absolute -top-[100px] -left-[100px] w-[600px] h-[600px] bg-[#8BC4AD] rounded-full mix-blend-multiply filter blur-[120px] opacity-40 animate-pulse"></div>
-      <div class="absolute top-[20%] -right-[100px] w-[500px] h-[500px] bg-[#6B9E86] rounded-full mix-blend-multiply filter blur-[120px] opacity-35"></div>
-      <div class="absolute bottom-[10%] left-[20%] w-[400px] h-[400px] bg-[#A5D4BF] rounded-full mix-blend-multiply filter blur-[120px] opacity-25"></div>
-      <div class="absolute top-[60%] right-[15%] w-[450px] h-[450px] bg-[#7BAF96] rounded-full mix-blend-multiply filter blur-[120px] opacity-30"></div>
-    </div>
-    <!-- Content -->
-    <div class="relative z-10">
+    <div class="relative">
       <Header />
       <slot />
       <Footer />
@@ -140,6 +151,65 @@ const {
 
     <!-- Chat Widget Component -->
     <ChatWidget />
+
+    <script is:inline>
+      (function () {
+        const styleId = "cookiescript-mobile-overrides";
+        const css = `
+          @media (max-width: 767px) {
+            #cookiescript_injected {
+              left: 1rem !important;
+              right: 1rem !important;
+              bottom: 1rem !important;
+              width: auto !important;
+              max-width: none !important;
+              max-height: min(68vh, 560px) !important;
+              box-sizing: border-box !important;
+              overflow-y: auto !important;
+              border-radius: 1rem !important;
+              transform: none !important;
+            }
+
+            #cookiescript_buttons {
+              display: grid !important;
+              grid-template-columns: 1fr !important;
+              gap: 0.75rem !important;
+              margin: 0 0 0.75rem !important;
+              width: 100% !important;
+            }
+
+            #cookiescript_accept,
+            #cookiescript_reject,
+            #cookiescript_save {
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              min-height: 44px !important;
+              margin: 0 !important;
+              padding: 0 1rem !important;
+              white-space: normal !important;
+            }
+          }
+        `;
+
+        function injectCookieOverrides() {
+          let style = document.getElementById(styleId);
+          if (!style) {
+            style = document.createElement("style");
+            style.id = styleId;
+            style.textContent = css;
+          }
+          document.body.appendChild(style);
+        }
+
+        injectCookieOverrides();
+        window.addEventListener("load", injectCookieOverrides);
+        setTimeout(injectCookieOverrides, 1000);
+        setTimeout(injectCookieOverrides, 3000);
+      })();
+    </script>
 
     <style>
       html {

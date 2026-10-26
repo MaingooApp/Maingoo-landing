@@ -1,55 +1,31 @@
 ---
-
+import { faqs } from "../data/faqs";
 ---
 
-<!-- FAQ Section -->
-<section id="faqs">
-  <div class="mt-20 mb-20 max-w-7xl mx-auto px-6">
-    <h3
-      class="text-4xl font-bold text-center dark:text-[#000000] mb-12"
+<section id="faqs" aria-labelledby="faqs-title" class="pb-20 pt-14">
+  <div class="mx-auto flex max-w-[860px] flex-col gap-4 px-5 md:px-8">
+    <h2 id="faqs-title" class="m-0 text-[30px] font-black leading-tight md:text-[40px]">Preguntas frecuentes</h2>
+    <div>
+      {
+        faqs.map((faq, index) => (
+          <details class="group border-b border-slate-200 dark:border-zinc-800" open={index === 0}>
+            <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold [&::-webkit-details-marker]:hidden">
+              {faq.question}
+              <svg class="size-[22px] shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </summary>
+            <p class="m-0 pb-5 text-base leading-relaxed text-muted dark:text-zinc-400">{faq.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+    <button
+      type="button"
+      data-open-chat
+      class="mt-4 inline-flex min-h-12 items-center gap-2 self-start rounded-control border border-slate-300 bg-white px-5 font-bold text-ink hover:border-brand-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50"
     >
-      Preguntas Frecuentes
-    </h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-      <div class="bg-white rounded-lg p-6 flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <h4 class="font-semibold text-[#1A3C34] mb-3 text-lg">
-          ¿Tiene coste unirme a la beta?
-        </h4>
-        <p class="text-gray-700 flex-grow">
-          No, la beta es completamente gratuita durante esta fase. Podrás
-          acceder a todas las funcionalidades disponibles sin ningún coste.
-        </p>
-      </div>
-      <div class="bg-white rounded-lg p-6 flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <h4 class="font-semibold text-[#1A3C34] mb-3 text-lg">
-          ¿Qué gano participando?
-        </h4>
-        <p class="text-gray-700 flex-grow">
-          Obtendrás acceso anticipado a nuevas funciones, soporte directo del
-          equipo de desarrollo y beneficios exclusivos, incluyendo descuentos
-          especiales cuando lancemos los planes oficiales.
-        </p>
-      </div>
-      <div class="bg-white rounded-lg p-6 flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <h4 class="font-semibold text-[#1A3C34] mb-3 text-lg">
-          ¿Cuándo habrá precios?
-        </h4>
-        <p class="text-gray-700 flex-grow">
-          Los planes de pago llegarán después de la fase beta. Como participante
-          beta, tendrás acceso a beneficios exclusivos y descuentos especiales
-          en los futuros planes.
-        </p>
-      </div>
-    </div>
-    <div class="flex justify-center">
-      <button
-          id="open-chat"
-          class="relative bg-transparent text-[#000000] px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transition-all transform hover:-translate-y-1 inline-flex items-center justify-center gap-2"
-          style="border: 3px solid #6B9E86; background-image: linear-gradient(#F0F7F4, #F0F7F4),  background-origin: border-box; background-clip: padding-box, border-box;"
-        >
-          <img src="/maingoo_logo.svg" alt="IA" class="w-7 h-7" />
-          Pregunta a Maingoo
-        </button>
-    </div>
+      ¿Otra duda? Pregunta a Maingoo
+    </button>
   </div>
 </section>
