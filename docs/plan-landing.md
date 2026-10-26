@@ -118,18 +118,18 @@ Regla: primero el canvas y la aprobación; después el código.
 ## Fase 2: vídeos cortos por función
 
 - [x] 2.1 Elegir el modo de video-shotcraft (decisión 4): cocreación. Leer `SKILL.md` y, según el modo, `references/pipeline.md` o `references/guided-free-creation.md`.
-- [ ] 2.2 Crear el proyecto Remotion `Maingoo-Front/video-landing/`, ignorado por git como `video-pitch`.
+- [x] 2.2 Crear el proyecto Remotion `Maingoo-Front/video-landing/`, ignorado por git como `video-pitch`.
   - Copiar la base de `video-pitch`: `capture/`, `src/lib`, `theme.ts` y `remotion.config.ts`.
   - Una composición por clip (`Clip01Facturas` …) desde un `Root.tsx` común.
   - Reutilizar `DESIGN-SPEC.md` como dirección visual y ampliarlo con una tabla de los 18 clips.
-- [ ] 2.3 Datos ficticios: ampliar `fake-data.mjs` y `mocks.mjs` para cada vista nueva.
+- [x] 2.3 Datos ficticios: ampliar `fake-data.mjs` y `mocks.mjs` para cada vista nueva.
   - TPV y comandero con mesas, carta con fotos y pedidos.
   - KDS con comandas a 2, 12 y 17 min.
   - Caja.
   - APPCC con 3–4 sensores (cámara, congelador, botellero), lecturas de 24 h y una alerta fuera de rango.
   - Maquinaria, gestor, usuarios y auditoría.
   - Congelar los datos antes de capturar. Nada de datos del entorno local en pantalla.
-- [ ] 2.4 Mapa de planos de los 18 clips: tarjeta de video-shotcraft por clip, duración, guion de 1–2 frases y vista o estado. Validar los nombres de tarjeta en `gallery/api/library.json` y leer el TSX de su demo. **Aprobación del usuario.**
+- [x] 2.4 Mapa de planos de los 18 clips: tarjeta de video-shotcraft por clip, duración, guion de 1–2 frases y vista o estado. Validar los nombres de tarjeta en `gallery/api/library.json` y leer el TSX de su demo. **Aprobación del usuario.**
 ### Guion de los clips (propuesta para aprobar en 2.4)
 
 **Modo:** cocreación (skill video-shotcraft). Producto, datos y dirección visual vienen de este plan y de `video-pitch/DESIGN-SPEC.md`. Se salta la comparativa de styleframes porque la marca está fijada en `DESIGN.md` y el pitch ya se aprobó con ella.
@@ -152,7 +152,7 @@ Regla: primero el canvas y la aprobación; después el código.
 | 04 | Costes (`04-costes`) | 8 | `spotlight-hero-card` | Ficha del AOVE 5 L con el KPI +12,4 % y su historial | Foco, acercamiento y el KPI se eleva; un único barrido de luz ámbar; vuelve a su sitio |
 | 05 | Inventario y recuento (`05-inventario`) | 8 | `type-and-filter` | Recuento en tablet: se busca «aceite», se filtra y se teclea la cantidad contada | Se escribe la búsqueda, la lista se filtra y la fila contada se confirma en verde |
 | 06 | Recetas y alérgenos (`06-recetas`) | 9 | `product-card-progressive-assemble` | «Crear artículo con Maingoo AI» → ficha de la receta con escandallo y alérgenos | La ficha se arma por partes (ingredientes, coste por ración, margen, iconos de alérgenos) |
-| 07 | TPV (`07-tpv`) | 10 | `input-trigger-moves · cursor-performance` | TPV de escritorio: plano de Terraza → Mesa 1 → carta con fotos → «Cobrar» | El cursor actúa en primera persona: toca la mesa, añade dos platos y abre el cobro |
+| 07 | TPV (`07-tpv`) | 10 | `input-trigger-moves · cursor-performance` | TPV de escritorio: plano de Terraza → Mesa 1 → carta con fotos → «Cobrar» | El cursor actúa en primera persona: toca la mesa, añade tres platos, envía a cocina y abre el cobro |
 | 08 | Comandero (`08-comandero`) | 8 | `radial-ripple-phone-chips` | Móvil del comandero con la carta y el pedido de Terraza · Mesa 4 | El móvil queda en el centro; las pastillas «Mesa 4», «2 × Hamburguesa» y «Enviado a cocina» brotan a los lados |
 | 09 | Pantalla de cocina (`09-cocina`) | 7 | `deck-deal-flyin` | KDS con las columnas Nuevas, En preparación y Listas | Las comandas se reparten como cartas en sus columnas; una pasa a ámbar por el tiempo |
 | 10 | Plano de sala (`10-plano`) | 7 | `canvas-materialize-moves · panel-to-canvas` | Editor del plano: foto de la terraza → mesas y barra colocadas | La foto se convierte en el plano editable; las mesas se materializan en su sitio |
@@ -169,12 +169,33 @@ Pendiente al aprobar:
 - Corregir en `src/data/features.ts` el texto del clip 17: hoy dice «Comparte las facturas con tu asesoría», que la app no hace.
 - Los clips 00, 08 y 10 necesitan mocks nuevos (comandero, foto de plano).
 
-- [ ] 2.5 Capturar las texturas 2x de cada vista: `node capture/capture.mjs <clip>` contra el front local.
-- [ ] 2.6 Producir y renderizar clip a clip.
+- [x] 2.5 Capturar las texturas 2x de cada vista: `node capture/capture.mjs <clip>` contra el front local.
+- [x] 2.6 Producir y renderizar clip a clip.
   - Revisar cada uno con fotogramas fijos antes del render final.
   - Exportar MP4 + WebM + póster a `Maingoo-landing/public/videos/<clip>.{mp4,webm,jpg}`.
-- [ ] 2.7 Conectar los clips en `FeatureClip` y revisar en el navegador: peso total, carga diferida y reproducción en móvil.
-- [ ] 2.8 Commit local en la landing con los clips. El proyecto Remotion se queda fuera de git.
+- [x] 2.7 Conectar los clips en `FeatureClip` y revisar en el navegador: peso total, carga diferida y reproducción en móvil.
+- [x] 2.8 Commit local en la landing con los clips. El proyecto Remotion se queda fuera de git.
+
+### Estado de la fase 2 (25-10-2026, para quien siga)
+
+**Hechos y renderizados**: los 19 clips (mp4 sin audio + webm + jpg en `public/videos/`). Revisión final independiente hecha el 26-10-2026: sin bloqueantes ni datos reales. Corregido tras ella: el bucle ya no superpone dos encuadres (funde al fondo y vuelve), el chat dice «Listo, este es el correo para tu gestora», encuadres de 16 y 18, tarjeta blanca en 03. El webm se codifica en rango de TV (`-color_range tv`): en rango completo Chrome no lo decodifica. `scripts/render-all.sh` vuelve a renderizar los 19.
+
+**Pie del chat**: la app ya dice «Gana tiempo. Maingoo hace el resto.» (Maingoo-Front `51031a9`) y las capturas con chat se rehicieron (`scripts/recapture-chat.sh`). Mejoras menores anotadas en la revisión: 12 y 17 comparten propuesta de correo; 14 lleva la línea azul de la gráfica de la app; 11 arranca en «000,00».
+
+**Cómo se trabaja** (todo en `Maingoo-Front/video-landing/`, ignorado por git):
+- Front de capturas: `ng serve --port 4300` (configuración `front-http` de `Maingoo-Front/.claude/launch.json`); backend local en el 3000. Exportar `MG_BASE=http://localhost:4300` antes de capturar.
+- Capturas: `cd capture && node capture.mjs <paso>`; pasos existentes: `invoice`, `product`, `dashboard`, `chat`, `voice`, `informes`, `equipo`, `usuarios`, `asesoria`, `sensor`, `caja`, `tpv`, `plano`, `kds`, `comandero`. Guardan texturas 2x/3x en `public/textures/` y cajas en `src/layout.json`. `probe.mjs <ruta> <nombre>` saca una captura rápida a `capture/sweep/`; `reqs.mjs <ruta>` lista las llamadas a la API.
+- Datos ficticios en `capture/mocks.mjs` (Taberna La Encina; nada real en pantalla): informes, caja abierta (esperado 502,10 €), sensores (`MG_IOT_ALARM=1` pone el Botellero por encima de 6 ºC), equipo, gestora Carmen Ortega (`carmen@ortega.example`), personas, carta de 15 platos, salas renombradas (Terraza con plano ficticio, Comedor, Barra, Reservado) y líneas de pedido del TPV simuladas en memoria (`ORDERS`: alta de línea, enviar a cocina y cambio de cantidad), porque el backend rechaza la carta ficticia.
+- Clips: un componente por clip en `src/clips/`, registrado en `src/Root.tsx` (1920×1200, 30 fps, envuelto en `Loop`, que funde los últimos 12 f con el primero). Cada archivo cita la demo de video-shotcraft que adapta; leer siempre el TSX de la demo antes de implementar.
+- Revisión: `scripts/stills.sh <id> <fotogramas…>` deja jpg en `out/qa/`. Render: `scripts/render.sh <id> <fotograma-póster>` (1280×800, copia a la landing).
+
+**Clip 07 TPV**: hecho (`src/clips/C07Tpv.tsx`, 10 s). El paso `tpv` saca plano, pedido vacío, una captura por línea añadida, enviado y diálogo de cobro; cada clic del cursor cambia a la captura siguiente. En el backend local sigue el pedido #2 de Terraza · Mesa 1 en borrador sin líneas reales (las líneas se simulan en `ORDERS`).
+
+**Clip 10 Plano**: hecho (`src/clips/C10Plano.tsx`, 7 s). `capture/sketch.mjs` dibuja el croquis a lápiz (`out/croquis-terraza.jpg`, copiado a `public/textures/`); el paso `plano` lo sube al editor de Terraza, que entra vacío porque `mocks.mjs` simula `GET …/floor-plan` y responde `…/ai-draft` con el plano de Terraza más una barra (sin llamar a la IA real). El cursor y la onda compartidos están en `src/lib/Cursor.tsx` (07 y 10).
+
+**Clips 08 Comandero y 09 Cocina**: hechos (`C08Comandero.tsx` 8 s, `C09Cocina.tsx` 7 s). `capture/device.mjs` abre una sesión de dispositivo simulada sin emparejar nada: escribe la identidad (y, en el comandero, el camarero) en IndexedDB, simula `GET /api/pos/device-context` y manda las llamadas con token de dispositivo con el token del propietario; el comandero usa el id de un dispositivo real del mismo tipo porque el bootstrap lo exige. `mocks.mjs` simula las comandas de cocina (`MG_NOW` fija la hora, `MG_KDS_RISK=1` deja la Mesa 7 en 11 min) y el pedido de la Mesa 4 (mesa ficticia) en `ORDERS`, incluida su ocupación, sin la cual el comandero lo descarta al reconciliar.
+
+**Notas para los demás clips**: 02, 03, 05 y 06 necesitan datos ficticios nuevos (albarán repetido, revisión «¿Qué producto es esta línea?», recuento iniciado y artículo con escandallo). Al terminar, parar el servidor del 4300 y avisar al usuario de reiniciar su `ng serve` del 4200.
 
 ## Registro
 
