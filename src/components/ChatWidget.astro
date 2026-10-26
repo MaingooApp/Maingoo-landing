@@ -241,7 +241,7 @@
           const { done, value } = await reader.read();
           if (done) break;
           responseText += decoder.decode(value, { stream: true });
-          botMessage.textElement.textContent = responseText;
+          botMessage.textElement.innerHTML = this.renderMarkdown(responseText);
           this.scrollToBottom();
         }
 
@@ -313,12 +313,12 @@
           />
         </div>
         <div class="bg-white rounded-lg p-3 shadow-sm max-w-xs border border-[#6B9E86]/20">
-          <p class="whitespace-pre-line text-sm text-[#1A3C34]"></p>
+          <div class="chat-md text-sm text-[#1A3C34]"></div>
           <span class="text-xs text-[#6B9E86] mt-1 block">Ahora</span>
         </div>
       `;
 
-      const textElement = messageDiv.querySelector("p");
+      const textElement = messageDiv.querySelector(".chat-md");
       this.chatMessages.appendChild(messageDiv);
       this.scrollToBottom();
 
@@ -361,6 +361,43 @@
       this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
     }
 
+    // Small Markdown subset the assistant uses (bold, italics, lists, paragraphs).
+    // The text is escaped first, so the model can never inject HTML.
+    renderMarkdown(markdown) {
+      const inline = (text) =>
+        this.escapeHtml(text)
+          .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+          .replace(/(^|[^*])\*([^*\s][^*]*?)\*(?!\*)/g, "$1<em>$2</em>")
+          .replace(/`([^`]+)`/g, "<code>$1</code>");
+      const html = [];
+      let list = null;
+      const closeList = () => {
+        if (list) html.push(`</${list}>`);
+        list = null;
+      };
+      for (const raw of markdown.split("\n")) {
+        const line = raw.trim();
+        const bullet = line.match(/^[-*•]\s+(.*)$/);
+        const numbered = line.match(/^\d+[.)]\s+(.*)$/);
+        if (bullet || numbered) {
+          const type = bullet ? "ul" : "ol";
+          if (list !== type) {
+            closeList();
+            html.push(`<${type}>`);
+            list = type;
+          }
+          html.push(`<li>${inline((bullet || numbered)[1])}</li>`);
+        } else if (line) {
+          closeList();
+          html.push(`<p>${inline(line.replace(/^#{1,6}\s+/, ""))}</p>`);
+        } else {
+          closeList();
+        }
+      }
+      closeList();
+      return html.join("");
+    }
+
     escapeHtml(text) {
       const map = {
         "&": "&amp;",
@@ -385,6 +422,33 @@
 </script>
 
 <style>
+  /* Assistant answers rendered from Markdown */
+  :global(.chat-md p) {
+    margin: 0 0 0.5rem;
+  }
+  :global(.chat-md p:last-child),
+  :global(.chat-md ul:last-child),
+  :global(.chat-md ol:last-child) {
+    margin-bottom: 0;
+  }
+  :global(.chat-md ul),
+  :global(.chat-md ol) {
+    margin: 0 0 0.5rem;
+    padding-left: 1.1rem;
+  }
+  :global(.chat-md ul) {
+    list-style: disc;
+  }
+  :global(.chat-md ol) {
+    list-style: decimal;
+  }
+  :global(.chat-md li) {
+    margin: 0.15rem 0;
+  }
+  :global(.chat-md strong) {
+    font-weight: 700;
+  }
+
   /* Custom scrollbar for chat messages */
   #chat-messages::-webkit-scrollbar {
     width: 4px;
