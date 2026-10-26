@@ -12,7 +12,7 @@ Creado el 2026-10-25. Presentación de Maingoo: 2026-10-28.
   - Normas propias en `AGENTS.md` del repo: copy en español, componentes en PascalCase y commits estilo `feat:`/`fix:` en español.
 - **Despliegue:** `.github/workflows` despliega por FTP a `maingoo.tech` (Hostinger) con cada push a la rama `production`. **Nunca hacer push** (ni a `main` ni a `production`). Commits solo locales en `main`; el usuario decide cuándo publicar.
 - **Landing actual (punto de partida):**
-  - `src/pages/index.astro` lleva `Header`, `Hero`, `Features`, `Pricing`, `ContactCTA`, `FAQs` y `Footer`, más datos estructurados (Organization LSXEM S.L., SoftwareApplication, FAQPage). `Benefits.astro` existe pero no se usa.
+  - `src/pages/index.astro` lleva `Header`, `Hero`, `Features`, `Pricing`, `ContactCTA`, `FAQs` y `Footer`, más datos estructurados (Organization, SoftwareApplication, FAQPage). `Benefits.astro` existe pero no se usa.
   - Páginas legales: `cookies`, `politica-privacidad` y `terminos-servicio`. Se mantienen.
   - Hero: «Gestiona tu restaurante con Inteligencia Artificial», con CTA «Solicitar Acceso a la Beta» y «Pregunta a Maingoo», que abre `ChatWidget`.
   - `Features`: 6 tarjetas con modal. **Promete cosas que la app no tiene**, como delivery (Glovo, Uber), predicción de personal y RRHH.
@@ -180,7 +180,7 @@ Pendiente al aprobar:
 
 **Hechos y renderizados**: los 19 clips (mp4 sin audio + webm + jpg en `public/videos/`). Revisión final independiente hecha el 26-10-2026: sin bloqueantes ni datos reales. Corregido tras ella: el bucle ya no superpone dos encuadres (funde al fondo y vuelve), el chat dice «Listo, este es el correo para tu gestora», encuadres de 16 y 18, tarjeta blanca en 03. El webm se codifica en rango de TV (`-color_range tv`): en rango completo Chrome no lo decodifica. `scripts/render-all.sh` vuelve a renderizar los 19.
 
-**Pie del chat**: la app ya dice «Gana tiempo. Maingoo hace el resto.» (Maingoo-Front `51031a9`) y las capturas con chat se rehicieron (`scripts/recapture-chat.sh`). Mejoras menores anotadas en la revisión: 12 y 17 comparten propuesta de correo; 14 lleva la línea azul de la gráfica de la app; 11 arranca en «000,00».
+**Pie del chat**: la app ya dice «Gana tiempo. Maingoo hace el resto.» (Maingoo-Front `51031a9`) y las capturas con chat se rehicieron (`scripts/recapture-chat.sh`). Mejoras menores anotadas en la revisión: resueltas: el 12 envía el resumen de ventas a la encargada, el 14 muestra una sola serie y el contador del 11 gira desde el principio.
 
 **Cómo se trabaja** (todo en `Maingoo-Front/video-landing/`, ignorado por git):
 - Front de capturas: `ng serve --port 4300` (configuración `front-http` de `Maingoo-Front/.claude/launch.json`); backend local en el 3000. Exportar `MG_BASE=http://localhost:4300` antes de capturar.
