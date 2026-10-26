@@ -170,7 +170,7 @@ Identificadores actualmente usados:
 | EmailJS public key | `aPPNoh3Ouq2xOXzLa` |
 | EmailJS service | `service_4nvrynj` |
 | EmailJS template | `template_tkal5o8` |
-| reCAPTCHA site key | `6Ld3ueYrAAAAALaYzCiypC39jBZKrANe9bEjLtZn` |
+| reCAPTCHA site key | `6LfqMwIuAAAAAMy_sIHDN5UvBcBoHWM_ZSMRzRZD` |
 
 Estos valores son públicos por naturaleza al ejecutarse en cliente, pero no deberían quedar dispersos en componentes si el proyecto crece. Recomendación interna: moverlos a variables públicas de Astro (`PUBLIC_*`) y documentar entornos.
 
