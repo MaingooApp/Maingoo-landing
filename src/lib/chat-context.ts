@@ -23,8 +23,8 @@ Funciones:
 ${featureLines}
 
 Precios:
-- Ahora mismo hay una beta gratuita que incluye: ${beta.join("; ")}.
-- Después llegarán los planes ${plans.map((plan) => `${plan.name} (${plan.text} ${plan.items.join(", ")})`).join(" y ")}. Tendrán un precio mensual fijo para siempre, con todas las funciones actuales y futuras. Todavía no hay precios publicados.
+- Ahora mismo hay una beta gratuita con el mismo software que el plan Profesional: ${beta.join("; ")}. Los sensores de temperatura no entran en la beta; van con el plan Profesional + sensores.
+- Después llegarán los planes ${plans.map((plan) => `${plan.name} (${plan.text} ${plan.items.join(", ")})`).join(" y ")}. Serán una suscripción mensual por local, sin tramos ni paquetes, con tarifas reducidas para varios locales. Todavía no hay precios publicados.
 
 Preguntas frecuentes:
 ${faqs.map((faq) => `- ${faq.question} ${faq.answer}`).join("\n")}

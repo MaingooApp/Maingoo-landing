@@ -16,7 +16,7 @@ Creado el 2026-10-25. Presentación de Maingoo: 2026-10-28.
   - Páginas legales: `cookies`, `politica-privacidad` y `terminos-servicio`. Se mantienen.
   - Hero: «Gestiona tu restaurante con Inteligencia Artificial», con CTA «Solicitar Acceso a la Beta» y «Pregunta a Maingoo», que abre `ChatWidget`.
   - `Features`: 6 tarjetas con modal. **Promete cosas que la app no tiene**, como delivery (Glovo, Uber), predicción de personal y RRHH.
-  - `Pricing`: beta gratis, más los planes Profesional y Empresarial «Próximamente».
+  - `Pricing`: beta gratis, más los planes Profesional y Profesional + sensores «Próximamente», sin precios.
   - `ContactCTA`: formulario con EmailJS, captcha, tipo de negocio y municipios (`src/data/municipios_spain.json`).
   - `ChatWidget`: asistente con webhook de n8n e IA local de Chrome.
   - **Conservar la lógica** del formulario, del chat, del captcha, el SEO y las páginas legales; el rediseño es visual y de contenido.
@@ -76,7 +76,7 @@ Para la presentación del 28-10, si falta tiempo, la prioridad es: 1, 13, 15, 7,
 ## Decisiones pendientes del usuario (preguntar antes del paso que las necesita)
 
 1. **Fase 1.** Funciones prometidas que no existen: delivery (Glovo, Uber), predicción de personal y RRHH. Propuesta: quitarlas y enseñar solo las funciones reales de la tabla de abajo; RRHH, como mucho, como «próximamente».
-2. **Fase 1.** Precios. Hoy: beta gratis más Profesional y Empresarial «Próximamente». Propuesta: mantenerlo hasta cerrar Stripe y la cuenta de prueba (memoria `trial-signup-future`), actualizando la lista de lo incluido.
+2. **Fase 1.** Precios. Hoy: beta gratis más Profesional y Profesional + sensores «Próximamente», sin precios. Propuesta: mantenerlo hasta cerrar Stripe y la cuenta de prueba (memoria `trial-signup-future`), actualizando la lista de lo incluido.
 3. **Fase 1.** Llamada a la acción principal. Hoy: «Solicitar acceso a la beta», que lleva al formulario de contacto. Propuesta: mantenerla con el eslogan nuevo; el registro abierto llegará con la cuenta de prueba.
 4. **Fase 2.** Modo de video-shotcraft. Propuesta: **cocreación** solo hasta aprobar el mapa de planos de los 18 clips, y luego autónomo por clip.
 5. **Fase 2.** Sonido. Propuesta: clips **sin audio** (en la landing se reproducen en silencio, en bucle y con `playsinline`), así que no hace falta sincronizar con el beat.
