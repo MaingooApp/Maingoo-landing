@@ -90,7 +90,7 @@ Regla: primero el canvas y la aprobación; después el código.
 - [x] 1.2 Responder las decisiones 1–3 con el usuario (2026-10-25: acepta las 3 propuestas: solo funciones reales, precios beta como hoy y CTA «Solicitar acceso a la beta»).
 - [x] 1.3 Crear el canvas «Maingoo — Landing» (`https://claude.ai/artifact/Lx9oAWZ682i6m1vucUAWfF`; archivos en el scratchpad `canvas-landing/project/`; pósteres con capturas reales y datos de prueba del pitch) (tipo Design, `quickstart` intent `design`) con tableros a 1440 de ancho y 390 en móvil:
   - Navegación con logo, enlaces y CTA.
-  - Hero con el eslogan y el hueco del vídeo principal.
+  - Hero con «Gestiona tu ___ con IA» (tipo de negocio rotativo, el mismo listado del formulario), el eslogan y el vídeo principal.
   - El problema: tiempo perdido en facturas, costes que suben y papeles de APPCC.
   - Cómo trabaja: la IA propone y tú confirmas (patrón de propuesta de DESIGN.md).
   - Rejilla de funciones agrupada en Compras y costes, Servicio (TPV, comandero, cocina, caja), Cocina segura (APPCC e IoT), Tu asistente (chat y voz) y Administración. Cada tarjeta lleva el hueco de su clip, con póster de marca hasta la fase 2.

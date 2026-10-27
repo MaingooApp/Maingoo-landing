@@ -1,6 +1,9 @@
 ---
 import FeatureClip from "./FeatureClip.astro";
 
+// Same business types as the contact form
+const businesses = ["Restaurante", "Bar", "Cafetería", "Buffet", "Coctelería", "Catering", "Cervecería", "Foodtruck", "Chiringuito", "Heladería", "Panadería", "Pizzería", "Hamburguesería"];
+
 const points = [
   "Ahorra horas de trabajo cada semana",
   "Diseñado junto a gerentes de hostelería reales",
@@ -16,9 +19,19 @@ const points = [
       >
         Beta abierta para hostelería
       </span>
-      <h1 id="hero-title" class="m-0 text-[40px] font-black leading-[1.05] tracking-tight md:text-[64px]">
-        Gana tiempo. Maingoo hace el resto.
+      <h1 id="hero-title" class="m-0 text-[44px] font-black leading-[1.05] tracking-tight md:text-[64px]">
+        <span class="sr-only">Gestiona tu negocio de hostelería con IA.</span>
+        <span aria-hidden="true" class="block">Gestiona tu</span>
+        <span aria-hidden="true" data-business-reel class="relative block h-[1.12em] overflow-hidden text-brand-600 dark:text-brand-300">
+          {
+            businesses.map((business, index) => (
+              <span class:list={["business-word", index === 0 && "is-current"]}>{business}</span>
+            ))
+          }
+        </span>
+        <span aria-hidden="true" class="block">con IA.</span>
       </h1>
+      <p class="m-0 text-[19px] font-bold text-brand-700 md:text-[22px] dark:text-brand-300">Gana tiempo. Maingoo hace el resto.</p>
       <p class="m-0 text-base leading-relaxed text-muted md:text-lg dark:text-zinc-400">
         Maingoo lee tus facturas y albaranes, cuadra el stock y los costes, lleva el TPV, la cocina y el APPCC, y te
         avisa de lo que importa.
@@ -106,3 +119,41 @@ const points = [
     </div>
   </div>
 </section>
+
+<style>
+  .business-word {
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(70%);
+    transition:
+      transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 520ms;
+  }
+  .business-word.is-current {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .business-word.is-leaving {
+    transform: translateY(-70%);
+  }
+</style>
+
+<script>
+  const reel = document.querySelector("[data-business-reel]");
+  const words = reel ? [...reel.children] : [];
+  // Without motion the first word ("Restaurante") stays
+  if (words.length > 1 && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let current = 0;
+    setInterval(() => {
+      if (document.hidden) return;
+      const next = (current + 1) % words.length;
+      words.forEach((word) => word.classList.remove("is-leaving"));
+      words[current].classList.replace("is-current", "is-leaving");
+      words[next].classList.add("is-current");
+      current = next;
+    }, 2200);
+  }
+</script>
