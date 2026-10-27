@@ -2,47 +2,16 @@
 // (resource maingoo-landing-ai) and streams the answer back as plain text.
 import type { APIRoute } from "astro";
 import { SYSTEM_PROMPT } from "../../lib/chat-context";
+import { allowedOrigin, clientIp, env, jsonError as error, rateLimiter } from "../../lib/server";
 
 export const prerender = false;
 
 const MAX_MESSAGES = 12;
 const MAX_CHARS = 1000;
 const MAX_OUTPUT_TOKENS = 700;
-const ALLOWED_ORIGINS = new Set(["https://maingoo.tech", "https://www.maingoo.tech"]);
-
-// shortcut: per-instance memory, so the limit resets on cold starts; move it to Vercel Firewall rate limiting if abused
-const WINDOW_MS = 10 * 60 * 1000;
-const MAX_PER_WINDOW = 20;
-const hits = new Map<string, number[]>();
+const rateLimited = rateLimiter(20, 10 * 60 * 1000);
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
-
-// Trimmed: values pasted into Vercel often carry a trailing space or line break
-const env = (name: string): string | undefined => (process.env[name] ?? import.meta.env[name])?.trim() || undefined;
-const error = (status: number, message: string) =>
-  new Response(JSON.stringify({ error: message }), { status, headers: { "Content-Type": "application/json" } });
-
-function allowedOrigin(origin: string | null): boolean {
-  if (!origin) return false;
-  if (ALLOWED_ORIGINS.has(origin)) return true;
-  let host: string;
-  try {
-    host = new URL(origin).hostname;
-  } catch {
-    return false;
-  }
-  if (import.meta.env.DEV) return host === "localhost" || host === "127.0.0.1";
-  // Vercel previews of this project
-  return host === "maingoo-landing.vercel.app" || host.endsWith("-maingoo-project.vercel.app");
-}
-
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((time) => now - time < WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > MAX_PER_WINDOW;
-}
 
 export function parseMessages(body: unknown): ChatMessage[] | null {
   const list = (body as { messages?: unknown })?.messages;
@@ -64,7 +33,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   const key = env("AZURE_LANDING_AI_KEY");
   if (!endpoint || !key) return error(503, "El chat no está configurado");
 
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || clientAddress;
+  const ip = clientIp(request, clientAddress);
   if (rateLimited(ip)) return error(429, "Demasiados mensajes seguidos. Prueba en unos minutos.");
 
   let messages: ChatMessage[] | null;

@@ -17,7 +17,7 @@ Creado el 2026-10-25. Presentación de Maingoo: 2026-10-28.
   - Hero: «Gestiona tu restaurante con Inteligencia Artificial», con CTA «Solicitar Acceso a la Beta» y «Pregunta a Maingoo», que abre `ChatWidget`.
   - `Features`: 6 tarjetas con modal. **Promete cosas que la app no tiene**, como delivery (Glovo, Uber), predicción de personal y RRHH.
   - `Pricing`: Profesional gratis durante la beta y Profesional + sensores «Próximamente», sin precio.
-  - `ContactCTA`: formulario con EmailJS, captcha, tipo de negocio y municipios (`src/data/municipios_spain.json`).
+  - `ContactCTA`: formulario con envío por Resend desde `/api/contact`, captcha, tipo de negocio y municipios (`src/data/municipios_spain.json`).
   - `ChatWidget`: asistente con webhook de n8n e IA local de Chrome.
   - **Conservar la lógica** del formulario, del chat, del captcha, el SEO y las páginas legales; el rediseño es visual y de contenido.
 - **App de referencia (rediseño ya hecho):** `/Users/david/Developer/Maingoo-Front`.

@@ -2,7 +2,7 @@
 
 Este documento describe la base técnica de la landing de Maingoo para desarrollo interno. No está pensado como README público ni como material comercial, sino como referencia operativa para mantener, extender y desplegar esta pieza del SaaS.
 
-La landing funciona como punto de entrada comercial y captación de leads para Maingoo. Actualmente es un sitio estático construido con Astro, con lógica de cliente para formulario, validaciones, analítica, consentimiento, reCAPTCHA y envío de contactos mediante EmailJS.
+La landing funciona como punto de entrada comercial y captación de leads para Maingoo. Actualmente es un sitio estático construido con Astro, con lógica de cliente para formulario, validaciones, analítica, consentimiento, reCAPTCHA y envío de contactos con Resend desde una función de Vercel (`/api/contact`).
 
 ## Estado actual
 
@@ -10,7 +10,7 @@ La landing funciona como punto de entrada comercial y captación de leads para M
 - Framework: Astro 5.
 - Styling: Tailwind CSS 3.
 - Render: estático, sin backend propio en este repositorio.
-- Formularios: lógica client-side con EmailJS.
+- Formularios: validación en cliente y envío a `/api/contact` (Resend).
 - Validación de teléfono: `libphonenumber-js`.
 - Dataset local: municipios de España para autocompletado.
 - Rutas legales incluidas: cookies, privacidad y términos.
@@ -22,7 +22,7 @@ La landing funciona como punto de entrada comercial y captación de leads para M
 | Framework | Astro `^5.13.2` |
 | Estilos | Tailwind CSS `^3.4.17` |
 | Integración Tailwind | `@astrojs/tailwind` |
-| Formularios | `@emailjs/browser` |
+| Formularios | Resend (API REST desde `/api/contact`) |
 | Teléfonos | `libphonenumber-js` |
 | Lenguaje/config | TypeScript + ESM |
 | Gestor de paquetes | npm |
@@ -31,7 +31,7 @@ La landing funciona como punto de entrada comercial y captación de leads para M
 
 - Node.js compatible con Astro 5.
 - npm.
-- Acceso a internet para probar servicios externos: EmailJS, reCAPTCHA, Google Analytics, Microsoft Clarity, Cookie Script y Google Fonts.
+- Acceso a internet para probar servicios externos: Resend, reCAPTCHA, Google Analytics, Microsoft Clarity, Cookie Script y Google Fonts.
 
 Instalación:
 
@@ -149,7 +149,6 @@ Archivo: `src/components/ContactCTA.astro`
 
 Responsabilidades actuales:
 
-- Inicializa EmailJS.
 - Construye el selector de países y prefijos telefónicos.
 - Formatea el teléfono mientras el usuario escribe.
 - Valida teléfono según país seleccionado.
@@ -160,16 +159,13 @@ Responsabilidades actuales:
 - Controla contador de caracteres del mensaje.
 - Exige aceptación de privacidad.
 - Exige reCAPTCHA v2.
-- Envía el lead a EmailJS.
+- Envía el lead a `/api/contact`, que verifica el reCAPTCHA en servidor y lo manda por Resend a hello@maingoo.tech con respuesta directa al cliente.
 - Muestra alertas de éxito/error.
 
 Identificadores actualmente usados:
 
 | Servicio | Valor actual |
 | --- | --- |
-| EmailJS public key | `aPPNoh3Ouq2xOXzLa` |
-| EmailJS service | `service_4nvrynj` |
-| EmailJS template | `template_tkal5o8` |
 | reCAPTCHA site key | `6LfqMwIuAAAAAMy_sIHDN5UvBcBoHWM_ZSMRzRZD` |
 
 Estos valores son públicos por naturaleza al ejecutarse en cliente, pero no deberían quedar dispersos en componentes si el proyecto crece. Recomendación interna: moverlos a variables públicas de Astro (`PUBLIC_*`) y documentar entornos.
@@ -182,7 +178,7 @@ Estos valores son públicos por naturaleza al ejecutarse en cliente, pero no deb
 | Microsoft Clarity | `Layout.astro` | Grabación/heatmaps/comportamiento. |
 | Cookie Script | `Layout.astro` | Gestión de consentimiento. |
 | Google reCAPTCHA v2 | `Layout.astro` + `ContactCTA.astro` | Protección del formulario. |
-| EmailJS | `ContactCTA.astro` | Envío de leads sin backend propio. |
+| Resend | `src/pages/api/contact.ts` | Envío de leads desde el dominio verificado `correo.maingoo.tech`. |
 | Google Fonts | `Layout.astro` | Fuente Inter. |
 
 IDs actuales:
@@ -195,17 +191,16 @@ IDs actuales:
 
 ## Variables y configuración recomendada
 
-Actualmente el proyecto no usa `.env`. Para separar entornos y facilitar despliegues, se recomienda introducir:
+Para separar entornos y facilitar despliegues, se recomienda introducir:
 
 ```text
 PUBLIC_GA_ID=
 PUBLIC_CLARITY_ID=
 PUBLIC_COOKIE_SCRIPT_ID=
-PUBLIC_EMAILJS_PUBLIC_KEY=
-PUBLIC_EMAILJS_SERVICE_ID=
-PUBLIC_EMAILJS_TEMPLATE_ID=
 PUBLIC_RECAPTCHA_SITE_KEY=
 ```
+
+Secretos de las funciones (en Vercel y en un `.env` local, nunca en el repo): `RESEND_API_KEY`, `RECAPTCHA_SECRET_KEY`, opcionales `CONTACT_TO_EMAIL` y `CONTACT_FROM_EMAIL`, y las variables `AZURE_LANDING_AI_*` del chat.
 
 En Astro, las variables expuestas al navegador deben empezar por `PUBLIC_`.
 
@@ -240,7 +235,7 @@ Salida:
 dist/
 ```
 
-El resultado es estático y puede desplegarse en hosting de frontend. Si se mantiene el envío por EmailJS, no se requiere backend para esta landing.
+El resultado es estático y puede desplegarse en hosting de frontend. Las páginas son estáticas; el chat y el formulario corren como funciones de Vercel.
 
 ## Checklist antes de publicar
 
@@ -248,7 +243,7 @@ El resultado es estático y puede desplegarse en hosting de frontend. Si se mant
 - Revisar visualmente desktop y mobile.
 - Probar envío real del formulario.
 - Validar que reCAPTCHA acepta el dominio de producción.
-- Validar que EmailJS recibe todos los campos esperados.
+- Validar que el correo de Resend llega con todos los campos.
 - Confirmar que las páginas legales reflejan las integraciones activas.
 - Confirmar que Cookie Script gobierna correctamente analítica y tracking.
 - Revisar consola del navegador sin errores críticos.
@@ -257,8 +252,7 @@ El resultado es estático y puede desplegarse en hosting de frontend. Si se mant
 ## Riesgos técnicos actuales
 
 - Credenciales/IDs públicos definidos directamente en componentes.
-- Formulario dependiente de terceros y sin backend propio de respaldo.
-- reCAPTCHA validado en cliente; sin verificación server-side dentro de este repositorio.
+- El límite de envíos de `/api/contact` es por instancia y se reinicia en arranques en frío.
 - Scripts de analítica y tracking cargados desde el layout global.
 - Lógica extensa dentro de `ContactCTA.astro`; puede dificultar mantenimiento si el formulario crece.
 - No hay scripts de lint, test ni typecheck explícitos en `package.json`.
@@ -282,7 +276,6 @@ Prioridad media:
 
 Prioridad futura:
 
-- Sustituir EmailJS por endpoint propio del SaaS si se necesita trazabilidad, validación server-side, CRM o antifraude más robusto.
 - Mover búsqueda de municipios a API si se amplían países o datasets.
 - Añadir pruebas end-to-end para el formulario crítico.
 

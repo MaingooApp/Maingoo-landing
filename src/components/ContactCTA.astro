@@ -29,7 +29,6 @@
     normalizedOriginal: string;
   }
 
-  import emailjs from "@emailjs/browser";
   import {
     parsePhoneNumber,
     AsYouType,
@@ -70,12 +69,6 @@
   };
 
   const initForm = () => {
-    try {
-      emailjs.init("aPPNoh3Ouq2xOXzLa");
-    } catch (error) {
-      console.error("Error al inicializar EmailJS:", error);
-    }
-
     const form = document.getElementById("contact-form") as HTMLFormElement;
     const submitButton = document.getElementById(
       "submit-button"
@@ -402,6 +395,7 @@
       }
 
       submitButton.textContent = "Enviando...";
+      submitButton.disabled = true;
 
       try {
         // Ocultar alertas anteriores
@@ -426,11 +420,13 @@
           );
         }
 
-        await emailjs.send(
-          "service_4nvrynj",
-          "template_tkal5o8",
-          Object.fromEntries(formData)
-        );
+        formData.set("recaptcha", recaptchaResponse);
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(Object.fromEntries(formData)),
+        });
+        if (!response.ok) throw new Error(`/api/contact respondió ${response.status}`);
 
         form.reset();
         hasAttemptedSubmit = false;
@@ -449,6 +445,7 @@
         }, 5000);
       } finally {
         submitButton.textContent = "Enviar mensaje";
+        submitButton.disabled = false;
       }
     };
 
