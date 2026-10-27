@@ -286,13 +286,6 @@
       if (option) countrySelect.appendChild(option);
     });
 
-    // Actualizar el maxLength del input cuando cambie el país
-    const updatePhoneInputMaxLength = () => {
-      const countryCode = countrySelect.value as CountryCode;
-      const maxLength = getMaxLengthForCountry(countryCode);
-      phoneInput.maxLength = maxLength;
-    };
-
     // Formatear número de teléfono mientras se escribe
     const formatPhoneNumber = () => {
       const countryCode = countrySelect.value as CountryCode;
@@ -323,13 +316,8 @@
     };
 
     phoneInput.addEventListener("input", formatPhoneNumber);
-    countrySelect.addEventListener("change", () => {
-      updatePhoneInputMaxLength();
-      formatPhoneNumber();
-    });
-
-    // Inicializar maxLength para el país por defecto
-    updatePhoneInputMaxLength();
+    // Sin maxLength en el input: contaría los espacios del formato; formatPhoneNumber ya limita los dígitos
+    countrySelect.addEventListener("change", formatPhoneNumber);
 
     const validateField = (
       field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
