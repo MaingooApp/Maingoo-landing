@@ -2,7 +2,7 @@
 // The chatbot has no tools and no access to the Maingoo backend: this text is all it knows.
 import { faqs } from "../data/faqs";
 import { featureClips, featureGroups } from "../data/features";
-import { beta, plans } from "../data/pricing";
+import { plans } from "../data/pricing";
 
 const featureLines = Object.entries(featureGroups)
   .map(([group, label]) => {
@@ -23,8 +23,9 @@ Funciones:
 ${featureLines}
 
 Precios:
-- Ahora mismo hay una beta gratuita con el mismo software que el plan Profesional: ${beta.join("; ")}. Los sensores de temperatura no entran en la beta; van con el plan Profesional + sensores.
-- Después llegarán los planes ${plans.map((plan) => `${plan.name} (${plan.text} ${plan.items.join(", ")})`).join(" y ")}. Serán una suscripción mensual por local, sin tramos ni paquetes, con tarifas reducidas para varios locales. Todavía no hay precios publicados.
+- Hay dos planes: ${plans.map((plan) => `${plan.name} (${plan.text} ${plan.items.join(", ")})`).join(" y ")}.
+- El plan Profesional es gratis mientras dure la beta, sin permanencia. El plan Profesional + sensores llegará más adelante y todavía no tiene precio.
+- Después de la beta serán una suscripción mensual por local, sin tramos ni paquetes, con tarifas reducidas para varios locales y un mes de regalo con el pago anual. Todavía no hay precios publicados.
 
 Preguntas frecuentes:
 ${faqs.map((faq) => `- ${faq.question} ${faq.answer}`).join("\n")}

@@ -1,5 +1,5 @@
 // Shared by the pricing section and the landing chatbot context.
-// The free beta gives the same software as the Profesional plan; sensors only come with the second plan.
+// Profesional is free during the beta; sensors only come with the second plan, still without a price.
 export const software = [
   "Facturas y albaranes leídos por la IA",
   "Proveedores, costes y alertas de precio",
@@ -10,12 +10,11 @@ export const software = [
   "Chat y llamada con Maingoo AI",
   "Todos los usuarios que necesites",
 ];
-export const beta = [...software, "Soporte directo del equipo"];
 export const plans = [
   {
     name: "Profesional",
     text: "El software completo para tu local.",
-    items: software,
+    items: [...software, "Soporte directo del equipo"],
   },
   {
     name: "Profesional + sensores",

@@ -1,5 +1,6 @@
 ---
-import { beta, plans } from "../data/pricing";
+import { plans } from "../data/pricing";
+const [profesional, sensores] = plans;
 const tick = "M4 12l5 5L20 6";
 ---
 
@@ -13,17 +14,17 @@ const tick = "M4 12l5 5L20 6";
       </p>
     </div>
 
-    <div class="grid gap-4 md:grid-cols-3 md:gap-5">
+    <div class="grid gap-4 md:grid-cols-2 md:gap-5">
       <article class="flex flex-col gap-4 rounded-card border-2 border-brand-500 bg-white p-7 dark:bg-zinc-900">
         <span class="inline-flex min-h-[30px] items-center self-start rounded-full border border-brand-200 bg-brand-50 px-3 text-[13px] font-bold text-brand-700 dark:border-brand-700 dark:bg-brand-950 dark:text-brand-300">
-          Disponible ahora
+          Beta abierta
         </span>
-        <h3 class="m-0 text-[22px] font-bold">Beta</h3>
+        <h3 class="m-0 text-[22px] font-bold">{profesional.name}</h3>
         <p class="m-0"><strong class="text-[44px] font-black">Gratis</strong> <span class="text-muted dark:text-zinc-400">durante la beta</span></p>
-        <p class="m-0 text-[15px] text-muted dark:text-zinc-400">El plan Profesional completo, gratis mientras dure la beta.</p>
+        <p class="m-0 text-[15px] text-muted dark:text-zinc-400">{profesional.text}</p>
         <ul class="m-0 flex list-none flex-col gap-2.5 p-0 text-[15px]">
           {
-            beta.map((item) => (
+            profesional.items.map((item) => (
               <li class="flex gap-2.5">
                 <svg class="mt-0.5 size-4 shrink-0 text-brand-700 dark:text-brand-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d={tick}></path></svg>
                 {item}
@@ -41,29 +42,27 @@ const tick = "M4 12l5 5L20 6";
         <span class="text-center text-[13px] text-muted dark:text-zinc-400">Sin permanencia</span>
       </article>
 
-      {
-        plans.map((plan) => (
-          <article class="flex flex-col gap-4 rounded-card border border-slate-200 bg-white p-7 dark:border-zinc-800 dark:bg-zinc-900">
-            <span class="inline-flex min-h-[30px] items-center self-start rounded-full border border-amber-300 bg-amber-50 px-3 text-[13px] font-bold text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300">
-              Próximamente
-            </span>
-            <h3 class="m-0 text-[22px] font-bold">{plan.name}</h3>
-            <p class="m-0 text-[15px] text-muted dark:text-zinc-400">{plan.text}</p>
-            <ul class="m-0 flex list-none flex-col gap-2.5 p-0 text-[15px]">
-              {plan.items.map((item) => (
-                <li class="flex gap-2.5">
-                  <svg class="mt-0.5 size-4 shrink-0 text-brand-700 dark:text-brand-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d={tick}></path></svg>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))
-      }
+      <article class="flex flex-col gap-4 rounded-card border border-slate-200 bg-white p-7 dark:border-zinc-800 dark:bg-zinc-900">
+        <span class="inline-flex min-h-[30px] items-center self-start rounded-full border border-amber-300 bg-amber-50 px-3 text-[13px] font-bold text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300">
+          Próximamente
+        </span>
+        <h3 class="m-0 text-[22px] font-bold">{sensores.name}</h3>
+        <p class="m-0 text-[15px] text-muted dark:text-zinc-400">{sensores.text}</p>
+        <ul class="m-0 flex list-none flex-col gap-2.5 p-0 text-[15px]">
+          {
+            sensores.items.map((item) => (
+              <li class="flex gap-2.5">
+                <svg class="mt-0.5 size-4 shrink-0 text-brand-700 dark:text-brand-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d={tick}></path></svg>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </article>
     </div>
 
     <p class="m-0 rounded-card bg-brand-50 px-5 py-4 text-[15px] leading-relaxed text-brand-700 dark:bg-brand-950 dark:text-brand-300">
-      Suscripción mensual por local, sin tramos ni paquetes. Tarifas reducidas si tienes varios locales. Precios, próximamente.
+      Después de la beta: suscripción mensual por local, sin tramos ni paquetes. Tarifas reducidas si tienes varios locales y, con el pago anual, te regalamos un mes.
     </p>
   </div>
 </section>
