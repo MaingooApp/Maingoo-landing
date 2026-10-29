@@ -36,3 +36,22 @@ Recent history uses concise Spanish messages, often Conventional Commit style, f
 
 The site deploys on Vercel from `main` with the `@astrojs/vercel` adapter: pages stay static and only `src/pages/api/chat.ts` and `src/pages/api/contact.ts` run as functions (shared helpers in `src/lib/server.ts`). It streams GPT-6 Luna answers from the Azure resource `maingoo-landing-ai` (deployment `gpt-6-luna-landing`, kept apart from the backend so landing usage is billed separately); its only context is `src/lib/chat-context.ts`, built from the public data in `src/data/`, and it has no tools or backend access. It needs `AZURE_LANDING_AI_ENDPOINT`, `AZURE_LANDING_AI_KEY` and optionally `AZURE_LANDING_AI_DEPLOYMENT` in Vercel and in a local `.env`.
 The contact form posts to `/api/contact`, which checks reCAPTCHA v2 server-side (`RECAPTCHA_SECRET_KEY`; skipped only in dev without it) and sends the lead with Resend from the verified domain `correo.maingoo.tech` (`RESEND_API_KEY`, optional `CONTACT_TO_EMAIL` default hello@maingoo.tech, `CONTACT_FROM_EMAIL` default `Maingoo <web@correo.maingoo.tech>`), with `reply_to` set to the lead. Do not commit secrets, webhook credentials, or service tokens. Review external URLs in `Header.astro` and `ChatWidget.astro` before deployment. Keep public assets optimized and descriptively named.
+
+## Repositorios de Maingoo
+
+Maingoo se reparte en cinco repositorios hermanos, clonados en la misma carpeta (`~/Developer/`). Esta sección es idéntica en todos: si una tarea exige tocar otro repositorio, lee primero su `AGENTS.md` y sigue sus reglas, porque cada uno tiene su propio stack, ramas y verificación.
+
+| Repositorio | Carpeta local | Qué contiene |
+| --- | --- | --- |
+| [Maingoo-Front](https://github.com/MaingooApp/Maingoo-Front) | `Maingoo-Front` | App web de clientes: Angular 19, PrimeNG y Tailwind. Incluye el TPV (`/ventas`), las facturas, los productos, el chat con el agente y la versión móvil. Llama al gateway en `/api` (puerto 3000 en local). |
+| [Maingoo-Launcher](https://github.com/MaingooApp/Maingoo-Launcher) (rama `master`) | `Maingoo-Launcher` | Backend en NestJS: microservicios sobre NATS, PostgreSQL/Prisma y Docker Compose (`make up`), más el despliegue. Cada servicio es un submódulo en `services/`: `gateway` (API HTTP), `auth`, `enterprises`, `suppliers` (facturas y proveedores), `products`, `documents-analyzer` (lectura de facturas), `billing`, `pos` (TPV) y `agent` (agente de IA). |
+| [Admin-Panel](https://github.com/MaingooApp/Admin-Panel) | `Admin-Panel` | Panel interno del equipo Maingoo: Angular 20 y PrimeNG. Gestiona clientes, usuarios, suscripciones, el uso de IA, el soporte de TPV y de productos, y los dispositivos IoT. Usa el mismo gateway (`urlBackend`). |
+| [maingoo-connect](https://github.com/MaingooApp/maingoo-connect) | `Maingoo-connect` | Agente local en Rust para Windows y macOS que conecta la web con impresoras de tickets y comandas y con cajones portamonedas. No tiene interfaz: se configura desde Maingoo-Front y recibe los trabajos del backend POS por WebSocket. No tiene autoridad fiscal. |
+| [Maingoo-landing](https://github.com/MaingooApp/Maingoo-landing) | `Maingoo-landing` | Web comercial: Astro 5 y Tailwind, desplegada en Vercel. El formulario de contacto envía con Resend desde `/api/contact`. No comparte código con la app. |
+
+Puntos donde un cambio afecta a otro repositorio:
+
+- Los contratos de la API (DTOs, endpoints, mensajes NATS) se definen en los servicios de Maingoo-Launcher. Si cambian, adapta Maingoo-Front y Admin-Panel.
+- El catálogo de navegación del agente vive en Maingoo-Front (`src/app/core/navigation/agent-route-catalog.json`) y tiene una copia en `services/agent`. Se sincroniza con `npm run sync:agent-routes`.
+- Impresión del TPV: Maingoo-Front → `services/pos` → maingoo-connect. Un cambio en el formato de los trabajos toca los tres.
+- Los submódulos de Maingoo-Launcher son repositorios propios. Haz commit dentro del submódulo y después actualiza el puntero en Launcher.
