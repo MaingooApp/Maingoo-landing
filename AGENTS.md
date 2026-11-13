@@ -55,3 +55,9 @@ Puntos donde un cambio afecta a otro repositorio:
 - El catálogo de navegación del agente vive en Maingoo-Front (`src/app/core/navigation/agent-route-catalog.json`) y tiene una copia en `services/agent`. Se sincroniza con `npm run sync:agent-routes`.
 - Impresión del TPV: Maingoo-Front → `services/pos` → maingoo-connect. Un cambio en el formato de los trabajos toca los tres.
 - Los submódulos de Maingoo-Launcher son repositorios propios. Haz commit dentro del submódulo y después actualiza el puntero en Launcher.
+
+### Código muerto y deuda técnica
+
+- No dejes código muerto. Si un cambio deja sin uso un endpoint, un mensaje NATS, un método, un tipo, un componente, una ruta, un permiso o un texto, bórralo en ese mismo cambio, en todos los repositorios a los que llegue (servicio, gateway, app y panel) y con sus tests.
+- Informa siempre de la deuda técnica que encuentres o que dejes: atajos, fallos conocidos, tests que ya fallaban, dependencias vulnerables o configuración desalineada. La persona decide si se arregla en ese momento o se deja para después.
+- Si se deja para después, queda documentada en el código (`shortcut: <límite>, <cuándo arreglarlo> (SCRUM-<n>)`) y con su ticket en Jira, en el proyecto SCRUM. Sin ticket no se deja.
