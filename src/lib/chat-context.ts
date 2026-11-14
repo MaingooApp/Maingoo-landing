@@ -24,7 +24,7 @@ ${featureLines}
 
 Precios:
 - Hay dos planes: ${plans.map((plan) => `${plan.name} (${plan.text} ${plan.items.join(", ")})`).join(" y ")}.
-- El plan Profesional es gratis mientras dure la beta, sin permanencia. El plan Profesional + sensores llegará más adelante y todavía no tiene precio.
+- El plan Profesional es gratis mientras dure la beta, sin permanencia, para un número limitado de locales por cliente (por lo general hasta dos): el equipo estudia cada solicitud y confirma cuántos se incluyen según el tamaño y el volumen de cada local. El plan Profesional + sensores llegará más adelante y todavía no tiene precio.
 - Después de la beta serán una suscripción mensual por local, sin tramos ni paquetes, con tarifas reducidas para varios locales y un mes de regalo con el pago anual. Todavía no hay precios publicados.
 
 Preguntas frecuentes:

@@ -2,7 +2,8 @@
 export const faqs = [
   {
     question: "¿Tiene coste unirme a la beta?",
-    answer: "No. La beta es gratuita durante esta fase y puedes usar todas las funciones disponibles sin coste.",
+    answer:
+      "No. La beta es gratuita durante esta fase y puedes usar todas las funciones disponibles sin coste. Para garantizar un uso justo, el acceso gratuito cubre un número limitado de locales por cliente, por lo general hasta dos; al estudiar tu solicitud valoramos el tamaño y el volumen de cada local y te confirmamos cuántos se incluyen.",
   },
   {
     question: "¿Qué gano participando?",

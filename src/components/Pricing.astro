@@ -20,7 +20,7 @@ const tick = "M4 12l5 5L20 6";
           Beta abierta
         </span>
         <h3 class="m-0 text-[22px] font-bold">{profesional.name}</h3>
-        <p class="m-0"><strong class="text-[44px] font-black">Gratis</strong> <span class="text-muted dark:text-zinc-400">durante la beta</span></p>
+        <p class="m-0"><strong class="text-[44px] font-black">Gratis<a href="#beta-condiciones" class="text-brand-700 no-underline dark:text-brand-300" aria-label="Ver condiciones">*</a></strong> <span class="text-muted dark:text-zinc-400">durante la beta</span></p>
         <p class="m-0 text-[15px] text-muted dark:text-zinc-400">{profesional.text}</p>
         <ul class="m-0 flex list-none flex-col gap-2.5 p-0 text-[15px]">
           {
@@ -40,6 +40,9 @@ const tick = "M4 12l5 5L20 6";
           Solicitar acceso a la beta
         </a>
         <span class="text-center text-[13px] text-muted dark:text-zinc-400">Sin permanencia</span>
+        <p id="beta-condiciones" class="m-0 text-[13px] leading-relaxed text-muted dark:text-zinc-400">
+          * Acceso gratuito sujeto a las condiciones de la beta. Para garantizar un uso justo, cada cliente puede incorporar un número limitado de locales, por lo general hasta dos. Al estudiar tu solicitud valoramos el tamaño y el volumen de actividad de cada local y te confirmamos cuántos se incluyen.
+        </p>
       </article>
 
       <article class="flex flex-col gap-4 rounded-card border border-slate-200 bg-white p-7 dark:border-zinc-800 dark:bg-zinc-900">
